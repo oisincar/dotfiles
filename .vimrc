@@ -28,13 +28,25 @@ filetype plugin indent on   " autodetect filetype and do indentation based on th
 "|   ||_|(_)|| )_)  (_|| )(_|  |_| )(-|||(-_) 
 "        _/                                   
 
-"set rtp+=~/.vim/bundle/Vundle.vim
-"call vundle#begin()
+set nocompatible              " be iMproved, required
+filetype off   
 
-execute pathogen#infect()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'Valloric/YouCompleteMe' 
+Plugin 'scrooloose/nerdtree' 
+Plugin 'scrooloose/syntastic' 
+Plugin 'plasticboy/vim-markdown'
+Plugin 'ajh17/Spacegray.vim'
+
+Plugin 'tpope/vim-fugitive'
+
+call vundle#end()            " required
+
 colorscheme spacegray
-
-" Plugin 'Valloric/YouCompleteMe'
 
 " syntastic
 set statusline+=%#warningmsg#
@@ -49,10 +61,6 @@ let g:syntastic_check_on_wq = 1
 
 " toggle nerdtree.
 map <leader>t :NERDTreeToggle<CR>
-
-" autolaunch NERDTree on enter.
-" autocmd vimenter * NERDTree
-
 
 " __                                                      
 "(_  _|_|_. _  _  _   _  _  _|  |  _  |_ . _  _|. _  _  _ 
