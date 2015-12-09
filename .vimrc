@@ -10,7 +10,6 @@
 " http://patorjk.com/software/taag
 
 
-
 " __               
 "/ _  _ _  _ _ _ | 
 "\__)(-| )(-| (_|| 
@@ -20,47 +19,82 @@
 let mapleader="\<Space>"
 
 syntax on                   " Switch syntax highlighting on
-filetype plugin indent on   " autodetect filetype and do indentation based on that.
-
 
 " __                                          
 "|__)|    _ . _  _   _  _  _|  |_|_  _ _  _ _ 
 "|   ||_|(_)|| )_)  (_|| )(_|  |_| )(-|||(-_) 
 "        _/                                   
 
-set nocompatible              " be iMproved, required
-filetype off   
-
-set rtp+=~/.vim/bundle/Vundle.vim
+set nocompatible              " be improved, required
+filetype off 
+set rtp+=~/.vim/bundle/vundle.vim
 call vundle#begin()
 
-Plugin 'VundleVim/Vundle.vim'
+Plugin 'vundlevim/vundle.vim'
 
-Plugin 'Valloric/YouCompleteMe' 
+Plugin 'valloric/youcompleteme' 
+Plugin 'rdnetto/ycm-generator'
+
 Plugin 'scrooloose/nerdtree' 
-Plugin 'scrooloose/syntastic' 
-Plugin 'plasticboy/vim-markdown'
-Plugin 'ajh17/Spacegray.vim'
+"Plugin 'scrooloose/syntastic' 
 
+Plugin 'godlygeek/tabular' " required for vim-markdown.
+Plugin 'plasticboy/vim-markdown'
+Plugin 'morhetz/gruvbox' 
+Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive'
 
+
 call vundle#end()            " required
+filetype plugin indent on    " autodetect filetype and do indentation based on that.
 
-colorscheme spacegray
+" colour scheme
+set background=dark    " setting dark mode
+let g:gruvbox_contrast_dark='hard'
+colorscheme gruvbox
+let $nvim_tui_enable_true_color=1 " nvim true colour
 
-" syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" airline (thingy on bottom) settings.
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1 
+let g:airline_theme= 'gruvbox'
 
 
-" toggle nerdtree.
-map <leader>t :NERDTreeToggle<CR>
+" YouCompleteMe options
+
+let g:ycm_register_as_syntastic_checker = 1 "default 1
+let g:Show_diagnostics_ui = 1 "default 1
+
+"will put icons in Vim's gutter on lines that have a diagnostic set.
+"Turning this off will also turn off the YcmErrorLine and YcmWarningLine
+"highlighting
+let g:ycm_enable_diagnostic_signs = 1
+let g:ycm_enable_diagnostic_highlighting = 0
+let g:ycm_always_populate_location_list = 1 "default 0
+let g:ycm_open_loclist_on_ycm_diags = 1 "default 1
+
+
+let g:ycm_complete_in_strings = 1 "default 1
+let g:ycm_collect_identifiers_from_tags_files = 0 "default 0
+let g:ycm_path_to_python_interpreter = '' "default ''
+
+
+let g:ycm_server_use_vim_stdout = 0 "default 0 (logging to console)
+let g:ycm_server_log_level = 'info' "default info
+
+
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'  "where to search for .ycm_extra_conf.py if not found
+let g:ycm_confirm_extra_conf = 1
+
+
+let g:ycm_goto_buffer_command = 'same-buffer' "[ 'same-buffer', 'horizontal-split', 'vertical-split', 'new-tab' ]
+let g:ycm_filetype_whitelist = { '*': 1 }
+let g:ycm_key_invoke_completion = '<C-Space>'
+
+"
+" nerdtree.
+map <leader>t :NERDTreeToggle<cr>
 
 " __                                                      
 "(_  _|_|_. _  _  _   _  _  _|  |  _  |_ . _  _|. _  _  _ 
@@ -107,22 +141,17 @@ set tabstop=4 shiftwidth=4 expandtab
 set backupdir=~/.vim/.backup//
 
 set visualbell         " FUCK YOUR STUPID BELL STFU HOLY SHIT
+
 inoremap qj <Esc>`^	    " Fix cursor bug, where it was moving onto next line.
 
 " allows an undo of ctrl-u
 inoremap <C-U> <C-G>u<C-U> 	
 
 " toggle line numbers, relitive/deterministi 
-nnoremap <C-n> :call NumberToggle()<cr>  
-
-" don't use Ex mode, use Q for formatting
-noremap Q gq			                 
-
-" enter breaks like it does in insertmode. ,j breaks like o does, and k breaks
-" like O does.
-nnoremap <CR> i<CR><Esc>==
-"nnoremap <leader>j o<Esc>
-"nnoremap <leader>k O<Esc>
+nnoremap <C-n> :call NumberToggle()<cr> 
+"
+" enter breaks like it does in insertmode. 
+ nnoremap <CR> i<CR><Esc>==
 
 " move around splits with <<leader>-hjkl>
 nnoremap <leader>j <C-W><C-J>
@@ -133,13 +162,22 @@ nnoremap <leader>h <C-W><C-H>
 " <leader>sp is my smart paste function. Make space, then paste from outside buffer.
 nnoremap <leader>sp o<CR><Esc>k<Esc>"+p
 
+" Replace file with buffer. For proj euler.
+nnoremap <leader>dv ggvG"+p
+
+" My smart copy function.. Simply copies the entire file.
+nnoremap <leader>c :%y+<CR>
+
 " save file with sp-s.
 nnoremap <leader>s :w<cr>
+
+" Run syntastic checking.
+map <leader>ch <ESC>:SyntaticCheck<CR>
 
 " make Y work like it's supposed to.
 nnoremap Y y$ 
 " use escape to exit terminal mode.
-"tnoremap <Esc> <C-\><C-n>
+tnoremap <Esc> <C-\><C-n>
 
 " insert mode shows deterministic line no, normal mode shows relative
 autocmd InsertEnter * :set norelativenumber
