@@ -85,7 +85,7 @@ let g:ycm_server_log_level = 'info' "default info
 
 
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'  "where to search for .ycm_extra_conf.py if not found
-let g:ycm_confirm_extra_conf = 1
+let g:ycm_confirm_extra_conf = 0
 
 
 let g:ycm_goto_buffer_command = 'same-buffer' "[ 'same-buffer', 'horizontal-split', 'vertical-split', 'new-tab' ]
@@ -149,7 +149,7 @@ inoremap <C-U> <C-G>u<C-U>
 
 " toggle line numbers, relitive/deterministi 
 nnoremap <C-n> :call NumberToggle()<cr> 
-"
+
 " enter breaks like it does in insertmode. 
  nnoremap <CR> i<CR><Esc>==
 
@@ -158,6 +158,10 @@ nnoremap <leader>j <C-W><C-J>
 nnoremap <leader>k <C-W><C-K>
 nnoremap <leader>l <C-W><C-L>
 nnoremap <leader>h <C-W><C-H>
+
+" move between tabs..
+nnoremap <bs> :tabprevious<CR>
+nnoremap <C-l> :tabnext<CR>
 
 " <leader>sp is my smart paste function. Make space, then paste from outside buffer.
 nnoremap <leader>sp o<CR><Esc>k<Esc>"+p
@@ -170,9 +174,6 @@ nnoremap <leader>c :%y+<CR>
 
 " save file with sp-s.
 nnoremap <leader>s :w<cr>
-
-" Run syntastic checking.
-map <leader>ch <ESC>:SyntaticCheck<CR>
 
 " make Y work like it's supposed to.
 nnoremap Y y$ 
