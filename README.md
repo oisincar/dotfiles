@@ -2,7 +2,15 @@
 
 ### Clone .vimrc:
 
-git clone https://github.com/oisincar/vimrc.git ~/
+>git clone https://github.com/oisincar/vimrc.git ~/blah
+
+>mv ~/blah/.vimrc .vimrc
+
+>rm -rf ~/blah
+
+Or something like that!
+
+Next try not to kill yourself with sheer frustration aliasing stuff to their various folders with neovim. Or just use a vim that reads your .vimrc from root like normal!
 
 ### Clone vundle, and download all plugins:
 
