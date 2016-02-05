@@ -183,7 +183,7 @@ nnoremap Y y$
 " tnoremap qj <C-\><C-n>
 
 " Insert mode shows deterministic line no, normal mode shows relative.
-autocmd InsertEnter * :set norelativenumber
+autocmd InsertEnter * :set number
 autocmd InsertLeave * :set relativenumber
 
 
