@@ -179,8 +179,8 @@ nnoremap <leader>w :w<cr>
 nnoremap Y y$ 
 
 " Use escape or qj to exit terminal mode.
-tnoremap <Esc> <C-\><C-n>
-tnoremap qj <C-\><C-n>
+" tnoremap <Esc> <C-\><C-n>
+" tnoremap qj <C-\><C-n>
 
 " Insert mode shows deterministic line no, normal mode shows relative.
 autocmd InsertEnter * :set norelativenumber
