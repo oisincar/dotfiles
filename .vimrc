@@ -13,48 +13,51 @@
 "|__)|    _ . _  _   _  _  _|  |_|_  _ _  _ _ 
 "|   ||_|(_)|| )_)  (_|| )(_|  |_| )(-|||(-_) 
 "        _/                                   
+let $nvim_tui_enable_true_color=1 " nvim true colour
+set t_Co=256
 
-" Vundle stuff.
 
-" Switch syntax highlighting on
-syntax on                   
-set nocompatible
-filetype off 
-set rtp+=~/.vim/bundle/vundle.vim
-call vundle#begin()
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
 
-Plugin 'vundlevim/vundle.vim'
+call plug#begin('~/.vim/plugged')
 
 " Completion
-Plugin 'valloric/youcompleteme'
-Plugin 'rdnetto/ycm-generator'
-"Plugin 'scrooloose/syntastic' 
+Plug 'valloric/youcompleteme'
+"Plug 'scrooloose/syntastic' 
 
 " Editing
-Plugin 'Raimondi/delimitMate'
-Plugin 'godlygeek/tabular' " Required for vim-markdown.
-Plugin 'plasticboy/vim-markdown'
+Plug 'Raimondi/delimitMate'
+Plug 'godlygeek/tabular' " Required for vim-markdown.
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'tpope/vim-commentary'
 
 " Colour
-Plugin 'ewilazarus/preto'
-Plugin 'fxn/vim-monochrome'
-Plugin 'robertmeta/nofrils'
-Plugin 'morhetz/gruvbox' 
+Plug 'ewilazarus/preto'
+Plug 'fxn/vim-monochrome'
+Plug 'robertmeta/nofrils'
+Plug 'morhetz/gruvbox' 
+
+" Navigation
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'easymotion/vim-easymotion'
 
 " Misc
-Plugin 'scrooloose/nerdtree' 
-Plugin 'bling/vim-airline'
-Plugin 'tpope/vim-fugitive'
+Plug 'bling/vim-airline'
+Plug 'tpope/vim-fugitive'
 
-call vundle#end()            " required
-filetype plugin indent on    " auto-detect filetype and do indentation based on that.
+call plug#end()
+
 
 " Colour scheme
 set background=dark    " setting dark mode
 let g:gruvbox_contrast_dark='hard'
 colorscheme gruvbox
+
 "colorscheme monochrome
-let $nvim_tui_enable_true_color=1 " nvim true colour
 
 
 " Airline (Status bar plugin) settings.
@@ -121,6 +124,9 @@ set number             " show line number
 set relativenumber     " relative line number
 set backup             " keep a backup file (restore to previous version)...
 set incsearch          " real time search highlighting
+
+set ignorecase smartcase " Clever searching
+set lazyredraw           " Better performance
 
 " Set a backup directory. On new computers this folder will need to be re-created.
 set backupdir=~/.vim/.backup//
