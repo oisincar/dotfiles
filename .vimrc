@@ -25,77 +25,87 @@ call vundle#begin()
 
 Plugin 'vundlevim/vundle.vim'
 
+" Completion
 Plugin 'valloric/youcompleteme'
 Plugin 'rdnetto/ycm-generator'
+"Plugin 'scrooloose/syntastic' 
 
+" Editing
 Plugin 'Raimondi/delimitMate'
-
-Plugin 'scrooloose/nerdtree' 
-Plugin 'scrooloose/syntastic' 
-
 Plugin 'godlygeek/tabular' " Required for vim-markdown.
 Plugin 'plasticboy/vim-markdown'
+
+" Colour
+Plugin 'ewilazarus/preto'
+Plugin 'fxn/vim-monochrome'
+Plugin 'robertmeta/nofrils'
 Plugin 'morhetz/gruvbox' 
+
+" Misc
+Plugin 'scrooloose/nerdtree' 
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive'
 
 call vundle#end()            " required
 filetype plugin indent on    " auto-detect filetype and do indentation based on that.
 
-
 " Colour scheme
 set background=dark    " setting dark mode
 let g:gruvbox_contrast_dark='hard'
 colorscheme gruvbox
+"colorscheme monochrome
 let $nvim_tui_enable_true_color=1 " nvim true colour
 
 
 " Airline (Status bar plugin) settings.
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1 
-let g:airline_theme= 'gruvbox'
-
+let g:airline_theme='gruvbox' 
+let g:airline#extensions#wordcount#enabled = 1
+let g:airline#extensions#whitespace#enabled = 0
+" only enable word count for selected filetypes.
+"let g:airline#extensions#wordcount#filetypes = ...
 
 " YouCompleteMe options 
-let g:ycm_register_as_syntastic_checker = 1 "default 1
+" Uncomment this to re-enable syntastic.
+"let g:ycm_register_as_syntastic_checker = 1 "default 1
 let g:Show_diagnostics_ui = 1 "default 1
 
 let g:ycm_enable_diagnostic_signs = 1
-let g:ycm_enable_diagnostic_highlighting = 0
-let g:ycm_always_populate_location_list = 1 "default 0
-let g:ycm_open_loclist_on_ycm_diags = 1 "default 1
+"let g:ycm_enable_diagnostic_highlighting = 0
+"let g:ycm_always_populate_location_list = 1 "default 0
+"let g:ycm_open_loclist_on_ycm_diags = 1 "default 1
+"
+"let g:ycm_complete_in_strings = 1 "default 1
+"let g:ycm_collect_identifiers_from_tags_files = 0 "default 0
+"let g:ycm_path_to_python_interpreter = '' "default ''
+"
+"let g:ycm_server_use_vim_stdout = 0 "default 0 (logging to console)
+"let g:ycm_server_log_level = 'info' "default info
+"
+"let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'  "where to search for .ycm_extra_conf.py if not found
+"let g:ycm_confirm_extra_conf = 0
+"
+"let g:ycm_goto_buffer_command = 'same-buffer' "[ 'same-buffer', 'horizontal-split', 'vertical-split', 'new-tab' ]
+"let g:ycm_filetype_whitelist = { '*': 1 }
+"let g:ycm_key_invoke_completion = '<C-Space>'
 
-let g:ycm_complete_in_strings = 1 "default 1
-let g:ycm_collect_identifiers_from_tags_files = 0 "default 0
-let g:ycm_path_to_python_interpreter = '' "default ''
-
-let g:ycm_server_use_vim_stdout = 0 "default 0 (logging to console)
-let g:ycm_server_log_level = 'info' "default info
-
-let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'  "where to search for .ycm_extra_conf.py if not found
-let g:ycm_confirm_extra_conf = 0
-
-let g:ycm_goto_buffer_command = 'same-buffer' "[ 'same-buffer', 'horizontal-split', 'vertical-split', 'new-tab' ]
-let g:ycm_filetype_whitelist = { '*': 1 }
-let g:ycm_key_invoke_completion = '<C-Space>'
-
+let g:ycm_semantic_triggers = {'haskell' : ['.']}
 
 " delimitMate Options. Need to look into these more, for now just nice
-" opening in brackets.
+" opening of brackets.
 let delimitMate_expand_cr=1 
 let delimitMate_expand_space=1
 
-
+let mapleader="\<Space>"
 " Nerdtree.
-map <leader>t :NERDTreeToggle<cr>
+map <leader>t :NERDTreeToggle<cr> 
 
 
 " __                                   
 "/ _  _ _  _ _. _   _ _|_|_. _  _  _   
 "\__)(-| )(-| |(_  _)(-|_|_|| )(_)_).  
 "                              _/     
- 
-let mapleader="\<Space>"
 
 set spell spelllang=en_gb
 
@@ -110,6 +120,7 @@ set showcmd            " display incomplete commands
 set number             " show line number
 set relativenumber     " relative line number
 set backup             " keep a backup file (restore to previous version)...
+set incsearch          " real time search highlighting
 
 " Set a backup directory. On new computers this folder will need to be re-created.
 set backupdir=~/.vim/.backup//
@@ -144,7 +155,13 @@ set tabstop=4 shiftwidth=4 expandtab
 "     /               _/    
 
 " Fix cursor bug, where it was moving onto next line. Nvim only.
-inoremap qj <Esc>`^	    
+"inoremap qj <Esc>`^	    
+inoremap qj <Esc>
+inoremap jq <Esc>
+
+" Easier moving around wrapped lines
+nmap j gj
+nmap k gk
 
 " Allows an undo of ctrl-u
 inoremap <C-U> <C-G>u<C-U> 	
@@ -170,7 +187,7 @@ nnoremap <leader>c :%y+<CR>
 
 " Toggle spell check, and allow for sp-tab auto complete in normal mode
 nmap <silent><leader>s :set spell!<CR> 
-map <silent><Tab> 1z=
+map <silent><leader><Tab> 1z=
 
 " Save file with sp-w.
 nnoremap <leader>w :w<cr>
@@ -179,8 +196,10 @@ nnoremap <leader>w :w<cr>
 nnoremap Y y$ 
 
 " Use escape or qj to exit terminal mode.
-tnoremap <Esc> <C-\><C-n>
-tnoremap qj <C-\><C-n>
+if has('nvim')
+  tnoremap <Esc> <C-\><C-n>
+  tnoremap qj <C-\><C-n>
+endif
 
 " Insert mode shows deterministic line no, normal mode shows relative.
 autocmd InsertEnter * :set norelativenumber
