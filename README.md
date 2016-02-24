@@ -2,11 +2,10 @@
 
 ### Clone .vimrc:
 
->git clone https://github.com/oisincar/vimrc.git ~/blah
+>git clone https://github.com/oisincar/vimrc.git
 
->mv ~/blah/.vimrc .vimrc
+>ln ~/vimrc/.vimrc ~/.vimrc
 
->rm -rf ~/blah
 
 Or something like that!
 
