@@ -218,39 +218,40 @@ if has('nvim')
   tnoremap <Esc> <C-\><C-n>
   tnoremap qj <C-\><C-n>
 
-else
-    noremap § $
-    noremap 1 & 
-    noremap 2 [
-    noremap 3 {
-    noremap 4 }
-    noremap 5 (
-    noremap 6 @
-    noremap 7 *
-    noremap 8 )
-    noremap 9 ^
-    noremap 0 ]
-    noremap [ !
-    noremap ] #
-
-    noremap ± ~
-    noremap ! % 
-    noremap @ 7
-    noremap # 5
-    noremap $ 3
-    noremap % 1
-    noremap ^ 9
-    noremap & 0
-    noremap * 2
-    noremap ( 4
-    noremap ) 6
-    noremap { 8
-    noremap } `
-
-    noremap ; '
-    noremap : "
-    noremap ' ;
-    noremap " :
+" Mappings for school computers...
+"else
+"    noremap § $
+"    noremap 1 & 
+"    noremap 2 [
+"    noremap 3 {
+"    noremap 4 }
+"    noremap 5 (
+"    noremap 6 @
+"    noremap 7 *
+"    noremap 8 )
+"    noremap 9 ^
+"    noremap 0 ]
+"    noremap [ !
+"    noremap ] #
+"
+"    noremap ± ~
+"    noremap ! % 
+"    noremap @ 7
+"    noremap # 5
+"    noremap $ 3
+"    noremap % 1
+"    noremap ^ 9
+"    noremap & 0
+"    noremap * 2
+"    noremap ( 4
+"    noremap ) 6
+"    noremap { 8
+"    noremap } `
+"
+"    noremap ; '
+"    noremap : "
+"    noremap ' ;
+"    noremap " :
 endif
 
 " Insert mode shows deterministic line no, normal mode shows relative.
