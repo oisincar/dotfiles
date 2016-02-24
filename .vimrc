@@ -26,7 +26,10 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " Completion
-Plug 'valloric/youcompleteme'
+"if liteVersion:
+if has('nvim')
+    Plug 'valloric/youcompleteme'
+endif
 "Plug 'scrooloose/syntastic' 
 
 " Editing
@@ -78,31 +81,34 @@ let g:airline#extensions#whitespace#enabled = 0
 " only enable word count for selected filetypes.
 "let g:airline#extensions#wordcount#filetypes = ...
 
+
 " YouCompleteMe options 
-" Uncomment this to re-enable syntastic.
-"let g:ycm_register_as_syntastic_checker = 1 "default 1
-let g:Show_diagnostics_ui = 1 "default 1
-
-let g:ycm_enable_diagnostic_signs = 1
-"let g:ycm_enable_diagnostic_highlighting = 0
-"let g:ycm_always_populate_location_list = 1 "default 0
-"let g:ycm_open_loclist_on_ycm_diags = 1 "default 1
-"
-"let g:ycm_complete_in_strings = 1 "default 1
-"let g:ycm_collect_identifiers_from_tags_files = 0 "default 0
-"let g:ycm_path_to_python_interpreter = '' "default ''
-"
-"let g:ycm_server_use_vim_stdout = 0 "default 0 (logging to console)
-"let g:ycm_server_log_level = 'info' "default info
-"
-"let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'  "where to search for .ycm_extra_conf.py if not found
-"let g:ycm_confirm_extra_conf = 0
-"
-"let g:ycm_goto_buffer_command = 'same-buffer' "[ 'same-buffer', 'horizontal-split', 'vertical-split', 'new-tab' ]
-"let g:ycm_filetype_whitelist = { '*': 1 }
-"let g:ycm_key_invoke_completion = '<C-Space>'
-
-let g:ycm_semantic_triggers = {'haskell' : ['.']}
+if has('nvim')
+    " Uncomment this to re-enable syntastic.
+    "let g:ycm_register_as_syntastic_checker = 1 "default 1
+    let g:Show_diagnostics_ui = 1 "default 1
+    
+    let g:ycm_enable_diagnostic_signs = 1
+    "let g:ycm_enable_diagnostic_highlighting = 0
+    "let g:ycm_always_populate_location_list = 1 "default 0
+    "let g:ycm_open_loclist_on_ycm_diags = 1 "default 1
+    "
+    "let g:ycm_complete_in_strings = 1 "default 1
+    "let g:ycm_collect_identifiers_from_tags_files = 0 "default 0
+    "let g:ycm_path_to_python_interpreter = '' "default ''
+    "
+    "let g:ycm_server_use_vim_stdout = 0 "default 0 (logging to console)
+    "let g:ycm_server_log_level = 'info' "default info
+    "
+    "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'  "where to search for .ycm_extra_conf.py if not found
+    "let g:ycm_confirm_extra_conf = 0
+    "
+    "let g:ycm_goto_buffer_command = 'same-buffer' "[ 'same-buffer', 'horizontal-split', 'vertical-split', 'new-tab' ]
+    "let g:ycm_filetype_whitelist = { '*': 1 }
+    "let g:ycm_key_invoke_completion = '<C-Space>'
+    
+    let g:ycm_semantic_triggers = {'haskell' : ['.']}
+endif
 
 " delimitMate Options. Need to look into these more, for now just nice
 " opening of brackets.
@@ -131,14 +137,11 @@ set ruler              " show the cursor position all the time
 set showcmd            " display incomplete commands
 set number             " show line number
 set relativenumber     " relative line number
-set backup             " keep a backup file (restore to previous version)...
+set nobackup           " use source control instead...
 set incsearch          " real time search highlighting
 
-set ignorecase smartcase " Clever searching
-set lazyredraw           " Better performance
-
-" Set a backup directory. On new computers this folder will need to be re-created.
-set backupdir=~/.vim/.backup//
+set ignorecase smartcase " clever searching
+set lazyredraw           " better performance
 
 " Highlight current line
 set cursorline
@@ -214,6 +217,40 @@ nnoremap Y y$
 if has('nvim')
   tnoremap <Esc> <C-\><C-n>
   tnoremap qj <C-\><C-n>
+
+else
+    noremap § $
+    noremap 1 & 
+    noremap 2 [
+    noremap 3 {
+    noremap 4 }
+    noremap 5 (
+    noremap 6 @
+    noremap 7 *
+    noremap 8 )
+    noremap 9 ^
+    noremap 0 ]
+    noremap [ !
+    noremap ] #
+
+    noremap ± ~
+    noremap ! % 
+    noremap @ 7
+    noremap # 5
+    noremap $ 3
+    noremap % 1
+    noremap ^ 9
+    noremap & 0
+    noremap * 2
+    noremap ( 4
+    noremap ) 6
+    noremap { 8
+    noremap } `
+
+    noremap ; '
+    noremap : "
+    noremap ' ;
+    noremap " :
 endif
 
 " Insert mode shows deterministic line no, normal mode shows relative.
