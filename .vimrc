@@ -197,7 +197,7 @@ nnoremap <C-l> :tabnext<CR>
 " Make a line above and below, then paste from buffer.
 nnoremap <leader>sp o<CR><Esc>k<Esc>"+p
 
-" Replace file with buffer. For proj euler.
+" Replace file with buffer. For proj Euler.
 nnoremap <leader>dp ggvG"+p
 
 " My smart copy function.. Simply copies the entire file.
@@ -257,6 +257,9 @@ endif
 " Insert mode shows deterministic line no, normal mode shows relative.
 autocmd InsertEnter * :set norelativenumber
 autocmd InsertLeave * :set relativenumber
+
+" Autosave on exiting insert mode.
+autocmd InsertLeave * :w
 
 
 "
