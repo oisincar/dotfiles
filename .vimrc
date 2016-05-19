@@ -25,19 +25,10 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-<<<<<<< HEAD
 " -------- COMPLETION ----------
 if has('nvim')
 	Plug 'valloric/youcompleteme', { 'do': './install.py --all' }
 endif
-=======
-" Completion
-"if liteVersion:
-if has('nvim')
-    Plug 'valloric/youcompleteme'
-endif
-"Plug 'scrooloose/syntastic' 
->>>>>>> c8badadb943606a3700428bf03e7831658c49c85
 
 " -------- EDITING ----------
 Plug 'Raimondi/delimitMate'
@@ -83,7 +74,6 @@ let g:airline_powerline_fonts = 1
 let g:airline_theme='gruvbox' 
 let g:airline#extensions#wordcount#enabled = 1
 let g:airline#extensions#whitespace#enabled = 0
-<<<<<<< HEAD
 
 " ------------- YOUCOMPLETEME ---------------
 if has('nvim')
@@ -96,8 +86,8 @@ if has('nvim')
     " functions. It's pretty hacky, but there doesn't seem to be a way 
     " to do combine symbols from the buffer and from haskell and necoghc.
     let g:ycm_semantic_triggers = {'haskell' : ['.']}
-    let g:ycm_semantic_triggers.haskell = ['re!(?=[a-zA-Z_]{4})'] 
-=======
+    let g:ycm_semantic_triggers.haskell = ['re!(?=[a-zA-Z_]{4})']
+endif
 " only enable word count for selected filetypes.
 "let g:airline#extensions#wordcount#filetypes = ...
 
@@ -128,7 +118,6 @@ if has('nvim')
     "let g:ycm_key_invoke_completion = '<C-Space>'
     
     let g:ycm_semantic_triggers = {'haskell' : ['.']}
->>>>>>> c8badadb943606a3700428bf03e7831658c49c85
 endif
 
 " ------------ DELIMITMATE -------------
@@ -165,7 +154,6 @@ set spell spelllang=en_gb
 
 set history=1000         " Can't have too much history!  
 set timeoutlen=400
-<<<<<<< HEAD
 
 set noswapfile	         " Don't keep swapfiles.
 set undofile             " Keep an undo file (undo changes after closing).
@@ -179,21 +167,7 @@ set incsearch            " Real time search highlighting.
 
 set ignorecase smartcase " Clever searching
 set nolazyredraw         " Fix rendering of terminal (?)
-=======
- 
-set noswapfile	       " don't keep swapfiles.
-set undofile           " keep an undo file (undo changes after closing)
-set hls                " highlight search
-set ruler              " show the cursor position all the time
-set showcmd            " display incomplete commands
-set number             " show line number
-set relativenumber     " relative line number
-set nobackup           " use source control instead...
-set incsearch          " real time search highlighting
 
-set ignorecase smartcase " clever searching
-set lazyredraw           " better performance
->>>>>>> c8badadb943606a3700428bf03e7831658c49c85
 
 " Highlight current line
 set cursorline
@@ -223,22 +197,11 @@ set tabstop=4 shiftwidth=4 expandtab
 
 let mapleader="\<Space>"
 
-" --------- NAVIGATION (SPLITS/WINDOWS/BUFFERS) ----------
-" qj or jq to escape normal mode
-inoremap qj <Esc>
-inoremap jq <Esc>
+" ------- FILE NAVIGATION -------
+" Toggle Nerdtree.
+map <leader>t :NERDTreeToggle<cr> 
 
-" Use escape/ qj/ jq to exit terminal mode.
-if has('nvim')
-  tnoremap <Esc> <C-\><C-n>
-  tnoremap qj <C-\><C-n>
-  tnoremap jq <C-\><C-n>
-endif
-
-" Easier moving around wrapped lines
-nmap j gj
-nmap k gk
-
+" ------ SPLITS/BUFFERS ---------
 " Use | or _ to open a vertical split or horizontal split.
 nnoremap <expr><silent> <Bar> v:count == 0 ? "<C-W>v<C-W><Right>" : ":<C-U>normal! 0".v:count."<Bar><CR>"
 nnoremap <expr><silent> _     v:count == 0 ? "<C-W>s<C-W><Down>"  : ":<C-U>normal! ".v:count."_<CR>"
@@ -252,7 +215,7 @@ if has('nvim') " As above, exit terminal mode, and switch window.
   tnoremap <S-Tab> <C-\><C-n><C-W>W
 endif
 
-" Move between tabs.
+" Move between tabs. (bs == backspace)
 nnoremap <bs> :tabprevious<CR>
 nnoremap <C-l> :tabnext<CR>
 
@@ -269,10 +232,23 @@ nnoremap <leader>K <C-W>K
 nnoremap <leader>L <C-W>L
 nnoremap <leader>H <C-W>H
 
-" Nerdtree.
-map <leader>t :NERDTreeToggle<cr> 
+" -------- CODE NAVIGATION --------
+" qj or jq to escape normal mode
+inoremap qj <Esc>
+inoremap jq <Esc>
 
-" ----------- FIXES ------------
+" Use escape/ qj/ jq to exit terminal mode.
+if has('nvim')
+  tnoremap <Esc> <C-\><C-n>
+  tnoremap qj <C-\><C-n>
+  tnoremap jq <C-\><C-n>
+endif
+
+" Easier moving around wrapped lines
+nmap j gj
+nmap k gk
+
+" -------------- FIXES ---------------
 " Allows an undo of ctrl-u
 inoremap <C-U> <C-G>u<C-U> 	
 
@@ -300,17 +276,7 @@ map <silent><leader><Tab> 1z=
 " Save file with sp-w.
 nnoremap <leader>w :w<cr>
 
-<<<<<<< HEAD
-=======
-" Make Y work like it's supposed to.
-nnoremap Y y$ 
-
-" Use escape or qj to exit terminal mode.
-if has('nvim')
-  tnoremap <Esc> <C-\><C-n>
-  tnoremap qj <C-\><C-n>
-
-" Mappings for school computers...
+" Mappings for college computers...
 "else
 "    noremap § $
 "    noremap 1 & 
@@ -344,26 +310,18 @@ if has('nvim')
 "    noremap : "
 "    noremap ' ;
 "    noremap " :
-endif
+" endif
 
->>>>>>> c8badadb943606a3700428bf03e7831658c49c85
 " Insert mode shows deterministic line no, normal mode shows relative.
 autocmd InsertEnter * :set norelativenumber
 autocmd InsertLeave * :set relativenumber
 
-<<<<<<< HEAD
 " Autosave all on focus lost (Terminal vim doesn't proc this but.. Eh)
 autocmd FocusLost * :wa
-=======
-" Autosave on exiting insert mode.
-autocmd InsertLeave * :w
-
->>>>>>> c8badadb943606a3700428bf03e7831658c49c85
 
 " ---------- HASKELL OVERLORDS ------------
-" Type of expression under cursor
+" (Show) || (Insert in line above) the type of the expression under cursor
 nmap <silent> <leader>ht :GhcModType<CR>
-" Insert type of expression under cursor
 nmap <silent> <leader>hT :GhcModTypeInsert<CR>
 
 " GHC errors and warnings
