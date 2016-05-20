@@ -16,7 +16,7 @@
 let $nvim_tui_enable_true_color=1 " nvim true colour
 set t_Co=256
 
-
+" --------- AUTOSETUP VIM FOLDER -------
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -32,7 +32,7 @@ endif
 
 " -------- EDITING ----------
 Plug 'Raimondi/delimitMate'
-Plug 'godlygeek/tabular', 		{ 'for': 'markdown' }" Required for vim-markdown.
+Plug 'godlygeek/tabular',       { 'for': 'markdown' } " Required for vim-markdown.
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'tpope/vim-commentary'
 Plug 'benekastah/neomake'   " Used for haskell typechecking, but I should 
@@ -53,10 +53,10 @@ Plug 'bling/vim-airline'
 Plug 'tpope/vim-fugitive'
 
 " -------- HASKELL ----------
-Plug 'Shougo/vimproc.vim', 				{ 'do': 'make' }
-Plug 'neovimhaskell/haskell-vim',   	{ 'for': 'haskell' }
-Plug 'eagletmt/ghcmod-vim',           	{ 'for': 'haskell' }
-Plug 'eagletmt/neco-ghc',             	{ 'for': 'haskell' }
+Plug 'Shougo/vimproc.vim', 	            { 'do': 'make' }
+Plug 'neovimhaskell/haskell-vim',       { 'for': 'haskell' }
+Plug 'eagletmt/ghcmod-vim',             { 'for': 'haskell' }
+Plug 'eagletmt/neco-ghc',               { 'for': 'haskell' }
 Plug 'Twinside/vim-hoogle',           	{ 'for': 'haskell' }
 "Plug 'mpickering/hlint-refactor-vim', 	{ 'for': 'haskell' }
 
@@ -81,43 +81,13 @@ if has('nvim')
     let g:YcmShowDetailedDiagnostic = 1
     let g:ycm_enable_diagnostic_signs = 1
 
+    "let g:ycm_collect_identifiers_from_tags_files = 1 "default 0
     " (Haskell)
     " Use symbols from file if (<4) chars, otherwise search full list of
     " functions. It's pretty hacky, but there doesn't seem to be a way 
     " to do combine symbols from the buffer and from haskell and necoghc.
     let g:ycm_semantic_triggers = {'haskell' : ['.']}
-    let g:ycm_semantic_triggers.haskell = ['re!(?=[a-zA-Z_]{4})']
-endif
-" only enable word count for selected filetypes.
-"let g:airline#extensions#wordcount#filetypes = ...
-
-
-" YouCompleteMe options 
-if has('nvim')
-    " Uncomment this to re-enable syntastic.
-    "let g:ycm_register_as_syntastic_checker = 1 "default 1
-    let g:Show_diagnostics_ui = 1 "default 1
-    
-    let g:ycm_enable_diagnostic_signs = 1
-    "let g:ycm_enable_diagnostic_highlighting = 0
-    "let g:ycm_always_populate_location_list = 1 "default 0
-    "let g:ycm_open_loclist_on_ycm_diags = 1 "default 1
-    "
-    "let g:ycm_complete_in_strings = 1 "default 1
-    "let g:ycm_collect_identifiers_from_tags_files = 0 "default 0
-    "let g:ycm_path_to_python_interpreter = '' "default ''
-    "
-    "let g:ycm_server_use_vim_stdout = 0 "default 0 (logging to console)
-    "let g:ycm_server_log_level = 'info' "default info
-    "
-    "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'  "where to search for .ycm_extra_conf.py if not found
-    "let g:ycm_confirm_extra_conf = 0
-    "
-    "let g:ycm_goto_buffer_command = 'same-buffer' "[ 'same-buffer', 'horizontal-split', 'vertical-split', 'new-tab' ]
-    "let g:ycm_filetype_whitelist = { '*': 1 }
-    "let g:ycm_key_invoke_completion = '<C-Space>'
-    
-    let g:ycm_semantic_triggers = {'haskell' : ['.']}
+    let g:ycm_semantic_triggers.haskell = ['re!(?=[a-zA-Z_]{3})']
 endif
 
 " ------------ DELIMITMATE -------------
@@ -156,13 +126,13 @@ set history=1000         " Can't have too much history!
 set timeoutlen=400
 
 set noswapfile	         " Don't keep swapfiles.
+set nobackup             " Use source control instead...
 set undofile             " Keep an undo file (undo changes after closing).
 set hls                  " Highlight search.
 set ruler                " Show the cursor position all the time.
 set showcmd              " Display incomplete commands in corner.
 set number               " Show line number.
 set relativenumber       " Relative line number.
-set nobackup             " Use source control instead...
 set incsearch            " Real time search highlighting.
 
 set ignorecase smartcase " Clever searching
@@ -199,31 +169,53 @@ let mapleader="\<Space>"
 
 " ------- FILE NAVIGATION -------
 " Toggle Nerdtree.
-map <leader>t :NERDTreeToggle<cr> 
+noremap <leader>t :NERDTreeToggle<cr> 
+
+" Close vim if only window left open in nerdtree.
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " ------ SPLITS/BUFFERS ---------
 " Use | or _ to open a vertical split or horizontal split.
 nnoremap <expr><silent> <Bar> v:count == 0 ? "<C-W>v<C-W><Right>" : ":<C-U>normal! 0".v:count."<Bar><CR>"
 nnoremap <expr><silent> _     v:count == 0 ? "<C-W>s<C-W><Down>"  : ":<C-U>normal! ".v:count."_<CR>"
 
+" Resize current split with +-
+if bufwinnr(1)
+  noremap + <C-W>+
+  noremap - <C-W>-
+endif
+
 " Use tab and shift-tab to cycle through windows in normal and terminal mode.
 nnoremap <Tab> <C-W>w
 nnoremap <S-Tab> <C-W>W
 
 if has('nvim') " As above, exit terminal mode, and switch window.
-  tnoremap <Tab>   <C-\><C-n><C-W>w
-  tnoremap <S-Tab> <C-\><C-n><C-W>W
+  tnoremap <M-j> <C-\><C-n><C-W><C-J>
+  tnoremap <M-k> <C-\><C-n><C-W><C-K>
+  tnoremap <M-l> <C-\><C-n><C-W><C-L>
+  tnoremap <M-h> <C-\><C-n><C-W><C-H>
+
+  " Always enter insert mode when changing focus to a terminal split.
+  autocmd BufWinEnter,WinEnter term://* startinsert
 endif
 
-" Move between tabs. (bs == backspace)
-nnoremap <bs> :tabprevious<CR>
-nnoremap <C-l> :tabnext<CR>
+" Move around splits with <C-hjkl>.
+nnoremap <M-j> <C-W><C-J>
+nnoremap <M-k> <C-W><C-K>
+nnoremap <M-l> <C-W><C-L>
+nnoremap <M-h> <C-W><C-H>
+"nnoremap <BS>  <C-W><C-H> " BS == <C-h> cause stupid things
 
-" Move around splits with <leader>-hjkl.
-nnoremap <leader>j <C-W><C-J>
-nnoremap <leader>k <C-W><C-K>
-nnoremap <leader>l <C-W><C-L>
-nnoremap <leader>h <C-W><C-H>
+inoremap <M-j> <Esc><C-W><C-J>
+inoremap <M-k> <Esc><C-W><C-K>
+inoremap <M-l> <Esc><C-W><C-L>
+inoremap <M-h> <Esc><C-W><C-H>
+
+" " Move around splits with <leader>-hjkl.
+" nnoremap <leader>j <C-W><C-J>
+" nnoremap <leader>k <C-W><C-K>
+" nnoremap <leader>l <C-W><C-L>
+" nnoremap <leader>h <C-W><C-H>
 
 " Also move splits around with <leader>-HJKL.
 " ('Pushes' split as far as possible in given direction.)
@@ -265,16 +257,29 @@ nnoremap <leader>dp ggvG"+p
 " Copy entire file into register
 nnoremap <leader>c :%y+<CR>
 
-" ---------- VISUAL/UTILITY -----------
+" ---------- UTILITY/MISC -----------
 " Clears highlighting after search
-nnoremap <leader>o :nohl<CR>
+nnoremap <silent><leader>o :nohl<CR>
+
+" Swap ; and : 
+nnoremap ; :
+nnoremap : ;
+vnoremap ; :
+vnoremap : ;
 
 " Toggle spell check, and allow for sp-tab auto complete in normal mode
-nmap <silent><leader>s :set spell!<CR> 
-map <silent><leader><Tab> 1z=
+nnoremap <silent><leader>s :set spell!<CR> 
+noremap <silent><leader><Tab> 1z=
 
 " Save file with sp-w.
 nnoremap <leader>w :w<cr>
+
+" Insert mode shows deterministic line no, normal mode shows relative.
+autocmd InsertEnter * :set norelativenumber
+autocmd InsertLeave * :set relativenumber
+
+" Autosave all on focus lost (Terminal vim doesn't proc this but.. Eh)
+autocmd FocusLost * :wa
 
 " Mappings for college computers...
 "else
@@ -311,13 +316,6 @@ nnoremap <leader>w :w<cr>
 "    noremap ' ;
 "    noremap " :
 " endif
-
-" Insert mode shows deterministic line no, normal mode shows relative.
-autocmd InsertEnter * :set norelativenumber
-autocmd InsertLeave * :set relativenumber
-
-" Autosave all on focus lost (Terminal vim doesn't proc this but.. Eh)
-autocmd FocusLost * :wa
 
 " ---------- HASKELL OVERLORDS ------------
 " (Show) || (Insert in line above) the type of the expression under cursor
