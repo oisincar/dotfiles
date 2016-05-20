@@ -174,6 +174,8 @@ noremap <leader>t :NERDTreeToggle<cr>
 " Close vim if only window left open in nerdtree.
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+noremap <leader>rc :vsp ~/.vimrc<CR>
+
 " ------ SPLITS/BUFFERS ---------
 " Use | or _ to open a vertical split or horizontal split.
 nnoremap <expr><silent> <Bar> v:count == 0 ? "<C-W>v<C-W><Right>" : ":<C-U>normal! 0".v:count."<Bar><CR>"
@@ -319,12 +321,14 @@ autocmd FocusLost * :wa
 
 " ---------- HASKELL OVERLORDS ------------
 " (Show) || (Insert in line above) the type of the expression under cursor
-nmap <silent> <leader>ht :GhcModType<CR>
-nmap <silent> <leader>hT :GhcModTypeInsert<CR>
+nnoremap <silent> <leader>ht :GhcModType<CR>
+nnoremap <silent> <leader>hT :GhcModTypeInsert<CR>
+" Clear highlighting
+nnoremap <silent><leader>ho :GhcModTypeClear<CR>
 
 " GHC errors and warnings
 let g:neomake_haskell_ghc_mod_args = '-g-Wall'
-nmap <silent> <leader>hc :Neomake ghcmod<CR>
+nnoremap <silent> <leader>hc :Neomake ghcmod<CR>
 
 " Hoogle search (shows type/ matching functions). 
 " Search for word under cursor, or prompt for input
@@ -335,6 +339,9 @@ nnoremap <leader>hH :Hoogle
 " Search for word under cursor, or prompt for input
 nnoremap <leader>hi :HoogleInfo<CR> 
 nnoremap <leader>hI :HoogleInfo              
+
+" Hoogle lint checker.
+nnoremap <leader>hl :GhcModCheckAndLintAsync
 
 " Close the Hoogle window
 nnoremap <silent> <leader>hq :HoogleClose<CR> 
