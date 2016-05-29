@@ -38,6 +38,8 @@ Plug 'tpope/vim-commentary'
 Plug 'benekastah/neomake'   " Used for haskell typechecking, but I should 
                             " use it for other stuff so it goes here..
 
+Plug 'sheerun/vim-polyglot' " Syntax highlighting for every language imaginable.
+
 " -------- COLOUR ----------
 Plug 'ewilazarus/preto'
 Plug 'fxn/vim-monochrome'
@@ -54,7 +56,6 @@ Plug 'tpope/vim-fugitive'
 
 " -------- HASKELL ----------
 Plug 'Shougo/vimproc.vim', 	            { 'do': 'make' }
-Plug 'neovimhaskell/haskell-vim',       { 'for': 'haskell' }
 Plug 'eagletmt/ghcmod-vim',             { 'for': 'haskell' }
 Plug 'eagletmt/neco-ghc',               { 'for': 'haskell' }
 Plug 'Twinside/vim-hoogle',           	{ 'for': 'haskell' }
@@ -82,12 +83,18 @@ if has('nvim')
     let g:ycm_enable_diagnostic_signs = 1
 
     "let g:ycm_collect_identifiers_from_tags_files = 1 "default 0
+    
     " (Haskell)
+    let g:ycm_semantic_triggers = {'haskell' : ['.']}
+
     " Use symbols from file if (<4) chars, otherwise search full list of
     " functions. It's pretty hacky, but there doesn't seem to be a way 
     " to do combine symbols from the buffer and from haskell and necoghc.
-    let g:ycm_semantic_triggers = {'haskell' : ['.']}
-    let g:ycm_semantic_triggers.haskell = ['re!(?=[a-zA-Z_]{3})']
+    
+    " let g:ycm_semantic_triggers.haskell = ['re!(?=[a-zA-Z_]{3})']
+    
+    " When the line above in commented out, semantic auto completion is triggered
+    " as normal with <C-Space>, otherwise just completes with symbols from current buffer.
 endif
 
 " ------------ DELIMITMATE -------------
@@ -107,9 +114,17 @@ let hscoptions="℘𝐒𝐓𝐄𝐌xErbl↱w-iRtBQZ𝔻A"
 
 " Show types in completion suggestions
 let g:necoghc_enable_detailed_browse = 1
-let g:haskellmode_completion_ghc = 1
+
+let g:haskellmode_completion_ghc = 0
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-let g:necoghc_debug = 1
+
+" Highlight everything we got..
+let g:haskell_enable_quantification = 1
+let g:haskell_enable_recursivedo = 1
+let g:haskell_enable_arrowsyntax = 1
+let g:haskell_enable_pattern_synonyms = 1
+let g:haskell_enable_typeroles = 1
+let g:haskell_enable_static_pointers = 1
 
 " Disable hlint-refactor-vim's default keybindings
 let g:hlintRefactor#disableDefaultKeybindings = 1
@@ -191,33 +206,31 @@ endif
 nnoremap <Tab> <C-W>w
 nnoremap <S-Tab> <C-W>W
 
-if has('nvim') " As above, exit terminal mode, and switch window.
-  tnoremap <M-j> <C-\><C-n><C-W><C-J>
-  tnoremap <M-k> <C-\><C-n><C-W><C-K>
-  tnoremap <M-l> <C-\><C-n><C-W><C-L>
-  tnoremap <M-h> <C-\><C-n><C-W><C-H>
+" " Move around splits with <Alt-hjkl>.
+" nnoremap <M-j> <C-W><C-J>
+" nnoremap <M-k> <C-W><C-K>
+" nnoremap <M-l> <C-W><C-L>
+" nnoremap <M-h> <C-W><C-H>
+" inoremap <M-j> <Esc><C-W><C-J>
+" inoremap <M-k> <Esc><C-W><C-K>
+" inoremap <M-l> <Esc><C-W><C-L>
+" inoremap <M-h> <Esc><C-W><C-H>
+" if has('nvim') " As above, exit terminal mode, and switch window.
+"   tnoremap <M-j> <C-\><C-n><C-W><C-J>
+"   tnoremap <M-k> <C-\><C-n><C-W><C-K>
+"   tnoremap <M-l> <C-\><C-n><C-W><C-L>
+"   tnoremap <M-h> <C-\><C-n><C-W><C-H>
+" endif
 
-  " Always enter insert mode when changing focus to a terminal split.
+" Move around splits with <leader>-hjkl.
+nnoremap <leader>j <C-W><C-J>
+nnoremap <leader>k <C-W><C-K>
+nnoremap <leader>l <C-W><C-L>
+nnoremap <leader>h <C-W><C-H>
+
+if has('nvim') " Enter insert mode when changing focus to a terminal split.
   autocmd BufWinEnter,WinEnter term://* startinsert
 endif
-
-" Move around splits with <C-hjkl>.
-nnoremap <M-j> <C-W><C-J>
-nnoremap <M-k> <C-W><C-K>
-nnoremap <M-l> <C-W><C-L>
-nnoremap <M-h> <C-W><C-H>
-"nnoremap <BS>  <C-W><C-H> " BS == <C-h> cause stupid things
-
-inoremap <M-j> <Esc><C-W><C-J>
-inoremap <M-k> <Esc><C-W><C-K>
-inoremap <M-l> <Esc><C-W><C-L>
-inoremap <M-h> <Esc><C-W><C-H>
-
-" " Move around splits with <leader>-hjkl.
-" nnoremap <leader>j <C-W><C-J>
-" nnoremap <leader>k <C-W><C-K>
-" nnoremap <leader>l <C-W><C-L>
-" nnoremap <leader>h <C-W><C-H>
 
 " Also move splits around with <leader>-HJKL.
 " ('Pushes' split as far as possible in given direction.)
@@ -298,7 +311,7 @@ autocmd FocusLost * :wa
 "    noremap 0 ]
 "    noremap [ !
 "    noremap ] #
-"
+
 "    noremap ± ~
 "    noremap ! % 
 "    noremap @ 7
@@ -340,7 +353,7 @@ nnoremap <leader>hH :Hoogle
 nnoremap <leader>hi :HoogleInfo<CR> 
 nnoremap <leader>hI :HoogleInfo              
 
-" Hoogle lint checker.
+" GHC Lint checker (Reports unnessasary brackets, hidden variables etc.)
 nnoremap <leader>hl :GhcModCheckAndLintAsync
 
 " Close the Hoogle window
@@ -379,3 +392,4 @@ function! s:Repl()
   return "p@=RestoreRegister()\<cr>"
 endfunction
 vmap <silent> <expr> p <sid>Repl()
+
