@@ -157,7 +157,6 @@ set nolazyredraw         " Fix rendering of terminal (?)
 " Highlight current line
 set cursorline
 set cmdheight=1
-set switchbuf=vsplit,useopen
 set showtabline=2
 
 set splitbelow splitright " open new window splits to the right and bottom of current.
@@ -295,70 +294,6 @@ autocmd InsertLeave * :set relativenumber
 
 " Autosave all on focus lost (Terminal vim doesn't proc this but.. Eh)
 autocmd FocusLost * :wa
-
-" Mappings for college computers...
-"else
-"    noremap § $
-"    noremap 1 & 
-"    noremap 2 [
-"    noremap 3 {
-"    noremap 4 }
-"    noremap 5 (
-"    noremap 6 @
-"    noremap 7 *
-"    noremap 8 )
-"    noremap 9 ^
-"    noremap 0 ]
-"    noremap [ !
-"    noremap ] #
-
-"    noremap ± ~
-"    noremap ! % 
-"    noremap @ 7
-"    noremap # 5
-"    noremap $ 3
-"    noremap % 1
-"    noremap ^ 9
-"    noremap & 0
-"    noremap * 2
-"    noremap ( 4
-"    noremap ) 6
-"    noremap { 8
-"    noremap } `
-"
-"    noremap ; '
-"    noremap : "
-"    noremap ' ;
-"    noremap " :
-" endif
-
-" ---------- HASKELL OVERLORDS ------------
-" (Show) || (Insert in line above) the type of the expression under cursor
-nnoremap <silent> <leader>ht :GhcModType<CR>
-nnoremap <silent> <leader>hT :GhcModTypeInsert<CR>
-" Clear highlighting
-nnoremap <silent><leader>ho :GhcModTypeClear<CR>
-
-" GHC errors and warnings
-let g:neomake_haskell_ghc_mod_args = '-g-Wall'
-nnoremap <silent> <leader>hc :Neomake ghcmod<CR>
-
-" Hoogle search (shows type/ matching functions). 
-" Search for word under cursor, or prompt for input
-nnoremap <leader>hh :Hoogle<CR> 
-nnoremap <leader>hH :Hoogle              
-
-" Hoogle info (Detailed info for specific func)
-" Search for word under cursor, or prompt for input
-nnoremap <leader>hi :HoogleInfo<CR> 
-nnoremap <leader>hI :HoogleInfo              
-
-" GHC Lint checker (Reports unnessasary brackets, hidden variables etc.)
-nnoremap <leader>hl :GhcModCheckAndLintAsync
-
-" Close the Hoogle window
-nnoremap <silent> <leader>hq :HoogleClose<CR> 
-
 
 "   
 "   |\ | _ _ |_  (_    _  _|_. _  _  _ |   _ _ . _  _ .|_ _ 
