@@ -138,7 +138,9 @@ augroup omnisharp_commands
     " Builds can also run asynchronously with vim-dispatch installed
     autocmd FileType cs nnoremap <leader>cb :wa!<cr>:OmniSharpBuildAsync<cr>
     " automatic syntax check on events (TextChanged requires Vim 7.4)
-    autocmd BufEnter,TextChanged,InsertLeave *.cs SyntasticCheck
+    "
+    " Disabled due to annoying flickering..
+    " autocmd BufEnter,TextChanged,InsertLeave *.cs SyntasticCheck
 
     " Automatically add new cs files to the nearest project on save
 ""    autocmd BufWritePost *.cs call OmniSharp#AddToProject()
@@ -337,7 +339,6 @@ if bufwinnr(1)
 endif
 
 " Use tab and shift-tab to cycle through windows in normal and terminal mode.
-nnoremap <Tab> <C-W>w
 nnoremap <S-Tab> <C-W>W
 
 " " Move around splits with <Alt-hjkl>.
