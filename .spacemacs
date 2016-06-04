@@ -1,6 +1,14 @@
-;; -*- mode: emacs-lisp -*-
-;; This file is loaded by Spacemacs at startup.
-;; It must be stored in your home directory.
+
+;;
+;;    ____  _     _       _
+;;   / __ \(_)   (_)     ( )
+;;  | |  | |_ ___ _ _ __ |/ ___     ___ _ __   __ _  ___ ___ _ __ ___   __ _  ___ ___
+;;  | |  | | / __| | '_ \  / __|   / __| '_ \ / _` |/ __/ _ \ '_ ` _ \ / _` |/ __/ __|
+;;  | |__| | \__ \ | | | | \__ \  _\__ \ |_) | (_| | (_|  __/ | | | | | (_| | (__\__ \
+;;   \____/|_|___/_|_| |_| |___/ (_)___/ .__/ \__,_|\___\___|_| |_| |_|\__,_|\___|___/
+;;                                     | |
+;;                                     |_|
+;;
 
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
@@ -29,7 +37,7 @@ values."
      (haskell :variables
               haskell-enable-hindent-style "Andrew Gibiansky"
               haskell-enable-ghci-ng-support t
-              ;; haskell-enable-shm-support t ;; <(doesn't work well with evil, but it's pretty sexy so.. Hm.)
+              ;; haskell-enable-shm-support t ;; <(doesn't play well with evil, but it's pretty sexy so.. Hm.)
               )
      html
      java
@@ -100,7 +108,7 @@ values."
    ;; Default major mode of the scratch buffer (default `text-mode')
    dotspacemacs-scratch-mode 'text-mode
 
-   ;; ------- SCHEMES / ASTETICS -------
+   ;; ------- SCHEMES / WINDOWS -------
    dotspacemacs-themes '(gruvbox
                          darktooth
                          spacemacs-dark
@@ -113,6 +121,8 @@ values."
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
+   ;; If non nil unicode symbols are displayed in the mode line. (default t)
+   dotspacemacs-mode-line-unicode-symbols t
 
    ;; If non nil a progress bar is displayed when spacemacs is loading.
    ;; Set to nil to maybe boost the loading time.
@@ -130,8 +140,6 @@ values."
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
    dotspacemacs-active-transparency 90
    dotspacemacs-inactive-transparency 90
-   ;; If non nil unicode symbols are displayed in the mode line. (default t)
-   dotspacemacs-mode-line-unicode-symbols t
    ;; Smooth vim-like scrolling.
    dotspacemacs-smooth-scrolling t
    ;; Relative line numbers.
@@ -198,6 +206,7 @@ values."
    ;; Delete trailing whitespace while saving buffer.
    dotspacemacs-whitespace-cleanup 'trailing
    ))
+
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
