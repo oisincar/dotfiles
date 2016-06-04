@@ -26,19 +26,29 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " -------- COMPLETION ----------
+function! DoRemote(arg)
+    UpdateRemotePlugins
+endfunction
+
 if has('nvim')
-	Plug 'valloric/youcompleteme', { 'do': './install.py --all' }
+    Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+    " Plug 'Shougo/neosnippet'
+    " Plug 'Shougo/neosnippet-snippets'
 endif
+
 
 " -------- EDITING ----------
 Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular',       { 'for': 'markdown' } " Required for vim-markdown.
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'tpope/vim-commentary'
-Plug 'benekastah/neomake'   " Used for haskell typechecking, but I should 
-                            " use it for other stuff so it goes here..
 
 Plug 'sheerun/vim-polyglot' " Syntax highlighting for every language imaginable.
+
+" ------- BUILDING ---------
+Plug 'Shougo/vimproc.vim', { 'do': 'make' } " For command line operations from within vim.
+Plug 'benekastah/neomake'   " Used for haskell typechecking, but I should 
+                            " use it for other stuff so it goes here..
 
 " -------- COLOUR ----------
 Plug 'ewilazarus/preto'
@@ -50,17 +60,22 @@ Plug 'morhetz/gruvbox'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'wellle/targets.vim'
 
+Plug 'Shougo/unite.vim'
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
 " ---------- MISC -----------
 Plug 'bling/vim-airline'
 Plug 'tpope/vim-fugitive'
 
-" -------- HASKELL ----------
-Plug 'Shougo/vimproc.vim', 	            { 'do': 'make' }
+" -------- LANGUAGES ----------
+" csharp
+Plug 'omnisharp/omnisharp-vim', { 'for': 'csharp', 'rtp': 'vim', 'do': 'cd server; xbuild' }
+
+" haskell
 Plug 'eagletmt/ghcmod-vim',             { 'for': 'haskell' }
 Plug 'eagletmt/neco-ghc',               { 'for': 'haskell' }
 Plug 'Twinside/vim-hoogle',           	{ 'for': 'haskell' }
 "Plug 'mpickering/hlint-refactor-vim', 	{ 'for': 'haskell' }
-
 "Plug 'enomsg/vim-haskellConcealPlus', 	{ 'for': 'haskell' }
 
 call plug#end()
@@ -76,37 +91,39 @@ let g:airline_theme='gruvbox'
 let g:airline#extensions#wordcount#enabled = 1
 let g:airline#extensions#whitespace#enabled = 0
 
-" ------------- YOUCOMPLETEME ---------------
-if has('nvim')
-    let g:Show_diagnostics_ui = 1 "default 1
-    let g:YcmShowDetailedDiagnostic = 1
-    let g:ycm_enable_diagnostic_signs = 1
+" --------------- DEOMPLETE -----------------
+let g:deoplete#enable_at_startup = 1
+" let g:deoplete#disable_auto_complete = 1
 
-    "let g:ycm_collect_identifiers_from_tags_files = 1 "default 0
-    
-    " (Haskell)
-    let g:ycm_semantic_triggers = {'haskell' : ['.']}
-
-    " Use symbols from file if (<4) chars, otherwise search full list of
-    " functions. It's pretty hacky, but there doesn't seem to be a way 
-    " to do combine symbols from the buffer and from haskell and necoghc.
-    
-    " let g:ycm_semantic_triggers.haskell = ['re!(?=[a-zA-Z_]{3})']
-    
-    " When the line above in commented out, semantic auto completion is triggered
-    " as normal with <C-Space>, otherwise just completes with symbols from current buffer.
+if !exists('g:deoplete#omni#input_patterns')
+  let g:deoplete#omni#input_patterns = {}
 endif
 
-" ------------ DELIMITMATE -------------
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" deoplete tab-complete
+inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
+" Space <Tab> for regular tab... Eh... This sucks.
+inoremap <Leader><Tab> <Space><Space>
+
+" ------------- DELIMITMATE --------------
 " Need to look into these more, for now just nice opening of brackets.
 let delimitMate_expand_cr=1 
 let delimitMate_expand_space=1
 
-" ------------ MARKDOWN -------------
+" ---------------------------------------------------
+" ------------------  LANGUAGES ---------------------
+" ---------------------------------------------------
+
+" --------- MARKDOWN -----------
 " Disable automatic folding of markdown files.
 let g:vim_markdown_folding_disabled = 1
 
-" ------------ EVERYTHING HASKELL -------------
+
+" ---------- C-SHARP ----------
+let g:OmniSharp_selector_ui = 'unite'
+
+" --------- HASKELL -----------
 let g:haskell_conceal_wide = 1
 let g:haskell_conceal_enumerations = 1
 "let hscoptions="𝐒𝐓𝐄𝐌xRtB𝔻wr"
@@ -114,11 +131,11 @@ let hscoptions="℘𝐒𝐓𝐄𝐌xErbl↱w-iRtBQZ𝔻A"
 
 " Show types in completion suggestions
 let g:necoghc_enable_detailed_browse = 1
-
 let g:haskellmode_completion_ghc = 0
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
-" Highlight everything we got..
+" Highlight everything we got.. Not sure this is doing anything with the new
+" setup. (Vim poligot)
 let g:haskell_enable_quantification = 1
 let g:haskell_enable_recursivedo = 1
 let g:haskell_enable_arrowsyntax = 1
@@ -192,19 +209,21 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 noremap <leader>rc :vsp ~/.vimrc<CR>
 
 " ------ SPLITS/BUFFERS ---------
+
+" Jump to other open buffer.
+nnoremap <leader><leader> <C-^>
+
 " Use | or _ to open a vertical split or horizontal split.
 nnoremap <expr><silent> <Bar> v:count == 0 ? "<C-W>v<C-W><Right>" : ":<C-U>normal! 0".v:count."<Bar><CR>"
 nnoremap <expr><silent> _     v:count == 0 ? "<C-W>s<C-W><Down>"  : ":<C-U>normal! ".v:count."_<CR>"
 
-" Resize current split with +-
-if bufwinnr(1)
-  noremap + <C-W>+
-  noremap - <C-W>-
-endif
+" Equalise splits upon resizing vim.
+autocmd VimResized * execute "normal! \<c-w>="
 
 " Use tab and shift-tab to cycle through windows in normal and terminal mode.
-nnoremap <Tab> <C-W>w
-nnoremap <S-Tab> <C-W>W
+" Disabled because it interferes with jump-list.
+" nnoremap <Tab> <C-W>w
+nnoremap <S-Tab> <C-W>w
 
 " " Move around splits with <Alt-hjkl>.
 " nnoremap <M-j> <C-W><C-J>
@@ -334,30 +353,30 @@ autocmd FocusLost * :wa
 
 " ---------- HASKELL OVERLORDS ------------
 " (Show) || (Insert in line above) the type of the expression under cursor
-nnoremap <silent> <leader>ht :GhcModType<CR>
-nnoremap <silent> <leader>hT :GhcModTypeInsert<CR>
+nnoremap <silent> <leader>st :GhcModType<CR>
+nnoremap <silent> <leader>sT :GhcModTypeInsert<CR>
 " Clear highlighting
-nnoremap <silent><leader>ho :GhcModTypeClear<CR>
+nnoremap <silent><leader>so :GhcModTypeClear<CR>
 
 " GHC errors and warnings
 let g:neomake_haskell_ghc_mod_args = '-g-Wall'
-nnoremap <silent> <leader>hc :Neomake ghcmod<CR>
+nnoremap <silent> <leader>sc :Neomake ghcmod<CR>
 
 " Hoogle search (shows type/ matching functions). 
 " Search for word under cursor, or prompt for input
-nnoremap <leader>hh :Hoogle<CR> 
-nnoremap <leader>hH :Hoogle              
+nnoremap <leader>sh :Hoogle<CR> 
+nnoremap <leader>sH :Hoogle              
 
 " Hoogle info (Detailed info for specific func)
 " Search for word under cursor, or prompt for input
-nnoremap <leader>hi :HoogleInfo<CR> 
-nnoremap <leader>hI :HoogleInfo              
+nnoremap <leader>si :HoogleInfo<CR> 
+nnoremap <leader>sI :HoogleInfo              
 
 " GHC Lint checker (Reports unnessasary brackets, hidden variables etc.)
-nnoremap <leader>hl :GhcModCheckAndLintAsync
+nnoremap <leader>sl :GhcModCheckAndLintAsync
 
 " Close the Hoogle window
-nnoremap <silent> <leader>hq :HoogleClose<CR> 
+nnoremap <silent> <leader>sq :HoogleClose<CR> 
 
 
 "   
@@ -392,4 +411,23 @@ function! s:Repl()
   return "p@=RestoreRegister()\<cr>"
 endfunction
 vmap <silent> <expr> p <sid>Repl()
+
+" Make current window more obvious by turning off/adjusting some features in non-current windows. Except command-t, for now.
+let g:WincentColorColumnBlacklist = ['diff', 'undotree', 'nerdtree', 'qf']
+let g:WincentCursorlineBlacklist = ['command-t']
+
+" if exists('+colorcolumn')
+"   autocmd BufEnter,FocusGained,VimEnter,WinEnter * if Should_colorcolumn() | let &l:colorcolumn='+' . join(range(0, 254), ',+') | endif
+"   autocmd FocusLost,WinLeave * if Should_colorcolumn() | let &l:colorcolumn=join(range(1, 255), ',') | endif
+" endif
+
+" function! Should_colorcolumn() abort
+"   return index(g:WincentColorColumnBlacklist, &filetype) == -1
+" endfunction
+
+" function! Should_cursorline() abort
+"   return index(g:WincentCursorlineBlacklist, &filetype) == -1
+" endfunction
+
+
 
