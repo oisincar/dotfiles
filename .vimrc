@@ -357,11 +357,14 @@ nnoremap <S-Tab> <C-W>W
 "   tnoremap <M-h> <C-\><C-n><C-W><C-H>
 " endif
 
-" Move around splits with <leader>-hjkl.
-nnoremap <leader>j <C-W><C-J>
-nnoremap <leader>k <C-W><C-K>
-nnoremap <leader>l <C-W><C-L>
-nnoremap <leader>h <C-W><C-H>
+" Move around splits with <leader-w>-hjkl. Changed to be like spacemacs.
+nnoremap <leader>wj <C-W><C-J>
+nnoremap <leader>wk <C-W><C-K>
+nnoremap <leader>wl <C-W><C-L>
+nnoremap <leader>wh <C-W><C-H>
+
+" Open terminal the same way as spacemacs; space '
+nnoremap <leader>' :vsp<CR>:terminal<CR>
 
 if has('nvim') " Enter insert mode when changing focus to a terminal split.
   autocmd BufWinEnter,WinEnter term://* startinsert
@@ -369,10 +372,10 @@ endif
 
 " Also move splits around with <leader>-HJKL.
 " ('Pushes' split as far as possible in given direction.)
-nnoremap <leader>J <C-W>J
-nnoremap <leader>K <C-W>K
-nnoremap <leader>L <C-W>L
-nnoremap <leader>H <C-W>H
+nnoremap <leader>wJ <C-W>J
+nnoremap <leader>wK <C-W>K
+nnoremap <leader>wL <C-W>L
+nnoremap <leader>wH <C-W>H
 
 " -------- CODE NAVIGATION --------
 " qj or jq to escape normal mode
