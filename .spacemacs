@@ -34,11 +34,22 @@ values."
      emacs-lisp
      git
      go
+
+     ;; (haskell :variables
+     ;;          haskell-enable-hindent-style "Andrew Gibiansky"
+     ;;          haskell-enable-ghci-ng-support t
+     ;;          ;; haskell-enable-shm-support t ;; <(doesn't play well with evil, but it's pretty sexy so.. Hm.)
+     ;;          )
+
+      ;haskell
      (haskell :variables
-              haskell-enable-hindent-style "Andrew Gibiansky"
-              haskell-enable-ghci-ng-support t
-              ;; haskell-enable-shm-support t ;; <(doesn't play well with evil, but it's pretty sexy so.. Hm.)
-              )
+              haskell-enable-ghc-mod-support nil
+              ;; haskell-enable-ghci-ng-support t
+              haskell-process-type 'stack-ghci
+              haskell-process-args-stack-ghci '("--ghc-options=-ferror-spans" "--with-ghc=intero")
+              hindent-style  "johan-tibell"
+              haskell-stylish-on-save t)
+
      html
      java
      javascript
@@ -50,10 +61,9 @@ values."
 
      ;; ----SHELL----
      (shell :variables
-            shell-default-shell 'ansi-term
-            shell-default-width 50
-            shell-default-height 50
-            shell-default-position 'left)
+            shell-default-shell 'eshell
+            shell-default-height 40
+            shell-default-position 'bottom)
      shell-scripts
 
      ;; ----TEXT ENTRY----
@@ -76,7 +86,8 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(intero company-ghci)
+   ;; dotspacemacs-additional-packages '()
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -97,9 +108,9 @@ values."
    dotspacemacs-editing-style 'vim
    ;; Stuff shows up in messages bout loading.
    dotspacemacs-verbose-loading nil
-   ;; Banner = dogemacs.
 
    ;; ------- START SCREEN -------
+   ;; Banner = dogemacs bby.
    dotspacemacs-startup-banner 999
    ;; List to show on startup.
    dotspacemacs-startup-lists '(recents projects bookmarks)
@@ -208,17 +219,18 @@ values."
    ))
 
 
+;; Is called immediately after `dotspacemacs/init', before layer configuration executes.
 (defun dotspacemacs/user-init ()
-  "Initialization function for user code.
-It is called immediately after `dotspacemacs/init', before layer configuration
-executes.
- This function is mostly useful for variables that need to be set
-before packages are loaded. If you are unsure, you should try in setting them in
-`dotspacemacs/user-config' first."
+  (setq-default
+  ;; Theoretically changes the default mode when terminal spawns.. But it's not working :/
+  ;; (evil-set-initial-state 'term-mode 'emacs)
 
-  ;; Used for haskell mode.. I think.. Not sure if needed
-  ;; (add-to-list 'exec-path "~/.local/bin")
-  )
+
+  ;; Ranger.
+  ;; Use deer instead of dired in all cases.
+   ranger-override-dired t
+
+   ))
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -232,22 +244,69 @@ you should place your code here."
   (setq-default evil-escape-key-sequence "qj")
   (setq-default evil-escape-delay 0.2)
 
-  ;; Disable highlighting of trailing whitespace.
-  (setq spacemacs-show-trailing-whitespace nil)
-
   ;; Split window vertically using | and horizontally with _
   (define-key evil-normal-state-map "|" 'split-window-right-and-focus)
   (define-key evil-normal-state-map "_" 'split-window-below-and-focus)
 
-  ;; Copy entire buffer.. Soon. (" bc" does work as a binding)
-  ;; (define-key evil-normal-state-map " bc" ')
-
-  ;; Use deer instead of default directory search. Allows for more vim bindings.
-  (add-hook 'makefile-mode-hook 'deer)
+  ;; Copy entire buffer.. Soon.
+  ;; (evil-leader/set-key "bc" 'custom-copy-things)
 
   ;; Instead of / doing regular search, use OP helm-swoop.
   (define-key evil-normal-state-map "/" 'helm-swoop)
-  )
+
+  ;; Auto correct word under cursor.
+  (evil-leader/set-key "TAB" 'flyspell-auto-correct-word)
+
+  ;; Since we stole next buffer from spc-tab, put it on spc-$
+  ;; I have no idea if i'll use this or not.
+  (evil-leader/set-key "$" 'last-buffer)
+
+  ;; Make <> not round to nearest 4 spaces.
+  ;; (evil-shift-round nil)
+
+  ;; Disable highlighting of trailing whitespace.
+  (setq spacemacs-show-trailing-whitespace nil)
+
+  ;; TODO: Change the way terminal buffers center on the active line. It's kinda off putting for em to center even in 'normal-mode'
+  ;; There's a way to do it in the spacemacs youtube video/ that guys config.
+
+  ;; HASKELL
+  (add-hook 'haskell-mode-hook (lambda ()
+          (message "haskell-mode-hook")
+          (intero-mode)
+          (push '(company-ghci :with company-yasnippet :with company-dabbrev) company-backends-haskell-mode)
+          (interactive-haskell-mode)
+          (turn-on-haskell-indentation)
+          (hindent-mode)
+          (setq haskell-stylish-on-save t) ;; override haskell layer
+          ))
+
+  (spacemacs/set-leader-keys-for-major-mode 'haskell-mode
+    "ht" 'haskell-process-do-type
+    "l"  'hayoo
+    "t"  'intero-type-at
+    "T"  'spacemacs/haskell-process-do-type-on-prev-line
+    "r"  'haskell-process-load-file
+    "i"  'intero-info
+    "I"  'haskell-do-info
+    "g"  'intero-goto-definition)
+    )
+
+(defun haskell-do-info (cPos cEnd)
+  "Bring repl and do :info under the current cursor word"
+  (interactive "r")
+  (let (inputStr oldPos endSymbol)
+    ;; grab the string
+    (setq oldPos cPos)
+    (setq endSymbol (cdr (bounds-of-thing-at-point 'symbol)))
+    (skip-syntax-backward "^(, ")
+    (setq inputStr (buffer-substring-no-properties (point) endSymbol))
+    (goto-char oldPos)
+    (haskell-interactive-switch)
+    (haskell-interactive-mode-run-expr (format ":info %s" inputStr))
+    (haskell-interactive-switch-back)
+   ))
+
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
