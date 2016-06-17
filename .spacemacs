@@ -61,7 +61,7 @@ values."
 
      ;; ----SHELL----
      (shell :variables
-            shell-default-shell 'eshell
+            shell-default-shell 'ansi-term
             shell-default-height 40
             shell-default-position 'bottom)
      shell-scripts
@@ -128,8 +128,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state nil
    ;; Slightly larger font than default (13-> 14)
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 14
-                               :weight normal
+                               :size 12
+                               :weight medium
                                :width normal
                                :powerline-scale 1.1)
    ;; If non nil unicode symbols are displayed in the mode line. (default t)
@@ -248,17 +248,13 @@ you should place your code here."
   (define-key evil-normal-state-map "|" 'split-window-right-and-focus)
   (define-key evil-normal-state-map "_" 'split-window-below-and-focus)
 
-  ;; Copy entire buffer.. Soon.
-  ;; (evil-leader/set-key "bc" 'custom-copy-things)
-
   ;; Instead of / doing regular search, use OP helm-swoop.
   (define-key evil-normal-state-map "/" 'helm-swoop)
 
   ;; Auto correct word under cursor.
   (evil-leader/set-key "TAB" 'flyspell-auto-correct-word)
 
-  ;; Since we stole next buffer from spc-tab, put it on spc-$
-  ;; I have no idea if i'll use this or not.
+  ;; Since we stole next buffer from spc-tab, put it on SPC-$.. Because why not.
   (evil-leader/set-key "$" 'last-buffer)
 
   ;; Make <> not round to nearest 4 spaces.
