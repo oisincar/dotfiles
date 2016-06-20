@@ -257,11 +257,11 @@ you should place your code here."
   ;; Since we stole next buffer from spc-tab, put it on SPC-$.. Because why not.
   (evil-leader/set-key "$" 'last-buffer)
 
-  ;; Make <> not round to nearest 4 spaces.
-  ;; (evil-shift-round nil)
-
   ;; Disable highlighting of trailing whitespace.
   (setq spacemacs-show-trailing-whitespace nil)
+
+  ;; Tab width = 4, not 2.
+  (setq-default tab-width 4)
 
   ;; TODO: Change the way terminal buffers center on the active line. It's kinda off putting for em to center even in 'normal-mode'
   ;; There's a way to do it in the spacemacs youtube video/ that guys config.
