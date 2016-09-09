@@ -197,6 +197,7 @@ you should place your code here."
    evil-escape-key-sequence "qj"
    evil-escape-delay 0.2
 
+   ;; Default tab-width is 2
    tab-width 4
    evil-shift-round nil
 
@@ -213,7 +214,6 @@ you should place your code here."
   (define-key evil-normal-state-map "|" 'split-window-right-and-focus)
   (define-key evil-normal-state-map "_" 'split-window-below-and-focus)
 
-
   ;; Make C-w delete word even if autocompletion window is active.
   (define-key company-active-map
     (kbd "C-w") 'evil-delete-backward-word)
@@ -223,19 +223,34 @@ you should place your code here."
 
   ;; Correcting speeellling mistakes.
   (evil-leader/set-key "TAB" 'flyspell-auto-correct-word)
-  (define-key evil-normal-state-map "S" 'helm-flyspell-correct)
+  ;; Correct next incorrect spelling with a list to choose from.
+  (setq ispell-following-word t)
+  (define-key evil-normal-state-map "S" 'ispell-word)
+  ;;(define-key evil-normal-state-map "S" 'helm-flyspell-correct)
 
   ;; Since we stole next buffer from spc-tab, put it on SPC-$.. Because why not.
   (evil-leader/set-key "$" 'last-buffer)
 
+  ;; Disable highlighting of trailing whitespace.
+  (setq spacemacs-show-trailing-whitespace nil)
+
+  ;; Wrap whole words in text documents, and by character in programming buffers.
+  (spacemacs/toggle-truncate-lines-off)
+  (add-hook 'text-mode-hook 'spacemacs/toggle-visual-line-navigation-on)
+
+  ;; Stops emacs creating .# files, which stop other programs editing stuff while emacs is doin it's stuff.
+  (setq create-lockfiles nil)
 
   ;; Regular line numbers in insert mode, relative in normal.
-  ;;(add-hook 'evil-normal-state-entry-hook 'linum-relative-on)
-  ;;(add-hook 'evil-normal-state-exit-hook 'linum-relative-off)
+  ;(add-hook 'evil-normal-state-entry-hook 'linum-relative-on)
+  ;(add-hook 'evil-normal-state-exit-hook 'linum-relative-off)
 
   ;; TODO: Change the way terminal buffers center on the active line. It's kinda off putting for em to center even in 'normal-mode'
   ;; There's a way to do it in the spacemacs youtube video/ that guys config.
 
+  ;; Java stuff..
+  (setq eclim-eclipse-dirs "~/Development/java-mars/Eclipse.app/"
+        eclim-executable "~/Development/java-mars/Eclipse.app/Contents/Eclipse/eclim")
 
   ;; JAVA
   (setq eclim-eclipse-dirs "~/Development/java-mars/Eclipse.app/"
@@ -280,7 +295,6 @@ you should place your code here."
     (haskell-interactive-mode-run-expr (format ":info %s" inputStr))
     (haskell-interactive-switch-back)
    ))
-
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
