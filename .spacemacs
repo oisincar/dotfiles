@@ -253,6 +253,9 @@ you should place your code here."
 
   ;; Auto correct word under cursor.
   (evil-leader/set-key "TAB" 'flyspell-auto-correct-word)
+  ;; Correct next incorrect spelling with a list to choose from.
+  (setq ispell-following-word t)
+  (define-key evil-normal-state-map "S" 'ispell-word)
 
   ;; Since we stole next buffer from spc-tab, put it on SPC-$.. Because why not.
   (evil-leader/set-key "$" 'last-buffer)
@@ -262,6 +265,10 @@ you should place your code here."
 
   ;; Tab width = 4, not 2.
   (setq-default tab-width 4)
+
+  ;; Wrap whole words in text documents, and by character in programming buffers.
+  (spacemacs/toggle-truncate-lines-off)
+  (add-hook 'text-mode-hook 'spacemacs/toggle-visual-line-navigation-on)
 
   ;; TODO: Change the way terminal buffers center on the active line. It's kinda off putting for em to center even in 'normal-mode'
   ;; There's a way to do it in the spacemacs youtube video/ that guys config.
@@ -302,7 +309,6 @@ you should place your code here."
     (haskell-interactive-mode-run-expr (format ":info %s" inputStr))
     (haskell-interactive-switch-back)
    ))
-
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
