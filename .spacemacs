@@ -35,13 +35,6 @@ values."
      git
      go
 
-     ;; (haskell :variables
-     ;;          haskell-enable-hindent-style "Andrew Gibiansky"
-     ;;          haskell-enable-ghci-ng-support t
-     ;;          ;; haskell-enable-shm-support t ;; <(doesn't play well with evil, but it's pretty sexy so.. Hm.)
-     ;;          )
-
-      ;haskell
      (haskell :variables
               haskell-enable-ghc-mod-support nil
               ;; haskell-enable-ghci-ng-support t
@@ -66,7 +59,7 @@ values."
      shell-scripts
 
      ;; ----TEXT ENTRY----
-     spell-checking
+     (spell-checking :variables spell-checking-enable-by-default nil)
      syntax-checking
      (auto-completion :variables
                       ;;auto-completion-return-key-behavior nil
@@ -78,7 +71,8 @@ values."
 
      ;; ----MISCELANIOUS----
      org
-     ranger  ;; Improved file browsing with vim commands.
+     ;; Improved file browsing with vim commands.
+     (ranger :variables ranger-override-dired t)
      semantic
      )
    ;; List of additional packages that will be installed without being
@@ -103,19 +97,14 @@ values."
    dotspacemacs-elpa-timeout 5
    ;; Check for update upon startup. Might want to disable.
    dotspacemacs-check-for-update t
-   ;; Best and only editing style.
    dotspacemacs-editing-style 'vim
-   ;; Stuff shows up in messages bout loading.
    dotspacemacs-verbose-loading nil
 
    ;; ------- START SCREEN -------
    ;; Banner = dogemacs bby.
    dotspacemacs-startup-banner 999
-   ;; List to show on startup.
    dotspacemacs-startup-lists '(recents projects bookmarks)
-   ;; Number of recent files to show in the startup buffer.
    dotspacemacs-startup-recent-list-size 10
-   ;; Default major mode of the scratch buffer (default `text-mode')
    dotspacemacs-scratch-mode 'text-mode
 
    ;; ------- SCHEMES / WINDOWS -------
@@ -124,44 +113,27 @@ values."
                          spacemacs-dark
                          monokai)
    ;; Don't recolour cursor (T'is gui emacs only.)
-   dotspacemacs-colorize-cursor-according-to-state nil
+   dotspacemacs-colorize-cursor-according-to-state t
    ;; Slightly larger font than default (13-> 14)
    dotspacemacs-default-font '("Source Code Pro"
                                :size 14
                                :weight medium
                                :width normal
                                :powerline-scale 1.1)
-   ;; If non nil unicode symbols are displayed in the mode line. (default t)
    dotspacemacs-mode-line-unicode-symbols t
-
-   ;; If non nil a progress bar is displayed when spacemacs is loading.
-   ;; Set to nil to maybe boost the loading time.
    dotspacemacs-loading-progress-bar t
-   ;; If non nil the frame is fullscreen when Emacs starts up. (default nil)
    dotspacemacs-fullscreen-at-startup nil
-   ;; If non nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
-   ;; Use to disable fullscreen animations in OSX. (default nil)
    dotspacemacs-fullscreen-use-non-native nil
-   ;; If non nil the frame is maximized when Emacs starts up.
-   ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
-   ;; (default nil) (Emacs 24.4+ only)
    dotspacemacs-maximized-at-startup nil
-   ;; The transparency % of a frame when it's active or selected/ inactive.
-   ;; Transparency can be toggled through `toggle-transparency'. (default 90)
    dotspacemacs-active-transparency 90
    dotspacemacs-inactive-transparency 90
-   ;; Smooth vim-like scrolling.
    dotspacemacs-smooth-scrolling t
-   ;; Relative line numbers.
    dotspacemacs-line-numbers 'relative
-   ;; Select a scope to highlight delimiters. Possible values are `any',
-   ;; `current', `all' or `nil'. Default is `all' (highlight any scope and
-   ;; emphasis the current one). (default 'all)
    dotspacemacs-highlight-delimiters 'all
+
 
    ;; ------- KEY BINDINGS -------
    dotspacemacs-leader-key "SPC"
-   ;; The leader key accessible in `emacs state' and `insert state'
    dotspacemacs-emacs-leader-key "M-m"
    ;; Major mode leader key is the equivalent of pressing `<leader> m`
    dotspacemacs-major-mode-leader-key ","
@@ -171,11 +143,9 @@ values."
    dotspacemacs-distinguish-gui-tab nil
    ;; The command key used for Evil commands (ex-commands) and Emacs commands (M-x).
    dotspacemacs-command-key ";"
-   ;; Remap y to y$.
    dotspacemacs-remap-Y-to-y$ t
 
    ;; ------- WINDOW LAYOUTS -------
-   ;; Name of the default window layout.
    dotspacemacs-default-layout-name "Default"
    ;; Don't display the default layout name in the mode-line.
    dotspacemacs-display-default-layout nil
@@ -184,51 +154,33 @@ values."
 
    ;; ------- SAVING / LOADING -------
    ;; Autosave files to cache.
-   ;; Set to 'nil to disable autosave, and 'origional to save in place.
    dotspacemacs-auto-save-file-location 'cache
-   ;; Maximum number of rollback slots to keep in the cache.
    dotspacemacs-max-rollback-slots 5
 
    ;; ------- PLUGIN CONFIG -------
    ;; Don't use ido.
    dotspacemacs-use-ido nil
-   ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
    dotspacemacs-helm-resize nil
-   ;; if non nil, the helm header is hidden when there is only one source. (default nil)
    dotspacemacs-helm-no-header t
-   ;; define the position to display `helm'.
    dotspacemacs-helm-position 'bottom
-   ;; Disable paste-micro-state.
    dotspacemacs-enable-paste-micro-state nil
-   ;; Which-key delay in seconds.
-   dotspacemacs-which-key-delay 0.6
-   ;; Which-key frame position.
+
+   dotspacemacs-which-key-delay 1.0
    dotspacemacs-which-key-position 'bottom
 
-   ;; ------- SPACEMACS GENERAL STUFF -------
-   ;; Smartparens-strict-mode enforces ballenced parrens. Pretty annoying.
    dotspacemacs-smartparens-strict-mode nil
-   ;; If non nil advises quit functions to keep server open when quitting (default nil)
+
+   ;; ------- SPACEMACS GENERAL STUFF -------
    dotspacemacs-persistent-server nil
    ;; List of search tool executable names. Spacemacs uses the first installed
-   ;; tool of the list. (default '("ag" "pt" "ack" "grep"))
-   dotspacemacs-search-tools '("ag")
+   dotspacemacs-search-tools '("ag" "pt" "ack" "grep")
    ;; Delete trailing whitespace while saving buffer.
    dotspacemacs-whitespace-cleanup 'trailing
    ))
 
-
 ;; Is called immediately after `dotspacemacs/init', before layer configuration executes.
 (defun dotspacemacs/user-init ()
   (setq-default
-  ;; Theoretically changes the default mode when terminal spawns.. But it's not working :/
-  ;; (evil-set-initial-state 'term-mode 'emacs)
-
-
-  ;; Ranger.
-  ;; Use deer instead of dired in all cases.
-   ranger-override-dired t
-
    ))
 
 (defun dotspacemacs/user-config ()
@@ -239,46 +191,58 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  ;; Escape key binding.
-  (setq-default evil-escape-key-sequence "qj")
-  (setq-default evil-escape-delay 0.2)
+  (setq-default
+
+   ;; Escape key binding.
+   evil-escape-key-sequence "qj"
+   evil-escape-delay 0.2
+
+   tab-width 4
+   evil-shift-round nil
+
+   vc-follow-symlinks t
+
+   ;; Stops emacs creating .# files, which stop other programs editing stuff while emacs is doin it's stuff.
+   create-lockfiles nil
+
+   ;; Disable highlighting of trailing whitespace.
+   spacemacs-show-trailing-whitespace nil
+   )
 
   ;; Split window vertically using | and horizontally with _
   (define-key evil-normal-state-map "|" 'split-window-right-and-focus)
   (define-key evil-normal-state-map "_" 'split-window-below-and-focus)
 
-  ;; Java stuff..
-  (setq eclim-eclipse-dirs "~/Development/java-mars/Eclipse.app/"
-        eclim-executable "~/Development/java-mars/Eclipse.app/Contents/Eclipse/eclim")
-  ;; Instead of / doing regular search, use OP helm-swoop.
-  (define-key evil-normal-state-map "/" 'helm-swoop)
 
-  ;; Auto correct word under cursor.
+  ;; Make C-w delete word even if autocompletion window is active.
+  (define-key company-active-map
+    (kbd "C-w") 'evil-delete-backward-word)
+
+  ;; Instead of / doing regular search, use OP helm-swoop.
+  (evil-leader/set-key "/" 'helm-swoop)
+
+  ;; Correcting speeellling mistakes.
   (evil-leader/set-key "TAB" 'flyspell-auto-correct-word)
+  (define-key evil-normal-state-map "S" 'helm-flyspell-correct)
 
   ;; Since we stole next buffer from spc-tab, put it on SPC-$.. Because why not.
   (evil-leader/set-key "$" 'last-buffer)
 
-  ;; Disable highlighting of trailing whitespace.
-  (setq spacemacs-show-trailing-whitespace nil)
-
-  ;; Tab width = 4, not 2.
-  (setq-default tab-width 4)
-
-  ;; Stops emacs creating .# files, which stop other programs editing stuff while emacs is doin it's stuff.
-  (setq create-lockfiles nil)
 
   ;; Regular line numbers in insert mode, relative in normal.
-  (add-hook 'evil-normal-state-entry-hook 'linum-relative-on)
-  (add-hook 'evil-normal-state-exit-hook 'linum-relative-off)
+  ;;(add-hook 'evil-normal-state-entry-hook 'linum-relative-on)
+  ;;(add-hook 'evil-normal-state-exit-hook 'linum-relative-off)
 
   ;; TODO: Change the way terminal buffers center on the active line. It's kinda off putting for em to center even in 'normal-mode'
   ;; There's a way to do it in the spacemacs youtube video/ that guys config.
 
 
+  ;; JAVA
+  (setq eclim-eclipse-dirs "~/Development/java-mars/Eclipse.app/"
+        eclim-executable "~/Development/java-mars/Eclipse.app/Contents/Eclipse/eclim")
+
   ;; CSHARP
   (setq-default omnisharp-server-executable-path "~/Development/omnisharp-server/OmniSharp/bin/Debug/OmniSharp.exe")
-
 
   ;; HASKELL
   (add-hook 'haskell-mode-hook (lambda ()
