@@ -53,7 +53,6 @@ values."
      html
      java
      javascript
-     javascript
      latex
      markdown
      python
@@ -75,7 +74,7 @@ values."
                       ;;auto-completion-enable-help-tooltip t
                       auto-completion-tab-key-behavior 'complete
                       auto-completion-enable-sort-by-usage t
-                      :disabled-for org erc)
+                      :disabled-for org)
 
      ;; ----MISCELANIOUS----
      org
@@ -128,7 +127,7 @@ values."
    dotspacemacs-colorize-cursor-according-to-state nil
    ;; Slightly larger font than default (13-> 14)
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 12
+                               :size 14
                                :weight medium
                                :width normal
                                :powerline-scale 1.1)
@@ -270,8 +269,23 @@ you should place your code here."
   (spacemacs/toggle-truncate-lines-off)
   (add-hook 'text-mode-hook 'spacemacs/toggle-visual-line-navigation-on)
 
+  ;; Stops emacs creating .# files, which stop other programs editing stuff while emacs is doin it's stuff.
+  (setq create-lockfiles nil)
+
+  ;; Regular line numbers in insert mode, relative in normal.
+  ;(add-hook 'evil-normal-state-entry-hook 'linum-relative-on)
+  ;(add-hook 'evil-normal-state-exit-hook 'linum-relative-off)
+
   ;; TODO: Change the way terminal buffers center on the active line. It's kinda off putting for em to center even in 'normal-mode'
   ;; There's a way to do it in the spacemacs youtube video/ that guys config.
+
+  ;; Java stuff..
+  (setq eclim-eclipse-dirs "~/Development/java-mars/Eclipse.app/"
+        eclim-executable "~/Development/java-mars/Eclipse.app/Contents/Eclipse/eclim")
+
+  ;; CSHARP
+  (setq-default omnisharp-server-executable-path "~/Development/omnisharp-server/OmniSharp/bin/Debug/OmniSharp.exe")
+
 
   ;; HASKELL
   (add-hook 'haskell-mode-hook (lambda ()
