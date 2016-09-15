@@ -1,0 +1,32 @@
+# Ignore everything..
+*
+# Except...
+ 
+# Bash stuff
+!.bash*
+.*.swp
+.bash_history
+.bash_local
+.bash_logout
+!.profile
+
+!.bash_profile
+!.bashrc
+!.profile
+
+.bash_profile.*
+
+# Git aliases, identification info
+!.gitconfig
+# The .gitignore of this repository.
+!.gitignore
+
+# The real business here..
+!.vimrc
+!.spacemacs
+
+!/spacemacs-private-layers
+!/spacemacs-private-layers/*
+!/spacemacs-private-layers/*/*
+!/spacemacs-private-layers/*/*/*
+!/spacemacs-private-layers/*/*/*/*
