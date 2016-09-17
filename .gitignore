@@ -1,7 +1,7 @@
 # Ignore everything..
 *
 # Except...
- 
+
 # Bash stuff
 !.bash*
 .*.swp
@@ -25,8 +25,8 @@
 !.vimrc
 !.spacemacs
 
-!/spacemacs-private-layers
-!/spacemacs-private-layers/*
-!/spacemacs-private-layers/*/*
-!/spacemacs-private-layers/*/*/*
-!/spacemacs-private-layers/*/*/*/*
+!.spacemacs-extra
+!.spacemacs-extra/*
+!.spacemacs-extra/*/*
+!.spacemacs-extra/*/*/*
+!.spacemacs-extra/*/*/*/*

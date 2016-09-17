@@ -1,12 +1,17 @@
 [user]
 	name = oisincar
 	email = oisincar@gmail.com
+[color]
+	# Enable colors in color-supporting terminals
+	ui = auto
 [core]
 	excludesfile = /Users/oisincar/.gitignore_global
 	editor = nvim
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
+[merge]
+	conflictStyle = diff3
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
