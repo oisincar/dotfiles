@@ -69,11 +69,13 @@ values."
                       :disabled-for org)
 
      ;; ----MISCELANIOUS----
+     colors
      git
      org
      ;; Improved file browsing with vim commands.
      (ranger :variables ranger-override-dired t)
      semantic
+     ivy
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -114,7 +116,7 @@ values."
                          spacemacs-dark
                          )
    ;; Don't recolour cursor (T'is gui emacs only.)
-   dotspacemacs-colorize-cursor-according-to-state t
+   dotspacemacs-colorize-cursor-according-to-state nil
    ;; Slightly larger font than default (13-> 14)
    dotspacemacs-default-font '("Source Code Pro"
                                :size 13
@@ -216,8 +218,8 @@ you should place your code here."
   (setq-default mode-line-format (doom-mode-line))
 
   ;; JAVA
-  (setq eclim-eclipse-dirs "~/Development/java-mars/Eclipse.app/"
-        eclim-executable "~/Development/java-mars/Eclipse.app/Contents/Eclipse/eclim")
+  (setq-default eclim-eclipse-dirs "~/Development/java-mars/Eclipse.app/"
+                eclim-executable "~/Development/java-mars/Eclipse.app/Contents/Eclipse/eclim")
 
   ;; CSHARP
   (setq-default omnisharp-server-executable-path "~/Development/omnisharp-server/OmniSharp/bin/Debug/OmniSharp.exe")
@@ -267,17 +269,7 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
-   ["#3c3836" "#fb4934" "#b8bb26" "#fabd2f" "#83a598" "#d3869b" "#8ec07c" "#ebdbb2"])
- '(custom-safe-themes
-   (quote
-    ("88ae008e9bf586a903dfb4e7ca6d9c06f6b1f8ce10d2ae89295a4114a6f2c3f3" default)))
- '(paradox-github-token t)
- '(safe-local-variable-values
-   (quote
-    ((eval when
-           (fboundp
-            (quote rainbow-mode))
-           (rainbow-mode 1))))))
+   ["#3c3836" "#fb4934" "#b8bb26" "#fabd2f" "#83a598" "#d3869b" "#8ec07c" "#ebdbb2"]))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

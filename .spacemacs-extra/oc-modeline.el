@@ -1,3 +1,104 @@
+;;; oc-modeline.el
+
+;; Shamelessly stolen with very little modification from the fantastic https://github.com/hlissner/.emacs.d
+;; All credit (and much thanks) goes to Henrik Lissner.
+
+;; It depends on the following external packages:
+;;   + REQUIRED
+;;       + f
+;;       + s
+;;       + powerline
+;;       + projectile
+;;       + DejaVu Mono for Powerline font <https://github.com/powerline/fonts>
+;;   + OPTIONAL
+;;       + evil-mode
+;;       + anzu + evil-anzu
+;;       + iedit and evil-multiedit
+;;       + flycheck
+
+
+(defun doom-mode-line (&optional id)
+  `(:eval
+    (let* ((active (eq (selected-window) mode-line-selected-window))
+           (lhs (list (propertize " " 'display (if active mode-line-bar mode-line-inactive-bar))
+                      (*macro-recording)
+                      (*selection-info)
+                      (*anzu)
+                      (*evil-substitute)
+                      (*iedit)
+                      " "
+                      ;; (*buffer-path)
+                      (*buffer-name)
+                      " "
+                      (*buffer-state)
+                      (*flycheck)
+                      ,(if (eq id 'scratch) '(*buffer-pwd))))
+           (rhs (list (*buffer-encoding-abbrev)
+                      "  "
+                      (*vc)
+                      "  "
+                      (*major-mode)
+                      "  "
+                      (propertize
+                       (concat "(%l,%c)" (*buffer-position))
+                       'face (if active 'mode-line-2))))
+           (middle (propertize
+                    " " 'display `((space :align-to (- (+ right right-fringe right-margin)
+                                                       ,(1+ (string-width (format-mode-line rhs)))))))))
+      (list lhs middle rhs))))
+
+
+(defvar mode-line-height 20 ;; 30
+  "How tall the mode-line should be. This is only respected in GUI emacs.")
+
+;; Load powerline only when uncompiled, in order to generate the xpm bitmaps for
+;; the mode-line. This is the tall blue bar on the left of the mode-line.
+;; NOTE Compile this file for a faster startup!
+(eval-when-compile (require 'powerline))
+;; FIXME Don't hardcode colors in
+(defvar mode-line-bar          (eval-when-compile (pl/percent-xpm mode-line-height 100 0 100 0 3 "#005560" nil)))
+(defvar mode-line-eldoc-bar    (eval-when-compile (pl/percent-xpm mode-line-height 100 0 100 0 3 "#B3EF00" nil)))
+(defvar mode-line-inactive-bar (eval-when-compile (pl/percent-xpm mode-line-height 100 0 100 0 3 nil nil)))
+
+;; Custom faces
+(defface mode-line-is-modified nil
+  "Face for mode-line modified symbol")
+
+(defface mode-line-2 nil
+  "The alternate color for mode-line text.")
+
+(defface mode-line-highlight nil
+   "Face for bright segments of the mode-line.")
+;;(set-face-attribute 'mode-line-highlight nil :foreground "black" :background "#00B3EF")
+;(set-face-attribute 'mode-line-highlight nil :foreground "white" :background "#005560")
+
+(defface mode-line-info-square nil
+  "Face for bright segments of the mode-line.")
+(set-face-attribute 'mode-line-info-square nil :foreground "white" :background "#005560")
+
+
+(defface mode-line-count-face nil
+  "Face for anzu/evil-substitute/evil-search number-of-matches display.")
+
+;; Git/VCS segment faces
+(defface mode-line-vcs-info '((t (:inherit warning)))
+  "")
+(defface mode-line-vcs-warning '((t (:inherit warning)))
+  "")
+
+;; Flycheck segment faces
+(defface doom-flycheck-error '((t (:inherit error)))
+  "Face for flycheck error feedback in the modeline.")
+(defface doom-flycheck-warning '((t (:inherit warning :background nil)))
+  "Face for flycheck warning feedback in the modeline.")
+
+;(set-face-attribute 'doom-flycheck-warning nil :background "#005560")
+
+
+
+;;
+;; Functions
+;;
 
 (defun doom-fix-unicode (font &rest chars)
   "Display certain unicode characters in a specific font.
@@ -20,74 +121,6 @@ e.g. (doom-fix-unicode \"DejaVu Sans\" ?⚠ ?★ ?λ)"
   (let (projectile-require-project-root strict-p)
     (projectile-project-root)))
 
-;;; core-modeline.el
-
-;; This file tries to be an almost self-contained configuration of my mode-line.
-;;
-;; It depends on the following external packages:
-;;   + REQUIRED
-;;       + f
-;;       + s
-;;       + powerline
-;;       + projectile
-;;       + DejaVu Mono for Powerline font <https://github.com/powerline/fonts>
-;;   + OPTIONAL
-;;       + evil-mode
-;;       + anzu + evil-anzu
-;;       + iedit and evil-multiedit
-;;       + flycheck
-;;
-;; The only external functions used are:
-;;  `doom-fix-unicode'  in core/core-defuns.el
-;;  `doom/project-root' in core/defuns/defuns-projectile.el
-;;
-;; Both are simple, isolated functions and, besides projectile, has no other
-;; dependencies.
-
-(defvar mode-line-height 15 ;; 30
-  "How tall the mode-line should be. This is only respected in GUI emacs.")
-
-;; Load powerline only when uncompiled, in order to generate the xpm bitmaps for
-;; the mode-line. This is the tall blue bar on the left of the mode-line.
-;; NOTE Compile this file for a faster startup!
-(eval-when-compile (require 'powerline))
-;; FIXME Don't hardcode colors in
-(defvar mode-line-bar          (eval-when-compile (pl/percent-xpm mode-line-height 100 0 100 0 3 "#00B3EF" nil)))
-(defvar mode-line-eldoc-bar    (eval-when-compile (pl/percent-xpm mode-line-height 100 0 100 0 3 "#B3EF00" nil)))
-(defvar mode-line-inactive-bar (eval-when-compile (pl/percent-xpm 10 100 0 100 0 3 nil nil)))
-
-;; Custom faces
-(defface mode-line-is-modified nil
-  "Face for mode-line modified symbol")
-
-(defface mode-line-2 nil
-  "The alternate color for mode-line text.")
-
-(defface mode-line-highlight nil
-   "Face for bright segments of the mode-line.")
-(set-face-attribute 'mode-line-highlight nil :foreground "black" :background "#00B3EF")
-
-
-
-(defface mode-line-count-face nil
-  "Face for anzu/evil-substitute/evil-search number-of-matches display.")
-
-;; Git/VCS segment faces
-(defface mode-line-vcs-info '((t (:inherit warning)))
-  "")
-(defface mode-line-vcs-warning '((t (:inherit warning)))
-  "")
-
-;; Flycheck segment faces
-(defface doom-flycheck-error '((t (:inherit error)))
-  "Face for flycheck error feedback in the modeline.")
-(defface doom-flycheck-warning '((t (:inherit warning)))
-  "Face for flycheck warning feedback in the modeline.")
-
-
-;;
-;; Functions
-;;
 
 (defun doom-ml-flycheck-count (state)
   "Return flycheck information for the given error type STATE."
@@ -278,14 +311,15 @@ lines are selected, or the NxM dimensions of a block selection."
                (format " %dL " lines)
              (format " %dC %dL " chars lines)))
           (t (format " %dC " (if evil chars (1- chars)))))))
-     'face 'mode-line-highlight)))
+     'face 'mode-line-info-square)))
 
 (defun *macro-recording ()
   "Display current macro being recorded."
   (when (and active defining-kbd-macro)
     (propertize
      (format " %s ▶ " (char-to-string evil-this-macro))
-     'face 'mode-line-highlight)))
+     'face 'mode-line-info-square)))
+;;'face 'mode-line-highlight)))
 
 (make-variable-buffer-local 'anzu--state)
 (defun *anzu ()
@@ -344,39 +378,5 @@ to be enabled."
             ((= end pend) ":Bot")
             (t (format ":%d%%%%" (/ end 0.01 pend)))))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defun doom-mode-line (&optional id)
-  `(:eval
-    (let* ((active (eq (selected-window) mode-line-selected-window))
-           (lhs (list (propertize " " 'display (if active mode-line-bar mode-line-inactive-bar))
-                      (*flycheck)
-                      (*macro-recording)
-                      (*selection-info)
-                      (*anzu)
-                      (*evil-substitute)
-                      (*iedit)
-                      " "
-                      ;; (*buffer-path)
-                      (*buffer-name)
-                      " "
-                      (*buffer-state)
-                      ,(if (eq id 'scratch) '(*buffer-pwd))))
-           (rhs (list (*buffer-encoding-abbrev)
-                      (*vc)
-                      "  " (*major-mode) "  "
-                      (propertize
-                       (concat "(%l,%c) " (*buffer-position))
-                       'face (if active 'mode-line-2))))
-           (middle (propertize
-                    " " 'display `((space :align-to (- (+ right right-fringe right-margin)
-                                                       ,(1+ (string-width (format-mode-line rhs)))))))))
-      (list lhs middle rhs))))
-
-(setq-default mode-line-format (doom-mode-line))
-
-
-
-
 (provide 'oc-modeline)
-;;; core-modeline.el ends here
+;;; oc-modeline.el ends here
