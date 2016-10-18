@@ -8,6 +8,10 @@
 (define-key evil-normal-state-map "|" 'split-window-right-and-focus)
 (define-key evil-normal-state-map "_" 'split-window-below-and-focus)
 
+;; swap ; and :
+(define-key evil-normal-state-map ":" 'evil-repeat-find-char)
+(define-key evil-normal-state-map ";" 'evil-ex)
+
 ;; swap ` and ', since `'s the useful one.
 (define-key evil-normal-state-map "`" 'evil-goto-mark-line)
 (define-key evil-normal-state-map "'" 'evil-goto-mark)

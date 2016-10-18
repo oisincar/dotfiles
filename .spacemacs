@@ -72,6 +72,7 @@ values."
      colors
      git
      org
+     osx
      ;; Improved file browsing with vim commands.
      (ranger :variables ranger-override-dired t)
      semantic
@@ -197,6 +198,8 @@ you should place your code here."
   (setq-default
 
    tab-width 4
+   evil-shift-width 4
+
    evil-shift-round nil
 
    vc-follow-symlinks t
@@ -207,10 +210,15 @@ you should place your code here."
    spacemacs-show-trailing-whitespace nil
    )
 
-
   ;; Wrap whole words in text documents, and by character in programming buffers.
   (spacemacs/toggle-truncate-lines-off)
   (add-hook 'text-mode-hook 'spacemacs/toggle-visual-line-navigation-on)
+
+  ;; Set the spellcheck language.
+  (setq ispell-dictionary "english")
+  ;; Make spellcheck work with special charachters.
+  (add-to-list 'ispell-local-dictionary-alist
+               (quote ("my_english" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t ("-d" "en_US") nil utf-8)))
 
   (require 'oc-keys)
   (require 'oc-modeline)

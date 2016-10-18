@@ -43,8 +43,6 @@ Plug 'godlygeek/tabular',       { 'for': 'markdown' } " Required for vim-markdow
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'tpope/vim-commentary'
 
-Plug 'sheerun/vim-polyglot' " Syntax highlighting for every language imaginable.
-
 " ------- BUILDING ---------
 Plug 'Shougo/vimproc.vim', { 'do': 'make' } " For command line operations from within vim.
 Plug 'benekastah/neomake'   " Used for haskell typechecking, but I should 
@@ -68,6 +66,10 @@ Plug 'bling/vim-airline'
 Plug 'tpope/vim-fugitive'
 
 " -------- LANGUAGES ----------
+" non-specific
+Plug 'metakirby5/codi.vim'  " Live REPL thingy for python/haskell/other languages.
+Plug 'sheerun/vim-polyglot' " Syntax highlighting for every language imaginable.
+
 " csharp
 Plug 'omnisharp/omnisharp-vim', { 'for': 'csharp', 'rtp': 'vim', 'do': 'cd server; xbuild' }
 
@@ -242,10 +244,10 @@ nnoremap <S-Tab> <C-W>w
 " endif
 
 " Move around splits with <leader>-hjkl.
-nnoremap <leader>j <C-W><C-J>
-nnoremap <leader>k <C-W><C-K>
-nnoremap <leader>l <C-W><C-L>
-nnoremap <leader>h <C-W><C-H>
+nnoremap <leader>wj <C-W><C-J>
+nnoremap <leader>wk <C-W><C-K>
+nnoremap <leader>wl <C-W><C-L>
+nnoremap <leader>wh <C-W><C-H>
 
 if has('nvim') " Enter insert mode when changing focus to a terminal split.
   autocmd BufWinEnter,WinEnter term://* startinsert
