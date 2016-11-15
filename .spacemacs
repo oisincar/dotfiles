@@ -61,7 +61,7 @@ values."
      (spell-checking :variables spell-checking-enable-by-default nil)
      syntax-checking
      (auto-completion :variables
-                      ;;auto-completion-return-key-behavior nil
+                      auto-completion-return-key-behavior nil
                       auto-completion-enable-snippets-in-popup t
                       ;;auto-completion-enable-help-tooltip t
                       auto-completion-tab-key-behavior 'complete
@@ -199,6 +199,8 @@ you should place your code here."
 
    tab-width 4
    evil-shift-width 4
+   c-default-style "bsd"
+   c-basic-offset 4
 
    evil-shift-round nil
 
@@ -214,15 +216,9 @@ you should place your code here."
   (spacemacs/toggle-truncate-lines-off)
   (add-hook 'text-mode-hook 'spacemacs/toggle-visual-line-navigation-on)
 
-  ;; Set the spellcheck language.
-  (setq ispell-dictionary "english")
-  ;; Make spellcheck work with special charachters.
-  (add-to-list 'ispell-local-dictionary-alist
-               (quote ("my_english" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t ("-d" "en_US") nil utf-8)))
-
   (require 'oc-keys)
   (require 'oc-modeline)
-  ;; Calling this here means reloading config file still works.
+  ;; Calling this here means reloading config file doesn't reset bar.
   (setq-default mode-line-format (doom-mode-line))
 
   ;; JAVA
@@ -232,42 +228,39 @@ you should place your code here."
   ;; CSHARP
   (setq-default omnisharp-server-executable-path "~/Development/omnisharp-server/OmniSharp/bin/Debug/OmniSharp.exe")
 
-  ;; HASKELL
-  (add-hook 'haskell-mode-hook (lambda ()
-          (message "haskell-mode-hook")
-          (intero-mode)
-          (push '(company-ghci :with company-yasnippet :with company-dabbrev) company-backends-haskell-mode)
-          (interactive-haskell-mode)
-          (turn-on-haskell-indentation)
-          (hindent-mode)
-          (setq haskell-stylish-on-save t) ;; override haskell layer
-          ))
-
-  (spacemacs/set-leader-keys-for-major-mode 'haskell-mode
-    "ht" 'haskell-process-do-type
-    "l"  'hayoo
-    "t"  'intero-type-at
-    "T"  'spacemacs/haskell-process-do-type-on-prev-line
-    "r"  'haskell-process-load-file
-    "i"  'intero-info
-    "I"  'haskell-do-info
-    "g"  'intero-goto-definition))
-
-
-(defun haskell-do-info (cPos cEnd)
-  "Bring repl and do :info under the current cursor word"
-  (interactive "r")
-  (let (inputStr oldPos endSymbol)
-    ;; grab the string
-    (setq oldPos cPos)
-    (setq endSymbol (cdr (bounds-of-thing-at-point 'symbol)))
-    (skip-syntax-backward "^(, ")
-    (setq inputStr (buffer-substring-no-properties (point) endSymbol))
-    (goto-char oldPos)
-    (haskell-interactive-switch)
-    (haskell-interactive-mode-run-expr (format ":info %s" inputStr))
-    (haskell-interactive-switch-back)
-   ))
+;;   ;; HASKELL
+;;   (add-hook 'haskell-mode-hook (lambda ()
+;;           (message "haskell-mode-hook")
+;;           (intero-mode)
+;;           (push '(company-ghci :with company-yasnippet :with company-dabbrev) company-backends-haskell-mode)
+;;           (interactive-haskell-mode)
+;;           (turn-on-haskell-indentation)
+;;           (hindent-mode)
+;;           (setq haskell-stylish-on-save t) ;; override haskell layer
+;;           ))
+;;   (spacemacs/set-leader-keys-for-major-mode 'haskell-mode
+;;     "ht" 'haskell-process-do-type
+;;     "l"  'hayoo
+;;     "t"  'intero-type-at
+;;     "T"  'spacemacs/haskell-process-do-type-on-prev-line
+;;     "r"  'haskell-process-load-file
+;;     "i"  'intero-info
+;;     "I"  'haskell-do-info
+;;     "g"  'intero-goto-definition)
+  )
+;; (defun haskell-do-info (cPos cEnd)
+;;   "Bring repl and do :info under the current cursor word"
+;;   (interactive "r")
+;;   (let (inputStr oldPos endSymbol)
+;;     ;; grab the string
+;;     (setq oldPos cPos)
+;;     (setq endSymbol (cdr (bounds-of-thing-at-point 'symbol)))
+;;     (skip-syntax-backward "^(, ")
+;;     (setq inputStr (buffer-substring-no-properties (point) endSymbol))
+;;     (goto-char oldPos)
+;;     (haskell-interactive-switch)
+;;     (haskell-interactive-mode-run-expr (format ":info %s" inputStr))
+;;     (haskell-interactive-switch-back)))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
