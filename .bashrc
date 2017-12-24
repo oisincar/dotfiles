@@ -24,3 +24,6 @@ alias sshspoon='ssh spoon.netsoc.tcd.ie'
 # Utils
 alias ll='ls -al'
 alias vim='nvim'
+
+# Create emacs eshell aliases file
+alias | sed -E "s/^alias ([^=]+)='(.*)'$/alias \1 \2 \$*/g; s/'\\\''/'/g;" >~/.emacs.d/.cache/eshell/alias
