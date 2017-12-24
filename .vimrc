@@ -104,9 +104,9 @@ endif
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " deoplete tab-complete
-inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
+"inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
 " Space <Tab> for regular tab... Eh... This sucks.
-inoremap <Leader><Tab> <Space><Space>
+"inoremap <Leader><Tab> <Space><Space>
 
 " ------------- DELIMITMATE --------------
 " Need to look into these more, for now just nice opening of brackets.
@@ -305,10 +305,18 @@ vnoremap : ;
 
 " Toggle spell check, and allow for sp-tab auto complete in normal mode
 nnoremap <silent><leader>s :set spell!<CR> 
-noremap <silent><leader><Tab> 1z=
+noremap <silent><Tab> 1z=
 
 " Save file with sp-w.
 nnoremap <leader>w :w<cr>
+
+"nnoremap ,m :w<CR>:!make && make run && cat<CR>
+nnoremap ,m :w<CR>:!g++ -o a % && ./a<CR>
+nnoremap ,r1 :w<CR>:!g++ -o a % && ./a < 1.in<CR>
+nnoremap ,r2 :w<CR>:!g++ -o a % && ./a < 2.in<CR>
+nnoremap ,r3 :w<CR>:!g++ -o a % && ./a < 3.in<CR>
+nnoremap ,r4 :w<CR>:!g++ -o a % && ./a < 4.in<CR>
+nnoremap ,r5 :w<CR>:!g++ -o a % && ./a < 5.in<CR>
 
 " Insert mode shows deterministic line no, normal mode shows relative.
 autocmd InsertEnter * :set norelativenumber

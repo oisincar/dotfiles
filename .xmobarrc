@@ -1,0 +1,22 @@
+Config { font = "xft:Source Code Pro:style=Regular:size=8,FontAwesome:size=10" 
+       , bgColor = "#2b303b"
+       , fgColor = "#c0c5ce"
+       , allDesktops = True
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = " %StdinReader% }{ %mpd% %vol% %brt% %wifi% %bat% %date%"
+       , commands = [ Run Date "\xf073 %a %b %_d \xf017 %H:%M " "date" 10
+                    , Run StdinReader
+                    , Run Com "bash" ["/home/oisincar/.xmobar/mpd"] "mpd" 5
+                    , Run Com "bash" ["/home/oisincar/.xmobar/volume"] "vol" 10
+                    , Run Com "bash" ["/home/oisincar/.xmobar/wifi"] "wifi" 15
+                    , Run Com "bash" ["/home/oisincar/.xmobar/bat"] "bat" 30
+                    , Run Com "bash" ["/home/oisincar/.xmobar/brt"] "brt" 15
+                    ]
+       }
+
+       --, borderColor = "#343d46"
+       --, borderColor = "#343d46"
+       --, lowerOnStart = True
+       --, hideOnStart = False
+       --, persistent = True

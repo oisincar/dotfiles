@@ -20,7 +20,7 @@
 (define-key evil-normal-state-map (kbd "DEL") 'evilnc-comment-or-uncomment-lines)
 
 ;; Make C-w delete word even if autocompletion window is active.
-(define-key company-active-map (kbd "C-w") 'evil-delete-backward-word)
+;; (define-key company-active-map (kbd "C-w") 'evil-delete-backward-word)
 
 ;; Correcting speeellling mistakes.
 (evil-leader/set-key "TAB" 'flyspell-auto-correct-word)

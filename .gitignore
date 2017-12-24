@@ -3,13 +3,6 @@
 # Except...
 
 # Bash stuff
-!.bash*
-.*.swp
-.bash_history
-.bash_local
-.bash_logout
-!.profile
-
 !.bash_profile
 !.bashrc
 !.profile
@@ -30,3 +23,9 @@
 !.spacemacs-extra/*/*
 !.spacemacs-extra/*/*/*
 !.spacemacs-extra/*/*/*/*
+
+# !.xmonad/xmonad.hs
+!.xmobar*
+!.xmobar/*
+!.xmonad
+!.xmonad/*.hs

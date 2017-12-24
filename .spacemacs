@@ -1,4 +1,3 @@
-
 ;;
 ;;    ____  _     _       _
 ;;   / __ \(_)   (_)     ( )
@@ -29,37 +28,36 @@ values."
      ;; ----LANGUAGES----
      c-c++
      csharp
+     csv
      elixir
      elm
      emacs-lisp
      go
 
      (haskell :variables
-              haskell-enable-ghc-mod-support nil
-              ;; haskell-enable-ghci-ng-support t
-              haskell-process-type 'stack-ghci
-              haskell-process-args-stack-ghci '("--ghc-options=-ferror-spans" "--with-ghc=intero")
-              hindent-style  "johan-tibell"
-              haskell-stylish-on-save t)
+              haskell-completion-backend 'intero)
 
      html
      java
      javascript
      latex
+     lua
      markdown
      python
-     ;;scala ;; Error with this, :/.
+     shell-scripts ;; layer for editing shell scripts
+     yaml
 
      ;; ----SHELL----
      (shell :variables
-            shell-default-shell 'ansi-term
+            shell-default-shell 'eshell ;; ansi-term
             shell-default-height 40
-            shell-default-position 'bottom)
-     shell-scripts
+            shell-default-position 'bottom
+            )
 
      ;; ----TEXT ENTRY----
      (spell-checking :variables spell-checking-enable-by-default nil)
      syntax-checking
+
      (auto-completion :variables
                       auto-completion-return-key-behavior nil
                       auto-completion-enable-snippets-in-popup t
@@ -82,8 +80,8 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(intero company-ghci)
-   ;; dotspacemacs-additional-packages '()
+   ;; dotspacemacs-additional-packages '(intero company-ghci)
+   dotspacemacs-additional-packages '()
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -111,16 +109,18 @@ values."
    dotspacemacs-scratch-mode 'text-mode
 
    ;; ------- SCHEMES / WINDOWS -------
-   dotspacemacs-themes '(darktooth
+   dotspacemacs-themes '(doom-one
+                         darktooth
                          gruvbox
-                         doom-one
                          spacemacs-dark
                          )
    ;; Don't recolour cursor (T'is gui emacs only.)
    dotspacemacs-colorize-cursor-according-to-state nil
    ;; Slightly larger font than default (13-> 14)
+   ;;dotspacemacs-default-font '("Droid sans mono"
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+                               ;; :size 13
+                               :size 20
                                :weight medium
                                :width normal
                                :powerline-scale 1.1)
@@ -185,18 +185,11 @@ values."
 ;; Is called immediately after `dotspacemacs/init', before layer configuration executes.
 (defun dotspacemacs/user-init ())
 
+;; Configuration function for user code.
 (defun dotspacemacs/user-config ()
-  "Configuration function for user code.
-This function is called at the very end of Spacemacs initialization after
-layers configuration.
-This is the place where most of your configurations should be done. Unless it is
-explicitly specified that a variable should be set before a package is loaded,
-you should place your code here."
-
   (push "~/.spacemacs-extra/" load-path)
 
   (setq-default
-
    tab-width 4
    evil-shift-width 4
    c-default-style "bsd"
@@ -211,6 +204,10 @@ you should place your code here."
 
    spacemacs-show-trailing-whitespace nil
    )
+
+  (setq python-indent 4)
+  (setq flycheck-python-pycompile-executable "python3")
+  (setq flycheck-flake8-maximum-line-length 120)
 
   ;; Wrap whole words in text documents, and by character in programming buffers.
   (spacemacs/toggle-truncate-lines-off)
@@ -227,40 +224,7 @@ you should place your code here."
 
   ;; CSHARP
   (setq-default omnisharp-server-executable-path "~/Development/omnisharp-server/OmniSharp/bin/Debug/OmniSharp.exe")
-
-;;   ;; HASKELL
-;;   (add-hook 'haskell-mode-hook (lambda ()
-;;           (message "haskell-mode-hook")
-;;           (intero-mode)
-;;           (push '(company-ghci :with company-yasnippet :with company-dabbrev) company-backends-haskell-mode)
-;;           (interactive-haskell-mode)
-;;           (turn-on-haskell-indentation)
-;;           (hindent-mode)
-;;           (setq haskell-stylish-on-save t) ;; override haskell layer
-;;           ))
-;;   (spacemacs/set-leader-keys-for-major-mode 'haskell-mode
-;;     "ht" 'haskell-process-do-type
-;;     "l"  'hayoo
-;;     "t"  'intero-type-at
-;;     "T"  'spacemacs/haskell-process-do-type-on-prev-line
-;;     "r"  'haskell-process-load-file
-;;     "i"  'intero-info
-;;     "I"  'haskell-do-info
-;;     "g"  'intero-goto-definition)
   )
-;; (defun haskell-do-info (cPos cEnd)
-;;   "Bring repl and do :info under the current cursor word"
-;;   (interactive "r")
-;;   (let (inputStr oldPos endSymbol)
-;;     ;; grab the string
-;;     (setq oldPos cPos)
-;;     (setq endSymbol (cdr (bounds-of-thing-at-point 'symbol)))
-;;     (skip-syntax-backward "^(, ")
-;;     (setq inputStr (buffer-substring-no-properties (point) endSymbol))
-;;     (goto-char oldPos)
-;;     (haskell-interactive-switch)
-;;     (haskell-interactive-mode-run-expr (format ":info %s" inputStr))
-;;     (haskell-interactive-switch-back)))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -270,7 +234,10 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
-   ["#3c3836" "#fb4934" "#b8bb26" "#fabd2f" "#83a598" "#d3869b" "#8ec07c" "#ebdbb2"]))
+   ["#3c3836" "#fb4934" "#b8bb26" "#fabd2f" "#83a598" "#d3869b" "#8ec07c" "#ebdbb2"])
+ '(package-selected-packages
+   (quote
+    (org-category-capture avy company f s yaml-mode csv-mode ob-elixir lua-mode yapfify xterm-color ws-butler winum which-key wgrep web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit stickyfunc-enhance srefactor spaceline powerline smex smeargle slim-mode shell-pop scss-mode sass-mode reveal-in-osx-finder restart-emacs request ranger rainbow-mode rainbow-identifiers rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pcre2el pbcopy paradox spinner osx-trash osx-dictionary orgit org-projectile org-present org-pomodoro alert log4e gntp org-download org-bullets open-junk-file omnisharp shut-up org-plus-contrib neotree multi-term move-text mmm-mode markdown-toc markdown-mode magit-gitflow macrostep lorem-ipsum livid-mode skewer-mode simple-httpd live-py-mode linum-relative link-hint less-css-mode launchctl json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc ivy-hydra intero insert-shebang info+ indent-guide hydra hy-mode hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-make helm helm-core haskell-snippets haml-mode google-translate golden-ratio go-guru go-eldoc gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flyspell-correct-ivy flyspell-correct flycheck-pos-tip pos-tip flycheck-mix flycheck-haskell flycheck-elm flycheck-credo flycheck flx-ido flx fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help emmet-mode elm-mode elisp-slime-nav dumb-jump disaster diminish cython-mode csharp-mode counsel-projectile projectile counsel swiper ivy company-web web-completion-data company-tern dash-functional tern company-shell company-go go-mode company-ghci company-ghc ghc haskell-mode company-emacs-eclim eclim company-cabal company-c-headers company-auctex company-anaconda column-enforce-mode color-identifiers-mode cmm-mode cmake-mode clean-aindent-mode clang-format bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-dictionary auto-compile packed dash anaconda-mode pythonic alchemist elixir-mode pkg-info epl ace-link ac-ispell auto-complete popup doom-themes evil-unimpaired company-statistics coffee-mode auctex async aggressive-indent adaptive-wrap ace-window))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

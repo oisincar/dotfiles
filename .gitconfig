@@ -6,7 +6,7 @@
 	ui = auto
 [core]
 	excludesfile = /Users/oisincar/.gitignore_global
-	editor = nvim
+	editor = vim
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
@@ -15,3 +15,5 @@
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+[url "https://github.com/"]
+	insteadOf = git://github.com/
