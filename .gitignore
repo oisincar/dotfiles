@@ -24,8 +24,16 @@
 !.spacemacs-extra/*/*/*
 !.spacemacs-extra/*/*/*/*
 
-# !.xmonad/xmonad.hs
+# Bar and window manager config.
 !.xmobar*
 !.xmobar/*
 !.xmonad
 !.xmonad/*.hs
+
+# Make caps lock meta key.
+!.Xmodmap
+
+# Terminal config
+!.Xresources
+!.Xresources.d
+!.Xresources.d/*

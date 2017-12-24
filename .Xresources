@@ -1,0 +1,30 @@
+! Import color scheme
+
+#include ".Xresources.d/x-colors-dark.Xresources"
+
+! ### Set default font ###
+
+! ### URxvt options ###
+! set 256 color mode
+URxvt.termName: rxvt-256color
+! fix font spacing
+URxvt.letterSpace: -1
+!URxvt.borderColor: #272822
+URxvt.scrollBar: false
+URxvt.cursorBlink: true
+URxvt.internalBorder: 8
+!URxvt.cursorUnderline: true
+
+URxvt*font: xft:Source Code Pro:style=Semibold:size=11
+URxvt*font: xft:Source Code Pro:style=Semibold:size=11
+
+!real trasnparancy and background color
+!URxvt.depth: 32
+URxvt.perl-ext-common: default,matcher,url-select
+! open url in browser
+URxvt.url-launcher: /usr/bin/firefox
+! Use Alt-U to start url-select and open in firefox
+URxvt.matcher.button: 1
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.url-select.launcher: /usr/bin/firefox
+URxvt.url-select.underline: true

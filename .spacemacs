@@ -213,6 +213,29 @@ values."
   (spacemacs/toggle-truncate-lines-off)
   (add-hook 'text-mode-hook 'spacemacs/toggle-visual-line-navigation-on)
 
+  ;; Default behavour is like mac term, tab cycles through possible completions.
+  ;; (setq eshell-cmpl-cycle-completions nil)
+
+  ;; Get eshell completion to use ivy
+  (add-hook 'eshell-mode-hook
+            (lambda ()
+              (define-key eshell-mode-map (kbd "<tab>")
+                (lambda () (interactive) (completion-at-point)))))
+
+  (add-hook 'eshell-mode-hook
+            (lambda ()
+              (define-key eshell-mode-map (kbd "C-l")
+                (lambda () (interactive) (completion-at-point)))))
+
+  ;; pcomplete-std-complete
+  ;; (add-hook
+  ;;  'eshell-mode-hook
+  ;;  (lambda ()
+  ;;    (setq pcomplete-cycle-completions nil)))
+
+  ;; (setq eshell-cmpl-cycle-cutoff-length 1)
+
+
   (require 'oc-keys)
   (require 'oc-modeline)
   ;; Calling this here means reloading config file doesn't reset bar.

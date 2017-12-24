@@ -26,8 +26,8 @@
 (evil-leader/set-key "TAB" 'flyspell-auto-correct-word)
 ;; Correct next incorrect spelling with a list to choose from.
 (setq ispell-following-word t)
-(define-key evil-normal-state-map "S" 'helm-flyspell-correct)
-;; (define-key evil-normal-state-map "S" 'ispell-word)
+;; (define-key evil-normal-state-map "S" 'helm-flyspell-correct)
+(define-key evil-normal-state-map "S" 'ispell-word)
 
 ;; Since we stole next buffer from spc-tab, put it on SPC-$.. Because why not.
 (evil-leader/set-key "$" 'last-buffer)
