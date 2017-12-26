@@ -65,7 +65,7 @@ myConfig = def { modMask = mod3Mask
 --   icons:       Chrome    terminal   code     folders   twitter   spotify   games
 --myWorkspaces = ["\xf268", "\xf120", "\xf121", "\xf07b", "\xf099", "\xf1bc", "\xf11b"]
 
---   icons:                     Chrome   terminal  code    folders   steam   video       twitter  youtube  reddit 
+--   icons:                     Chrome   terminal  code    folders   steam   video       twitter  youtube  reddit
 myWorkspaces = map wrapSpaces ["\xf268","\xf120","\xf121","\xf07c","\xf1b6","\xf04e"] --,"\xf099","\xf16a","\xf281"]
     where wrapSpaces s = "" ++ s ++ ""
 
@@ -76,18 +76,19 @@ myWorkspaces = map wrapSpaces ["\xf268","\xf120","\xf121","\xf07c","\xf1b6","\xf
 --myWorkspaces = clickable . (map xmobarEscape) $ ["\xf269","\xf120","\xf0e0","\xf07c","\xf1b6","\xf281","\xf099" ,"\xf16a","\xf04e"]
 --   where
 --       clickable l = [ "<action=xdotool key alt+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
---           (i,ws) <- zip [1..9] l,                                        
+--           (i,ws) <- zip [1..9] l,
 --                           let n = i ]
 
 -- Separate mask for some keys. Caps for some, alt for others..
 altMask = mod1Mask
 myKeys conf@(XConfig {XMonad.modMask = capsMask}) = M.fromList $
- 
+
     -- Launch programs: Terminal, Dmenu, Chrome, Emacs.
     [ ((capsMask, xK_Return), spawn myTerminal)
     , ((capsMask, xK_d), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
-    , ((capsMask, xK_b), spawn "google-chrome-stable") 
-    , ((capsMask, xK_e), spawn "emacs24")
+    --, ((capsMask, xK_b), spawn "google-chrome-stable")
+    , ((capsMask, xK_b), spawn "firefox")
+    , ((capsMask, xK_e), spawn "emacs")
 
     , ((altMask, xK_q), kill) -- quit current window
 
