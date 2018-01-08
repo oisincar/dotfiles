@@ -65,8 +65,8 @@ myConfig = def { modMask = mod3Mask
 --   icons:       Chrome    terminal   code     folders   twitter   spotify   games
 --myWorkspaces = ["\xf268", "\xf120", "\xf121", "\xf07b", "\xf099", "\xf1bc", "\xf11b"]
 
---   icons:                     Chrome   terminal  code    folders   steam   video       twitter  youtube  reddit
-myWorkspaces = map wrapSpaces ["\xf268","\xf120","\xf121","\xf07c","\xf1b6","\xf04e"] --,"\xf099","\xf16a","\xf281"]
+--   icons:                     Chrome   terminal  code    folders   reddit   video       twitter  youtube  reddit
+myWorkspaces = map wrapSpaces ["\xf269","\xf120","\xf121","\xf07c","\xf281","\xf04e"] --,"\xf099","\xf16a","\xf281"]
     where wrapSpaces s = "" ++ s ++ ""
 
 --xmobarEscape = concatMap doubleLts
@@ -93,7 +93,7 @@ myKeys conf@(XConfig {XMonad.modMask = capsMask}) = M.fromList $
     , ((altMask, xK_q), kill) -- quit current window
 
      -- Rotate through the available layout algorithms
-    , ((altMask, xK_space), sendMessage NextLayout)
+    , ((capsMask, xK_space), sendMessage NextLayout)
 
     --  Reset the layouts on the current workspace to default
     , ((altMask .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
@@ -114,8 +114,8 @@ myKeys conf@(XConfig {XMonad.modMask = capsMask}) = M.fromList $
     , ((capsMask .|. altMask, xK_l), sendMessage $ Swap R)
 
     -- Shrink/expand master area.
-    , ((capsMask .|. controlMask, xK_h), sendMessage Shrink)
-    , ((capsMask .|. controlMask, xK_l), sendMessage Expand)
+    , ((             altMask, xK_h), sendMessage Shrink)
+    , ((             altMask, xK_l), sendMessage Expand)
 
     -- Increment/Decrement the number of windows in the master area
     , ((capsMask, xK_comma),  sendMessage (IncMasterN (-1)))
@@ -196,10 +196,13 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 
 -- myLayoutHook = avoidStruts (Grid ||| tiled ||| noBorders (fullscreenFull Full) ||| Mirror tiled)
 --myLayoutHook = avoidStruts (tiled ||| simpleTabbed)
-myLayoutHook = windowNavigation (tiled ||| noBorders (fullscreenFull Full))
-    where
-    -- Split screen into two panes. Left = master.
-      tiled = Tall nmaster delta ratio
-      nmaster = 1     -- 1 window in master pane
-      ratio   = 4/7   -- Ratio to split screen.
-      delta   = 3/100 -- Percent of screen to increment by when resizing panes
+myLayoutHook = windowNavigation (tiledWindowLayout ||| fullWindowLayout)
+
+-- Fullscreen
+fullWindowLayout = noBorders (fullscreenFull Full)
+
+-- Split screen into two panes. Left = master.
+tiledWindowLayout = Tall nmaster delta ratio
+  where nmaster = 1     -- 1 window in master pane
+        ratio   = 4/7   -- Ratio to split screen.
+        delta   = 3/100 -- Percent of screen to increment by when resizing panes
