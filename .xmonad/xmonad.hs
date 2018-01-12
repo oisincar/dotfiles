@@ -65,7 +65,7 @@ myConfig = def { modMask = mod3Mask
 --   icons:       Chrome    terminal   code     folders   twitter   spotify   games
 --myWorkspaces = ["\xf268", "\xf120", "\xf121", "\xf07b", "\xf099", "\xf1bc", "\xf11b"]
 
---   icons:                     Chrome   terminal  code    folders   steam   video       twitter  youtube  reddit 
+--   icons:                     Chrome   terminal  code    folders   steam   video       twitter  youtube  reddit
 myWorkspaces = map wrapSpaces ["\xf268","\xf120","\xf121","\xf07c","\xf1b6","\xf04e"] --,"\xf099","\xf16a","\xf281"]
     where wrapSpaces s = "" ++ s ++ ""
 
@@ -76,17 +76,17 @@ myWorkspaces = map wrapSpaces ["\xf268","\xf120","\xf121","\xf07c","\xf1b6","\xf
 --myWorkspaces = clickable . (map xmobarEscape) $ ["\xf269","\xf120","\xf0e0","\xf07c","\xf1b6","\xf281","\xf099" ,"\xf16a","\xf04e"]
 --   where
 --       clickable l = [ "<action=xdotool key alt+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
---           (i,ws) <- zip [1..9] l,                                        
+--           (i,ws) <- zip [1..9] l,
 --                           let n = i ]
 
 -- Separate mask for some keys. Caps for some, alt for others..
 altMask = mod1Mask
 myKeys conf@(XConfig {XMonad.modMask = capsMask}) = M.fromList $
- 
+
     -- Launch programs: Terminal, Dmenu, Chrome, Emacs.
     [ ((capsMask, xK_Return), spawn myTerminal)
     , ((capsMask, xK_d), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
-    , ((capsMask, xK_b), spawn "google-chrome-stable") 
+    , ((capsMask, xK_b), spawn "google-chrome-stable")
     , ((capsMask, xK_e), spawn "emacs24")
 
     , ((altMask, xK_q), kill) -- quit current window
@@ -120,8 +120,8 @@ myKeys conf@(XConfig {XMonad.modMask = capsMask}) = M.fromList $
     , ((capsMask, xK_comma),  sendMessage (IncMasterN (-1)))
     , ((capsMask, xK_period), sendMessage (IncMasterN 1))
 
-    -- Push window back into tiling
-    , ((capsMask,               xK_t), withFocused $ windows . W.sink)
+    -- Push 'S-ink' window back into tiling
+    , ((capsMask,               xK_s), withFocused $ windows . W.sink)
 
     -- Volume
     , ((0, xF86XK_AudioMute),        spawn "amixer -D pulse set Master toggle")
@@ -159,7 +159,7 @@ myStartupHook = do
   --spawnOnce "/usr/bin/stalonetray"
   spawnOnce "nm-applet"
   spawnOnce "volumeicon"
-  spawnOnce "dropbox"
+  -- spawnOnce "dropbox"
   spawnOnce "compton -cb"
   spawnOnce "redshift-gtk"
 
@@ -168,6 +168,7 @@ myManageHook = composeAll
     , isFullscreen                --> doFullFloat
     , className =? "mpv"          --> doFullFloat
     , manageDocks
+
     --, className =? "Steam"        --> doFullFloat
     --, title =? "LIMBO"            --> doIgnore
     --, title =? "FEZ"              --> doIgnore
