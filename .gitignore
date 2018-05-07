@@ -1,5 +1,6 @@
 # Ignore everything..
-*
+/*
+/*/
 # Except...
 
 # Bash stuff
@@ -18,22 +19,17 @@
 !.vimrc
 !.spacemacs
 
-!.spacemacs-extra
-!.spacemacs-extra/*
-!.spacemacs-extra/*/*
-!.spacemacs-extra/*/*/*
-!.spacemacs-extra/*/*/*/*
+!/.spacemacs-extra/
 
 # Bar and window manager config.
-!.xmobar*
-!.xmobar/*
-!.xmonad
-!.xmonad/*.hs
+!.xmobar/
+!/.xmonad/*.hs
 
 # Make caps lock meta key.
 !.Xmodmap
 
 # Terminal config
-!.Xresources
-!.Xresources.d
-!.Xresources.d/*
+!/.Xresources.d/
+
+!/.doom.d/
+
