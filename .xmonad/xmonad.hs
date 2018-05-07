@@ -86,7 +86,6 @@ myKeys conf@(XConfig {XMonad.modMask = capsMask}) = M.fromList $
     -- Launch programs: Terminal, Dmenu, Chrome, Emacs.
     [ ((capsMask, xK_Return), spawn myTerminal)
     , ((capsMask, xK_d), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
-    --, ((capsMask, xK_b), spawn "google-chrome-stable")
     , ((capsMask, xK_b), spawn "firefox")
     , ((capsMask, xK_e), spawn "emacs")
 
@@ -121,8 +120,8 @@ myKeys conf@(XConfig {XMonad.modMask = capsMask}) = M.fromList $
     , ((capsMask, xK_comma),  sendMessage (IncMasterN (-1)))
     , ((capsMask, xK_period), sendMessage (IncMasterN 1))
 
-    -- Push window back into tiling
-    , ((capsMask,               xK_t), withFocused $ windows . W.sink)
+    -- Push 'S-ink' window back into tiling
+    , ((capsMask,               xK_s), withFocused $ windows . W.sink)
 
     -- Volume
     , ((0, xF86XK_AudioMute),        spawn "amixer -D pulse set Master toggle")
@@ -160,7 +159,7 @@ myStartupHook = do
   --spawnOnce "/usr/bin/stalonetray"
   spawnOnce "nm-applet"
   spawnOnce "volumeicon"
-  spawnOnce "dropbox"
+  -- spawnOnce "dropbox"
   spawnOnce "compton -cb"
   spawnOnce "redshift-gtk"
 
@@ -169,6 +168,7 @@ myManageHook = composeAll
     , isFullscreen                --> doFullFloat
     , className =? "mpv"          --> doFullFloat
     , manageDocks
+
     --, className =? "Steam"        --> doFullFloat
     --, title =? "LIMBO"            --> doIgnore
     --, title =? "FEZ"              --> doIgnore
