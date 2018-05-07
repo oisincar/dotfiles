@@ -166,8 +166,8 @@
           :desc "Save buffer"                 :n  "s"   #'save-buffer
           :desc "Pop scratch buffer"          :n  "x"   #'doom/open-scratch-buffer
           :desc "Bury buffer"                 :n  "z"   #'bury-buffer
-          :desc "Next buffer"                 :n  "]"   #'next-buffer
-          :desc "Previous buffer"             :n  "["   #'previous-buffer
+          :desc "Next buffer"                 :n  "n"   #'next-buffer
+          :desc "Previous buffer"             :n  "p"   #'previous-buffer
           :desc "Sudo edit this file"         :n  "S"   #'doom/sudo-this-file)
 
         (:desc "code" :prefix "c"
@@ -200,8 +200,8 @@
           :desc "Magit clone"                 :n  "C"   #'magit-clone
           :desc "Magit dispatch"              :n  "d"   #'magit-dispatch-popup
           :desc "Magit find-file"             :n  "f"   #'magit-find-file
-          :desc "Magit status"                :n  "g"   #'magit-status
-          :desc "List gists"                  :n  "G"   #'+gist:list
+          :desc "Magit status"                :n  "s"   #'magit-status
+          :desc "List gists"                  :n  "S"   #'+gist:list
           :desc "Initialize repo"             :n  "i"   #'magit-init
           :desc "Magit buffer log"            :n  "l"   #'magit-log-buffer-file
           :desc "List repositories"           :n  "L"   #'magit-list-repositories
@@ -209,8 +209,8 @@
           :desc "Magit pull popup"            :n  "P"   #'magit-pull-popup
           :desc "Git revert hunk"             :n  "r"   #'git-gutter:revert-hunk
           :desc "Git revert file"             :n  "R"   #'vc-revert
-          :desc "Git stage hunk"              :n  "s"   #'git-gutter:stage-hunk
-          :desc "Git stage file"              :n  "S"   #'magit-stage-file
+         ;:desc "Git stage hunk"              :n  "s"   #'git-gutter:stage-hunk
+         ;:desc "Git stage file"              :n  "S"   #'magit-stage-file
           :desc "Git time machine"            :n  "t"   #'git-timemachine-toggle
           :desc "Git unstage file"            :n  "U"   #'magit-unstage-file
           :desc "Next hunk"                   :nv "]"   #'git-gutter:next-hunk
