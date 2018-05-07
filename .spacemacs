@@ -115,8 +115,8 @@ values."
    dotspacemacs-scratch-mode 'text-mode
 
    ;; ------- SCHEMES / WINDOWS -------
-   dotspacemacs-themes '(darktooth
-                doom-one
+   dotspacemacs-themes '(doom-one
+                darktooth
                 gruvbox
                 )
    ;; Don't recolour cursor (T'is gui emacs only.)

@@ -32,7 +32,8 @@
 ;; Since we stole next buffer from spc-tab, put it on SPC-$.. Because why not.
 (evil-leader/set-key "$" 'last-buffer)
 
-
+;; Make meta+SPC toggle the buffer being fullscreen. This matches xmonad config.
+(global-set-key (kbd "M-SPC") 'spacemacs/toggle-maximize-buffer)
 
 
 ;; Disabling keys I don't use...

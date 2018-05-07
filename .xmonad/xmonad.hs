@@ -130,7 +130,7 @@ myKeys conf@(XConfig {XMonad.modMask = capsMask}) = M.fromList $
     , ((0, xF86XK_AudioRaiseVolume), spawn "amixer -D pulse set Master unmute 5%+")
 
     -- Screen brightness
-    , ((0, xF86XK_MonBrightnessDown), spawn "xbacklight -dec 10")
+    , ((0, xF86XK_MonBrightnessDown), spawn "xbacklight -dec 10") -- BROKEN ubuntu 16.04. TODO: Find fix.
     , ((0, xF86XK_MonBrightnessUp),   spawn "xbacklight -inc 10")
 
     -- Quit xmonad (logout)
