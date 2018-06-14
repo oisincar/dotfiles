@@ -25,9 +25,9 @@
       :gnvime "M-:"  #'doom/open-scratch-buffer
 
       ;; Text-scaling
-      :ne "M-+"      (λ! (text-scale-set 0))
-      :ne "M-="      #'text-scale-increase
-      :ne "M--"      #'text-scale-decrease
+      :ne "C-+"      (λ! (text-scale-set 0))
+      :ne "C-="      #'text-scale-increase
+      :ne "C--"      #'text-scale-decrease
 
       ;; Simple window/frame navigation/manipulation
       :ne "C-`"      #'+popup/toggle
@@ -158,7 +158,7 @@
           :desc "Switch to last workspace"    :n  "0"   #'+workspace/switch-to-last)
 
         (:desc "buffer" :prefix "b"
-          :desc "New empty buffer"            :n  "n"   #'evil-buffer-new
+          :desc "New empty buffer"            :n  "N"   #'evil-buffer-new
           :desc "Switch workspace buffer"     :n  "b"   #'persp-switch-to-buffer
           :desc "Switch buffer"               :n  "B"   #'switch-to-buffer
           :desc "Kill buffer"                 :n  "k"   #'kill-this-buffer
@@ -395,6 +395,7 @@
           "C-SPC"    #'ivy-call-and-recenter ; preview
           "M-RET"    (+ivy-do-action! #'+ivy-git-grep-other-window-action)))
 
+
       ;; evil
       (:after evil
         :textobj "a" #'evil-inner-arg                    #'evil-outer-arg
@@ -478,7 +479,7 @@
 
       ;; evil-surround
       :v  "S"  #'evil-surround-region
-      :o  "s"  #'evil-surround-edit
+      ;:o  "s"  #'evil-surround-edit
       :o  "S"  #'evil-Surround-edit
 
       ;; ;; expand-region
@@ -654,8 +655,6 @@
           :ig "TAB" yas-maybe-expand
           :v  "TAB" #'yas-insert-snippet))
 
-
-      ;; --- Major mode bindings --------------------------
       (:after markdown-mode
         (:map markdown-mode-map
           ;; fix conflicts with private bindings
@@ -680,6 +679,15 @@
         :map vc-annotate-mode-map
         [remap quit-window] #'kill-this-buffer))
 
+
+;; C-sharp test
+(map!
+ :after omnisharp
+ :map omnisharp-mode-map
+ (:localleader
+   :n "d" #'omnisharp-go-to-definition
+   :n "D" #'omnisharp-go-to-definition-other-window
+   ))
 
 ;;
 ;; Keybinding fixes
@@ -747,3 +755,6 @@
     (evil-define-key* 'normal go-mode-map "gd" nil "K" nil))
   (after! lua-mode
     (evil-define-key* 'normal lua-mode-map "K" nil)))
+
+
+(setq doom-localleader-key ",")
