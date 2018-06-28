@@ -395,7 +395,6 @@
           "C-SPC"    #'ivy-call-and-recenter ; preview
           "M-RET"    (+ivy-do-action! #'+ivy-git-grep-other-window-action)))
 
-
       ;; evil
       (:after evil
         :textobj "a" #'evil-inner-arg                    #'evil-outer-arg
@@ -636,8 +635,8 @@
           [backtab]  #'+ivy/wgrep-occur))
 
       ;; undo-tree -- undo/redo for visual regions
-      :v "C-u" #'undo-tree-undo
-      :v "C-r" #'undo-tree-redo
+      ;; :v "C-u" #'undo-tree-undo
+      ;; :v "C-r" #'undo-tree-redo
 
       ;; yasnippet
       (:after yasnippet
@@ -687,6 +686,8 @@
  (:localleader
    :n "d" #'omnisharp-go-to-definition
    :n "D" #'omnisharp-go-to-definition-other-window
+   :n "R" #'omnisharp-run-code-action-refactoring
+   :n "r" #'omnisharp-rename
    ))
 
 ;;

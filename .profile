@@ -20,8 +20,12 @@ fi
 PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 
-. /home/oisincar/torch/install/bin/torch-activate
-if [ -e /home/oisincar/.nix-profile/etc/profile.d/nix.sh ]; then . /home/oisincar/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+# . /home/oisincar/torch/install/bin/torch-activate
+# if [ -e /home/oisincar/.nix-profile/etc/profile.d/nix.sh ]; then . /home/oisincar/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+# 
+# # Add opencv to libraries list.
+# export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib
 
-# Add opencv to libraries list.
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib
+# Cuda/ tensorflow shtuff.
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"
+export CUDA_HOME=/usr/local/cuda
