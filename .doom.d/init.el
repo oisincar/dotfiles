@@ -90,6 +90,7 @@
         +babel           ; running code in org
         +capture         ; org-capture in and outside of Emacs
         +export          ; Exporting org to whatever you want
+        +ipython +right-popup
         +present         ; Emacs for presentations
         +publish)        ; Emacs+Org as a static site generator
        perl              ; write code no one else can comprehend
@@ -106,6 +107,11 @@
        typescript        ; javascript, but better
        web               ; the tubes
 
+       (org-private
+        +babel
+        ;; +ipython +right-popup
+        )
+
        ;; Applications are complex and opinionated modules that transform Emacs
        ;; toward a specific purpose. They may have additional dependencies and
        ;; should be loaded late.
@@ -114,9 +120,9 @@
       ;irc               ; how neckbeards socialize
       ;(rss +org)        ; emacs as an RSS reader
       ;twitter           ; twitter client https://twitter.com/vnought
-      ;(write            ; emacs as a word processor (latex + org + markdown)
-      ; +wordnut         ; wordnet (wn) search
-      ; +langtool)       ; a proofreader (grammar/style check) for Emacs
+       (write            ; emacs as a word processor (latex + org + markdown)
+        +wordnut         ; wordnet (wn) search
+        +langtool)       ; a proofreader (grammar/style check) for Emacs
 
        :config
        ;; The default module set reasonable defaults for Emacs. It also provides
@@ -125,4 +131,3 @@
        ;; your own modules.
        ;(default +bindings +snippets +evil-commands)
        )
-
