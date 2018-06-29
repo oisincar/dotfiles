@@ -95,6 +95,7 @@
         :desc "M-x"                           :nv ":"  #'execute-extended-command
         :desc "Pop up scratch buffer"         :nv "x"  #'doom/open-scratch-buffer
         :desc "Org Capture"                   :nv "X"  #'org-capture
+        :desc "eshell"                        :nv "'"  #'+eshell/open-popup
 
         ;; Most commonly used
         :desc "Find file in project"          :n  "SPC" #'projectile-find-file
@@ -257,6 +258,7 @@
           :desc "Neotree"                     :n  "n"   #'+neotree/open
           :desc "Neotree: on this file"       :n  "N"   #'+neotree/find-this-file
           :desc "Imenu sidebar"               :nv "i"   #'imenu-list-smart-toggle
+          :desc "Eshell"                      :n  "e"   #'+eshell/open
           :desc "Terminal"                    :n  "t"   #'+term/open-popup-in-project
 
           ;; applications
@@ -288,7 +290,9 @@
 
         (:desc "quit" :prefix "q"
           :desc "Save and quit"               :n  "q"   #'evil-save-and-quit
-          :desc "Quit (forget session)"       :n  "Q"   #'+workspace/kill-session-and-quit)
+          :desc "Quit (forget session)"       :n  "Q"   #'+workspace/kill-session-and-quit
+          :desc "Restart & restore"           :n  "r"   #'+workspace/restart-emacs-then-restore
+          :desc "Restart"                     :n  "R"   #'restart-emacs)
 
         (:when (featurep! :tools upload)
           (:desc "remote" :prefix "r"
@@ -464,6 +468,19 @@
       ;;   (:map (evil-multiedit-state-map evil-multiedit-insert-state-map)
       ;;     "C-n" #'evil-multiedit-next
       ;;     "C-p" #'evil-multiedit-prev))
+
+      ;; emacs/eshell
+      ;(:after eshell
+      ;  (set-eshell-alias!
+      ;   "q"   "quit-and-close"
+      ;   "l"   "ls -l"
+      ;   "la"  "ls -la"
+      ;   "f"   "find-file $1"
+      ;   "d"   "dired $1"
+      ;   "gl"  "(call-interactively 'magit-log-current)"
+      ;   "gs"  "magit-status"
+      ;   "gc"  "magit-commit"
+      ;   "rg" "rg --color=always $*"))
 
       ;; evil-snipe
       (:after evil-snipe
