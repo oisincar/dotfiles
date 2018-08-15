@@ -469,9 +469,22 @@
       ;;     "C-n" #'evil-multiedit-next
       ;;     "C-p" #'evil-multiedit-prev))
 
+
       ;; emacs/eshell
+      ;; (:after eshell
+      ;;   :map eshell-mode-map
+      ;;   ; Regular window movement..
+      ;;   "C-h"      #'evil-window-left
+      ;;   "C-j"      #'evil-window-down
+      ;;   "C-k"      #'evil-window-up
+      ;;   "C-l"      #'evil-window-right
+      ;;   ;; (:leader
+      ;;   ;;   "'" #'kill-this-buffer
+      ;;   ;;   )
+      ;;   )
+
       ;(:after eshell
-      ;  (set-eshell-alias!
+      ; (set-eshell-alias!
       ;   "q"   "quit-and-close"
       ;   "l"   "ls -l"
       ;   "la"  "ls -la"

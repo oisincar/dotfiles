@@ -73,6 +73,7 @@
        :lang
        assembly          ; assembly for fun or debugging
        (cc +irony +rtags); C/C++/Obj-C madness
+       clojure           ; java with a lisp
        common-lisp       ; if you've seen one lisp, you've seen them all
        crystal           ; ruby at the speed of c
        clojure           ; java with a lisp
@@ -112,7 +113,7 @@
       ;ruby              ; 1.step do {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
       ;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
       ;scala             ; java, but good
-       sh                ; she sells (ba|z)sh shells on the C xor
+       (sh +fish)        ; she sells (ba|z)sh shells on the C xor
       ;solidity          ; do you need a blockchain? No.
       ;swift             ; who asked for emoji variables?
        web               ; the tubes
@@ -138,6 +139,11 @@
        ;; literate config in your `doom-private-dir' whenever it changes.
       ;literate
 
+       ;; The default module set reasonable defaults for Emacs. It also provides
+       ;; a Spacemacs-inspired keybinding scheme, a custom yasnippet library,
+       ;; and additional ex commands for evil-mode. Use it as a reference for
+       ;; your own modules.
+       (default +bindings +snippets +evil-commands)
        ;; (org-private
        ;;  +babel
        ;;  ;; +ipython +right-popup
