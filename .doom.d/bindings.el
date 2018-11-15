@@ -640,6 +640,18 @@
         :n "q"         #'neotree-hide
         :n "R"         #'neotree-refresh)
 
+      (:after org
+        :map evil-org-mode-map
+        :localleader
+        :n "l" #'org-toggle-latex-fragment)
+        ;; :n "t" #'org-todo
+        ;; (:desc "clock" :prefix "c"
+        ;;   :n "c" #'org-clock-in
+        ;;   :n "C" #'org-clock-out
+        ;;   :n "g" #'org-clock-goto
+        ;;   :n "G" (λ! (org-clock-goto 'select))
+        ;;   :n "x" #'org-clock-cancel))
+
       ;; realgud
       (:after realgud
         :map realgud:shortkey-mode-map

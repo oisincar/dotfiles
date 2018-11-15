@@ -118,6 +118,10 @@
       ;swift             ; who asked for emoji variables?
        web               ; the tubes
 
+       (org-private
+        +babel
+        +ipython +right-popup)
+
        ;; Applications are complex and opinionated modules that transform Emacs
        ;; toward a specific purpose. They may have additional dependencies and
        ;; should be loaded late.
@@ -144,8 +148,4 @@
        ;; and additional ex commands for evil-mode. Use it as a reference for
        ;; your own modules.
        (default +bindings +snippets +evil-commands)
-       ;; (org-private
-       ;;  +babel
-       ;;  ;; +ipython +right-popup
-       ;;  )
        )
