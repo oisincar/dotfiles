@@ -17,12 +17,10 @@ alias gk='gitk --all&'
 alias got='git '
 alias get='git '
 
-# Servers
-alias sshcube='ssh cube.netsoc.tcd.ie'
-alias sshspoon='ssh spoon.netsoc.tcd.ie'
-
 # Utils
 alias ll='ls -al'
+
+alias god='~/Devcrap/WizLiz/godot/bin/godot.x11.opt.tools.64.mono'
 
 # Create emacs eshell aliases file
 #alias | sed -E "s/^alias ([^=]+)='(.*)'$/alias \1 \2 \$*/g; s/'\\\''/'/g;" >~/.emacs.d/.cache/eshell/alias
