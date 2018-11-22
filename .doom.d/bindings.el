@@ -642,8 +642,10 @@
 
       (:after org
         :map evil-org-mode-map
+        :n "M-TAB" #'org-global-cycle
         :localleader
-        :n "l" #'org-toggle-latex-fragment)
+        :n "l" #'org-toggle-latex-fragment
+        )
         ;; :n "t" #'org-todo
         ;; (:desc "clock" :prefix "c"
         ;;   :n "c" #'org-clock-in
