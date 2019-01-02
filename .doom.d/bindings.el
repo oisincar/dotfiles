@@ -1,7 +1,16 @@
 ;;; private/default/+bindings.el -*- lexical-binding: t; -*-
 
+
+
+
+;; Unset unused keys!
+(global-unset-key (kbd "C-j")) ;;inserts newline at point
+(global-unset-key (kbd "C-o")) ;;inserts newline at point
+
 (after! evil-escape
-       (setq evil-escape-key-sequence "qj"))
+       (setq evil-escape-key-sequence "qj")
+       (setq evil-escape-unordered-key-sequence t)
+       )
 
 ;; expand-region's prompt can't tell what key contract-region is bound to, so we
 ;; tell it explicitly.
@@ -95,7 +104,8 @@
         :desc "M-x"                           :nv ":"  #'execute-extended-command
         :desc "Pop up scratch buffer"         :nv "x"  #'doom/open-scratch-buffer
         :desc "Org Capture"                   :nv "X"  #'org-capture
-        :desc "eshell"                        :nv "'"  #'+eshell/open-popup
+        ;:desc "eshell"                        :nv "'"  #'+eshell/open-popup
+        :desc "eshell"                        :nv "'"  #'eshell-here
 
         ;; Most commonly used
         :desc "Find file in project"          :n  "SPC" #'projectile-find-file
@@ -407,19 +417,23 @@
         :textobj "I" #'evil-indent-plus-i-indent-up      #'evil-indent-plus-a-indent-up
         :textobj "J" #'evil-indent-plus-i-indent-up-down #'evil-indent-plus-a-indent-up-down
 
-        (:map evil-window-map ; prefix "C-w"
-          "C-S-w"   #'ace-swap-window
-          ;; Window undo/redo
-          "u"       #'winner-undo
-          "C-u"     #'winner-undo
-          "C-r"     #'winner-redo
-          "o"       #'doom/window-enlargen
-          ;; Delete window
-          "c"       #'+workspace/close-window-or-workspace
-          "C-C"     #'ace-delete-window))
+        ;; (:map evil-window-map ; prefix "C-w"
+        ;;   "C-S-w"   #'ace-swap-window
+        ;;   ;; Window undo/redo
+        ;;   "u"       #'winner-undo
+        ;;   "C-u"     #'winner-undo
+        ;;   "C-r"     #'winner-redo
+        ;;   "o"       #'doom/window-enlargen
+        ;;   ;; Delete window
+        ;;   "c"       #'+workspace/close-window-or-workspace
+        ;;   "C-C"     #'ace-delete-window)
 
-      ;; ;; evil-commentary
-      ;; :n  "gc"  #'evil-commentary
+          ;; Fix conflicts with company complete (which is only aparent in haskell buffers for some reason)!
+          :i "C-j" nil
+          :i "C-k" nil
+          :i "C-l" nil
+          :i "C-h" nil
+        )
 
       ;; evil-exchange
       :n  "gx"  #'evil-exchange
@@ -483,17 +497,22 @@
       ;;   ;;   )
       ;;   )
 
-      ;(:after eshell
-      ; (set-eshell-alias!
-      ;   "q"   "quit-and-close"
-      ;   "l"   "ls -l"
-      ;   "la"  "ls -la"
-      ;   "f"   "find-file $1"
-      ;   "d"   "dired $1"
-      ;   "gl"  "(call-interactively 'magit-log-current)"
-      ;   "gs"  "magit-status"
-      ;   "gc"  "magit-commit"
-      ;   "rg" "rg --color=always $*"))
+
+
+      (:after eshell
+        "C-'" #'eshell-here
+      ;(set-eshell-alias!
+      ;  "q"   "quit-and-close"
+      ;  "l"   "ls -l"
+      ;  "la"  "ls -la"
+      ;  "f"   "find-file $1"
+      ;  "d"   "dired $1"
+      ;  "gl"  "(call-interactively 'magit-log-current)"
+      ;  "gs"  "magit-status"
+      ;  "gc"  "magit-commit"
+      ;  "rg" "rg --color=always $*"
+      ;  )
+      )
 
       ;; evil-snipe
       (:after evil-snipe
@@ -509,11 +528,11 @@
       ;; evil-surround
       :v  "S"  #'evil-surround-region
       ;:o  "s"  #'evil-surround-edit
-      :o  "S"  #'evil-Surround-edit
+      :o  "S"  #'evil-surround-edit
 
-      ;; ;; expand-region
-      ;; :v  "v"  #'er/expand-region
-      ;; :v  "V"  #'er/contract-region
+      ;; expand-region
+      :v  "v"  #'er/expand-region
+      :v  "V"  #'er/contract-region
 
       ;; flycheck
       :m  "]e" #'next-error
