@@ -8,6 +8,15 @@
       (setq doom-font (font-spec :family "Source Code Pro" :size 26))
     ))
 
+(setq-default doom-big-font (font-spec :family "Source Code Pro" :size 34)
+
+              ;; Only replace charachters/ auto-format in some modes.
+              +pretty-code-enabled-modes '(emacs-lisp-mode org-mode)
+              +format-on-save-enabled-modes '(not emacs-lisp-mode))
+
+; Add habit, TODO: Use.
+(add-to-list 'org-modules 'org-habit t)
+
 ; Unused ibpython config.. Replaced by using EIN now.
 ;; (setq
 ;;  python-shell-interpreter "ipython3"
@@ -69,3 +78,14 @@ directory to make multiple eshell windows easier."
     (eshell-send-input)))
 
 (global-set-key (kbd "C-!") 'eshell-here)
+
+;; emacs/eshell
+(after! eshell
+  (set-eshell-alias!
+   "f"   "find-file $1"
+   "l"   "ls -lh"
+   "d"   "dired $1"
+   "gl"  "(call-interactively 'magit-log-current)"
+   "gs"  "magit-status"
+   "gc"  "magit-commit"
+   "rg"  "rg --color=always $*"))

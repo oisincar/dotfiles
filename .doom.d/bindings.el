@@ -260,31 +260,34 @@
           :desc "Browse notes"                :n  "N"   #'+default/browse-notes
           :desc "Org capture"                 :n  "x"   #'org-capture)
 
+        (:desc "apps" :prefix "a"
+          ;; applications
+          :desc "Ranger"                      :n  "r"   #'ranger
+          :desc "Elfeed"                      :n  "e"   #'=rss
+          :desc "Email"                       :n  "m"   #'=email
+          :desc "Twitter"                     :n  "t"   #'=twitter
+          :desc "Regex"                       :n  "x"   #'=regex)
+
         (:desc "open" :prefix "o"
           :desc "Default browser"             :n  "b"   #'browse-url-of-file
           :desc "Debugger"                    :n  "d"   #'+debug/open
           :desc "REPL"                        :n  "r"   #'+eval/open-repl
                                               :v  "r"   #'+eval:repl
-          :desc "Neotree"                     :n  "n"   #'+neotree/open
-          :desc "Neotree: on this file"       :n  "N"   #'+neotree/find-this-file
+          ;; :desc "Neotree"                     :n  "n"   #'+neotree/open
+          ;; :desc "Neotree: on this file"       :n  "N"   #'+neotree/find-this-file
           :desc "Imenu sidebar"               :nv "i"   #'imenu-list-smart-toggle
           :desc "Eshell"                      :n  "e"   #'+eshell/open
           :desc "Terminal"                    :n  "t"   #'+term/open-popup-in-project
 
-          ;; applications
-          :desc "APP: elfeed"                 :n  "E"   #'=rss
-          :desc "APP: email"                  :n  "M"   #'=email
-          :desc "APP: twitter"                :n  "T"   #'=twitter
-          :desc "APP: regex"                  :n  "X"   #'=regex
-
-          ;; macos
-          (:when IS-MAC
-            :desc "Reveal in Finder"          :n  "o"   #'+macos/reveal-in-finder
-            :desc "Reveal project in Finder"  :n  "O"   #'+macos/reveal-project-in-finder
-            :desc "Send to Transmit"          :n  "u"   #'+macos/send-to-transmit
-            :desc "Send project to Transmit"  :n  "U"   #'+macos/send-project-to-transmit
-            :desc "Send to Launchbar"         :n  "l"   #'+macos/send-to-launchbar
-            :desc "Send project to Launchbar" :n  "L"   #'+macos/send-project-to-launchbar))
+          ;; ;; macos
+          ;; (:when IS-MAC
+          ;;   :desc "Reveal in Finder"          :n  "o"   #'+macos/reveal-in-finder
+          ;;   :desc "Reveal project in Finder"  :n  "O"   #'+macos/reveal-project-in-finder
+          ;;   :desc "Send to Transmit"          :n  "u"   #'+macos/send-to-transmit
+          ;;   :desc "Send project to Transmit"  :n  "U"   #'+macos/send-project-to-transmit
+          ;;   :desc "Send to Launchbar"         :n  "l"   #'+macos/send-to-launchbar
+          ;;   :desc "Send project to Launchbar" :n  "L"   #'+macos/send-project-to-launchbar)
+          )
 
         (:desc "project" :prefix "p"
           ;:desc "Browse project"          :n  "." #'+default/browse-project
@@ -304,14 +307,14 @@
           :desc "Restart & restore"           :n  "r"   #'+workspace/restart-emacs-then-restore
           :desc "Restart"                     :n  "R"   #'restart-emacs)
 
-        (:when (featurep! :tools upload)
-          (:desc "remote" :prefix "r"
-            :desc "Upload local"              :n  "u"   #'ssh-deploy-upload-handler
-            :desc "Upload local (force)"      :n  "U"   #'ssh-deploy-upload-handler-forced
-            :desc "Download remote"           :n  "d"   #'ssh-deploy-download-handler
-            :desc "Diff local & remote"       :n  "D"   #'ssh-deploy-diff-handler
-            :desc "Browse remote files"       :n  "."   #'ssh-deploy-browse-remote-handler
-            :desc "Detect remote changes"     :n  ">"   #'ssh-deploy-remote-changes-handler))
+        ;; (:when (featurep! :tools upload)
+        ;;   (:desc "remote" :prefix "r"
+        ;;     :desc "Upload local"              :n  "u"   #'ssh-deploy-upload-handler
+        ;;     :desc "Upload local (force)"      :n  "U"   #'ssh-deploy-upload-handler-forced
+        ;;     :desc "Download remote"           :n  "d"   #'ssh-deploy-download-handler
+        ;;     :desc "Diff local & remote"       :n  "D"   #'ssh-deploy-diff-handler
+        ;;     :desc "Browse remote files"       :n  "."   #'ssh-deploy-browse-remote-handler
+        ;;     :desc "Detect remote changes"     :n  ">"   #'ssh-deploy-remote-changes-handler))
 
         (:desc "snippets" :prefix "s"
           :desc "New snippet"                 :n  "n"   #'yas-new-snippet
