@@ -31,5 +31,9 @@
 !/.Xresources.d/
 
 #
+# !/.config/monitors.xml
+!.config
+.config/*
 !/.config/monitors.xml
-!/.config/monitors.xml
+!/.config/git
+!/.config/qutebrowser
