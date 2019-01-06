@@ -15,21 +15,21 @@
 # The .gitignore of this repository.
 !.gitignore
 
-# The real business here..
+# The real business here.. Vim & Emacs.
 !.vimrc
-!.spacemacs
-
-!/.spacemacs-extra/
+!.doom.d/
 
 # Bar and window manager config.
 !.xmobar/
-!/.xmonad/*.hs
+!.xmonad/*.hs
 
-# Make caps lock meta key.
+# To make caps lock a meta key instead.
 !.Xmodmap
 
-# Terminal config
+# Terminal (uvrxt) config
+!.Xresources
 !/.Xresources.d/
 
-!/.doom.d/
-
+#
+!/.config/monitors.xml
+!/.config/monitors.xml
