@@ -29,3 +29,5 @@ PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 # Cuda/ tensorflow shtuff.
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"
 export CUDA_HOME=/usr/local/cuda
+
+export PATH="$HOME/.cargo/bin:$PATH"

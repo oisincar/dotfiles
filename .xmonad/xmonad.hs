@@ -88,7 +88,8 @@ myKeys conf@(XConfig {XMonad.modMask = capsMask}) = M.fromList $
     , ((capsMask, xK_d), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     , ((capsMask, xK_b), spawn "firefox")
     , ((capsMask, xK_q), spawn "~/Devcrap/qutebrowser/.venv/bin/python3 -m qutebrowser")
-    , ((capsMask, xK_e), spawn "emacs")
+    , ((capsMask, xK_e), spawn "~/Devcrap/remacs/src/remacs")
+    -- , ((capsMask, xK_e), spawn "emacs")
 
     , ((altMask, xK_q), kill) -- quit current window
 

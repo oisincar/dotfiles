@@ -25,7 +25,6 @@
 ;; (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
 ;; (use-package pyvenv)
 ;; Make images fill width in org mode by default..
-(setq org-image-actual-width 1000)
 
 ;; Make search work using silver-searcher on windows.
 ;; (Not updating value for some reason??)
@@ -37,13 +36,22 @@
 (add-hook 'ein:notebook-multilang-mode-hook
           (lambda () (local-set-key (kbd "M-K") #'ein:worksheet-goto-prev-input)))
 
-; Set scale for latex fragments to be displayed in org mode.
 (after! org
-  (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.5)))
+  ; Set scale for latex fragments to be displayed in org mode.
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.5))
+  ; Thicc images
+  (setq org-image-actual-width 1000)
+  ; Show images on startup
+  (setq org-startup-with-inline-images t))
 
 ;; Tramp.
-;; (setq tramp-default-method "ssh")
+(require 'tramp)
+(setq tramp-default-method "ssh")
+;; TODO: Should be vv, need to test.
+;; (after! tramp
+;;   (setq tramp-default-method "ssh"))
 
+; TODO: Move to some other (functions?) file
 (defun my-org-screenshot ()
   "Take a screenshot into a time stamped unique-named file in the
 same directory as the org-buffer and insert a link to this file."
@@ -56,6 +64,11 @@ same directory as the org-buffer and insert a link to this file."
                   (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
   (call-process "import" nil nil nil filename)
   (insert (concat "[[" filename "]]"))
+  (org-display-inline-images))
+
+(defun my-execute-babel ()
+  (interactive)
+  (org-ctrl-c-ctrl-c)
   (org-display-inline-images))
 
 
@@ -89,3 +102,6 @@ directory to make multiple eshell windows easier."
    "gs"  "magit-status"
    "gc"  "magit-commit"
    "rg"  "rg --color=always $*"))
+
+;; Set search engine to use grep by default, since it's on all servers.
+(setq +ivy-project-search-engines '(grep rg ag pt))

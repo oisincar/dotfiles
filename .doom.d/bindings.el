@@ -667,14 +667,15 @@
         :n "M-TAB" #'org-global-cycle
         :localleader
         :n "l" #'org-toggle-latex-fragment
-        )
-        ;; :n "t" #'org-todo
-        ;; (:desc "clock" :prefix "c"
-        ;;   :n "c" #'org-clock-in
-        ;;   :n "C" #'org-clock-out
-        ;;   :n "g" #'org-clock-goto
-        ;;   :n "G" (λ! (org-clock-goto 'select))
-        ;;   :n "x" #'org-clock-cancel))
+        :n "r" #'my-execute-babel
+        ;; )
+        :n "t" #'org-todo
+        (:desc "clock" :prefix "c"
+          :n "c" #'org-clock-in
+          :n "C" #'org-clock-out
+          :n "g" #'org-clock-goto
+          :n "G" (λ! (org-clock-goto 'select))
+          :n "x" #'org-clock-cancel))
 
       ;; realgud
       (:after realgud

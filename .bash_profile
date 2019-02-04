@@ -18,3 +18,5 @@ alias ll='ls -al'
 alias vim='nvim'
 
 export PATH="$HOME/Library/Haskell/bin:$PATH"
+
+export PATH="$HOME/.cargo/bin:$PATH"

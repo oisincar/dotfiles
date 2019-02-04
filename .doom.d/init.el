@@ -63,8 +63,8 @@
        vc                ; version-control and Emacs, sitting in a tree
 
        :tools
-       ;;ansible
-       ;;docker
+      ;ansible
+      ;docker
        editorconfig      ; let someone else argue about tabs vs spaces
        ein               ; tame Jupyter notebooks with emacs
        gist              ; interacting with github gists
@@ -150,7 +150,7 @@
        :collab
       ;floobits          ; peer programming for a price
       ; TODO: USE THIS vvv
-      ;impatient-mode    ; show off code over HTTP
+       impatient-mode    ; show off code over HTTP
 
        :config
        ;; For literate config users. This will tangle+compile a config.org
