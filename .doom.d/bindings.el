@@ -393,9 +393,9 @@
           "C-k"     #'company-select-previous
           "C-s"     #'company-filter-candidates
           "C-S-s"   #'company-search-candidates
-          "C-SPC"   #'company-complete-common
-          "TAB"     #'company-complete-common-or-cycle
-          [tab]     #'company-complete-common-or-cycle
+          ;; "C-SPC"   #'company-complete-common
+          "TAB"     #'company-complete-selection
+          [tab]     #'company-complete-selection
           "S-TAB"   #'company-select-previous
           [backtab] #'company-select-previous)
         ;; Automatically applies to `company-filter-map'
@@ -436,6 +436,10 @@
           :i "C-k" nil
           :i "C-l" nil
           :i "C-h" nil
+
+          ;; Allow line up/down in insert mode too.
+          ;:i "C-e" evil-scroll-line-down
+          ;:i "C-y" evil-scroll-line-up
         )
 
       ;; evil-exchange
@@ -755,6 +759,8 @@
    :n "D" #'omnisharp-go-to-definition-other-window
    :n "R" #'omnisharp-run-code-action-refactoring
    :n "r" #'omnisharp-rename
+   :n "i" #'omnisharp-current-type-information
+   :n "I" #'omnisharp-current-type-documentation
    ))
 
 ;;
