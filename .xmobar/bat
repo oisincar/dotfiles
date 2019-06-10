@@ -10,10 +10,23 @@ if [ -e /sys/class/power_supply/BAT1 ]; then
   BAT_STAT=$(echo $ACPI_STAT | awk '{print $3}' | tr -d ',')
   # get the current battery load percentage
   BAT_PERC=$(echo $ACPI_STAT | awk '{print $4}' | tr -d '%,')
+  # get wattage!
+  WATT=$(echo - | awk "{printf \"%.1f\", \
+    $(( \
+    $(cat /sys/class/power_supply/BAT1/current_now) * \
+    $(cat /sys/class/power_supply/BAT1/voltage_now) \
+    )) / 1000000000000 }")
+
+  HRS_LEFT=$(echo - | awk "{printf \"%.1f\", \
+    $(( \
+    $(cat /sys/class/power_supply/BAT1/charge_now) / \
+    $(cat /sys/class/power_supply/BAT1/current_now) \
+    ))}")
+
   if [[ $BAT_STAT = "Discharging" ]]; then
-    echo -e "$ICON_BATTERY_FULL $BAT_PERC"
+    echo -e "$ICON_BATTERY_FULL ${BAT_PERC}% ${WATT}W ${HRS_LEFT}h"
   else
-    echo -e "$ICON_BATTERY_CHARGING $BAT_PERC"
+    echo -e "$ICON_BATTERY_CHARGING ${BAT_PERC}% ${WATT}W"
   fi
 else
   echo -e "$ICON_BATTERY_CHARGING"
