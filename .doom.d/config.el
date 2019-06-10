@@ -38,9 +38,9 @@
 
 (after! org
   ; Set scale for latex fragments to be displayed in org mode.
-  (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.5))
+  ;; (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.5))
   ; Thicc images
-  (setq org-image-actual-width 1000)
+  ;; (setq org-image-actual-width 1000)
   ; Show images on startup
   (setq org-startup-with-inline-images t))
 
@@ -104,4 +104,22 @@ directory to make multiple eshell windows easier."
    "rg"  "rg --color=always $*"))
 
 ;; Set search engine to use grep by default, since it's on all servers.
-(setq +ivy-project-search-engines '(grep rg ag pt))
+;; (setq +ivy-project-search-engines '(grep rg ag pt))
+
+;; Don't show unity's stupid .meta files.
+(after! counsel
+  (setq counsel-find-file-ignore-regexp "\\.meta\\'"))
+
+;; Add inline-js as an org language - which exports javascript directly into the file.
+(after! org
+  (add-to-list 'org-src-lang-modes '("inline-js" . javascript)) ;; js2 if you're fancy
+
+  (setq indent-tabs-mode nil)
+  (setq org-src-preserve-indentation nil)
+;; (defvar org-babel-default-header-args:inline-js
+;;   '((:results . "html")
+;;     (:exports . "results")))
+;; (defun org-babel-execute:inline-js (body _params)
+;;   (format "<script type=\"text/javascript\">\n%s\n</script>" body))
+  )
+
