@@ -147,6 +147,7 @@
           :desc "Project"                     :nv "p"   #'+ivy/project-search
           :desc "Directory"                   :nv "d"   (λ! (+ivy/project-search t))
           :desc "Buffer"                      :nv "b"   #'swiper
+          ;TODO: Use imenu more
           :desc "Symbols"                     :nv "i"   #'imenu
           :desc "Symbols across buffers"      :nv "I"   #'imenu-anywhere
           :desc "Online providers"            :nv "o"   #'+lookup/online-select)
@@ -393,7 +394,7 @@
           "C-k"     #'company-select-previous
           "C-s"     #'company-filter-candidates
           "C-S-s"   #'company-search-candidates
-          ;; "C-SPC"   #'company-complete-common
+          "C-SPC"   #'company-complete-common
           "TAB"     #'company-complete-selection
           [tab]     #'company-complete-selection
           "S-TAB"   #'company-select-previous

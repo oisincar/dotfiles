@@ -115,7 +115,7 @@ directory to make multiple eshell windows easier."
   (add-to-list 'org-src-lang-modes '("inline-js" . javascript)) ;; js2 if you're fancy
 
   (setq indent-tabs-mode nil)
-  (setq org-src-preserve-indentation nil)
+  (setq org-src-preserve-indentation nil) ;; TODO: Check if this is messing up indentation during edit.
 ;; (defvar org-babel-default-header-args:inline-js
 ;;   '((:results . "html")
 ;;     (:exports . "results")))
@@ -123,3 +123,55 @@ directory to make multiple eshell windows easier."
 ;;   (format "<script type=\"text/javascript\">\n%s\n</script>" body))
   )
 
+
+;; Whitespace mode - highlight lines that are too long.
+(require 'whitespace)
+(setq whitespace-style '(face empty tabs lines-tail trailing))
+(setq whitespace-line-column 100) ;; limit line length
+(add-hook 'prog-mode-hook 'whitespace-mode)
+
+;; Delete trailing whitespace on save
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Org mode text wrap rather than inserting newlines
+;; (with-eval-after-load 'visual-fill-column
+;;   (add-hook 'visual-fill-column-mode-hook 'spacemacs/toggle-visual-line-navigation-on)
+;;   (setq split-window-preferred-function 'visual-fill-column-split-window-sensibly)
+;;   (advice-add 'text-scale-adjust :after 'visual-fill-column-adjust))
+;; (add-hook 'org-mode-hook '(lambda ()
+;;                             (auto-fill-mode) ;; Disable automatic insertion of newlines
+;;                             ;; make the lines in the buffer wrap around the edges of the screen.
+;;                             ;; to press C-c q  or fill-paragraph ever again!
+;;                             (visual-line-mode)
+;;                             (org-indent-mode)))
+
+(add-hook '+write-mode-hook
+          (auto-fill-mode) ;; Disable auto insertion of newlines
+          )
+
+;; Refrence/citation stuff.
+(setq bibtex-completion-bibliography '( "~/Devcrap/bibliography/reference/Bibliography.bib" ) ;the major bibtex file
+      bibtex-completion-library-path "~/Devcrap/bibliography/reference/pdf/" ;the directory to store pdfs
+      bibtex-completion-notes-path "~/Devcrap/bibliography/ref.org" ;the note file for reference notes
+      ;; org-directory "~/Dropbox/org"
+      org-ref-default-bibliography '( "~/Devcrap/bibliography/reference/Bibliography.bib" )
+      org-ref-bibliography-notes "~/Devcrap/bibliography/ref.org"
+      org-ref-pdf-directory "~/Devcrap/bibliography/reference/pdf/"
+      )
+;; Latex export with stuff better.
+;; (setq org-latex-pdf-process (list
+   ;; "latexmk -pdflatex='lualatex -shell-escape -interaction nonstopmode' -pdf -f  %f"))
+(setq org-latex-pdf-process (list "latexmk -pdf %f"))
+(setq org-latex-caption-above nil)    ; Caption below everything, including tables.
+(setq org-export-with-smart-quotes t) ; Nice looking quotes
+
+;; (setq
+;; '(emacspeak-character-echo nil)
+;; '(emacspeak-line-echo t)
+;; '(emacspeak-word-echo nil)
+;; '(espeak-default-speech-rate 250)
+;; '(line-number-mode nil))
+;; (dtk-toggle-split-caps t)
+;; (dtk-toggle-allcaps-beep t)
+
+;; (require 'emacspeak-ivy)
