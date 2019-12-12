@@ -3,7 +3,7 @@
 # Get the current status from mpc
 MUSIC=$(mpc)
 # When music is playing, mpc shows 3 lines, when stopped only one line. Get the number of lines.
-MUSIC_LINES=$(echo $MUSIC | wc -l) 
+MUSIC_LINES=$(echo $MUSIC | wc -l)
 # When number of lines is 3, music is playing
 if [[ $MUSIC_LINES -eq 3 ]]; then
   # get status: playing or paused

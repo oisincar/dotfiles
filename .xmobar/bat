@@ -26,7 +26,7 @@ if [ -e /sys/class/power_supply/BAT1 ]; then
   if [[ $BAT_STAT = "Discharging" ]]; then
     echo -e "$ICON_BATTERY_FULL ${BAT_PERC}% ${WATT}W ${HRS_LEFT}h"
   else
-    echo -e "$ICON_BATTERY_CHARGING ${BAT_PERC}% ${WATT}W"
+    echo -e "$ICON_BATTERY_CHARGING ${BAT_PERC}% ${WATT}W?"
   fi
 else
   echo -e "$ICON_BATTERY_CHARGING"

@@ -31,3 +31,6 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/e
 export CUDA_HOME=/usr/local/cuda
 
 export PATH="$HOME/.cargo/bin:$PATH"
+
+# Emacspeak!
+export DTK_PROGRAM="espeak"
