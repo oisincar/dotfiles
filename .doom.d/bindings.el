@@ -262,13 +262,14 @@
         ;  :desc "Browse notes"                :n  "N"   #'+default/browse-notes
         ;  :desc "Org capture"                 :n  "x"   #'org-capture)
 
-        ;(:desc "apps" :prefix "a"
-        ;  ;; applications
-        ;  :desc "Ranger"                      :n  "r"   #'ranger
+        (:desc "apps" :prefix "a"
+          ;; applications
+          :desc "Ranger"                      :n  "r"   #'ranger
         ;  :desc "Elfeed"                      :n  "e"   #'=rss
         ;  :desc "Email"                       :n  "m"   #'=email
         ;  :desc "Twitter"                     :n  "t"   #'=twitter
-        ;  :desc "Regex"                       :n  "x"   #'=regex)
+        ;  :desc "Regex"                       :n  "x"   #'=regex ; TODO: Try this regex thing
+          )
 
         ;(:desc "open" :prefix "o"
         ;  :desc "Default browser"             :n  "b"   #'browse-url-of-file
@@ -628,8 +629,8 @@
         :map ivy-minibuffer-map
         [escape] #'keyboard-escape-quit
         "C-SPC"  #'ivy-call-and-recenter
-        "M-z"    #'undo
-        "M-v"    #'yank
+        ;"M-z"    #'undo
+        ;"M-v"    #'yank
         "C-v"    #'yank
         "C-r"    #'evil-paste-from-register
         "C-k"    #'ivy-previous-line
@@ -718,9 +719,9 @@
         (:map yas-keymap
           "C-e"           #'+snippets/goto-end-of-field
           "C-a"           #'+snippets/goto-start-of-field
-          "<M-right>"     #'+snippets/goto-end-of-field
-          "<M-left>"      #'+snippets/goto-start-of-field
-          "<M-backspace>" #'+snippets/delete-to-start-of-field
+          ;"<M-right>"     #'+snippets/goto-end-of-field
+          ;"<M-left>"      #'+snippets/goto-start-of-field
+          ;"<M-backspace>" #'+snippets/delete-to-start-of-field
           [backspace]     #'+snippets/delete-backward-char
           [delete]        #'+snippets/delete-forward-char-or-field)
         (:map yas-minor-mode-map
