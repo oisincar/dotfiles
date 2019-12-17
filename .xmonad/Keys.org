@@ -1,0 +1,51 @@
+#+TITLE: Keys!
+
+
+Idea: Mod keys are alt, and right shift(?). Right alt?
+Right shift only on keys which I'd never normally right shift..?
+
+* Xmonad itself
+Recompile/ reload:                   (ALT + R)
+Quit (logout)                        (ALT + SHIFT + E)
+
+Toggle top bar                       (ALT + T)
+
+* Programs
+Launch Terminal,                     (ALT + Return)
+TODO: use https://github.com/davidshepherd7/frames-only-mode
+Launch Emacs Server,                 ??
+Launch Emacs Client,                 (ALT + E)
+Launch Browser,                      (ALT + B)
+Launch Dmenu/ other launcher         (ALT + D)
+
+Possibly look at code for finding/ bringing focus to those windows too? I.e.
+Spawn one if it doesn't exist, otherwise jump to it.
+
+Quit current window.                (ALT + Q)
+
+* Workspace
+Go to workspace ix                   (ALT + 123456)
+Move window to workspace ix          (R-ALT + 123456)???
+Bring window to workspace ix         (ALT + R-ALT + 123456)???
+  ^^ I.e. do both, move then go to that workspace.
+
+* Window
+** Navigation
+Move Up, Left, Right, Down         (ALT + HJKL)
+Jump to window in row by index?    (ALT + ',.py)
+
+** Layout
+Rotate through layouts.            (R-ALT + N)
+Flip/ Mirror layout.               (R-ALT + M)
+Swap Up/ Left/ Right/ Down         (R-ALT + HJKL)
+Reset size(?) (refresh)            (R-ALT + R)
+Shrink/expand current area(??)      (??)
+Add/remove number of windows in current column/ master area. (??)
+
+** Non-tiling stuff
+Pull out of tiling                 (R-ALT + mouse(?)) (Or next key over?)
+Push back into tiling              (R-ALT + S)
+
+* Fn keys
+Volume stuff FN-xyz w/e
+brightness

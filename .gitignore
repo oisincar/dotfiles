@@ -21,16 +21,20 @@
 
 # Bar and window manager config.
 !.xmobar/
-!.xmonad/*.hs
 
-# To make caps lock a meta key instead.
+!.xmonad/
+.xmonad/*
+!.xmonad/*.org
+!.xmonad/*.hs
+!.xmonad/*.png
+
+# Key rebindings
 !.Xmodmap
 
 # Terminal (uvrxt) config
 !.Xresources
 !/.Xresources.d/
 
-#
 # !/.config/monitors.xml
 !.config
 .config/*

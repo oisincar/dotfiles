@@ -21,6 +21,7 @@ import XMonad.Util.SpawnOnce
 
 -- hjkl navigation
 import XMonad.Layout.WindowNavigation
+import qualified XMonad.Layout.IndependentScreens as LIS
 
 -- Has isFullscreen, for games/ other fullscreen stuff.
 --import Xmonad.Hooks.EwmhDesktops
@@ -47,7 +48,7 @@ toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_t)
 myTerminal = "urxvt"
 
 -- Main configuration, override the defaults to your liking.
-myConfig = def { modMask = mod3Mask
+myConfig = def { modMask = mod4Mask
                , terminal = myTerminal
                , workspaces = myWorkspaces
                , keys = myKeys
@@ -78,51 +79,49 @@ myWorkspaces = map wrapSpaces ["\xf269","\xf120","\xf121","\xf07c","\xf281","\xf
 --       clickable l = [ "<action=xdotool key alt+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
 --           (i,ws) <- zip [1..9] l,
 --                           let n = i ]
+rAltMask = mod1Mask
 
--- Separate mask for some keys. Caps for some, alt for others..
-altMask = mod1Mask
-myKeys conf@(XConfig {XMonad.modMask = capsMask}) = M.fromList $
+myKeys conf@(XConfig {XMonad.modMask = altMask}) = M.fromList $
 
     -- Launch programs: Terminal, Dmenu, Chrome, Emacs.
-    [ ((capsMask, xK_Return), spawn myTerminal)
-    , ((capsMask, xK_d), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
-    , ((capsMask, xK_b), spawn "firefox")
-    , ((capsMask, xK_q), spawn "~/Devcrap/qutebrowser/.venv/bin/python3 -m qutebrowser")
-    , ((capsMask, xK_e), spawn "emacs")
+    [ ((altMask, xK_Return), spawn myTerminal)
+    , ((altMask, xK_d), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
+    , ((altMask, xK_b), spawn "firefox")
+    , ((altMask, xK_q), spawn "~/Devcrap/qutebrowser/.venv/bin/python3 -m qutebrowser")
+    , ((altMask, xK_e), spawn "emacs")
 
     , ((altMask, xK_q), kill) -- quit current window
 
      -- Rotate through the available layout algorithms
-    , ((capsMask, xK_space), sendMessage NextLayout)
+    , ((rAltMask, xK_n), sendMessage NextLayout)
 
     --  Reset the layouts on the current workspace to default
     , ((altMask .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
 
     -- Resize viewed windows to the correct size
-    , ((capsMask, xK_n), refresh)
+    , ((rAltMask, xK_r), refresh)
 
-    -- HJKL moves between windows.
-    -- Shift + HJKL swaps windows.
-    , ((capsMask,               xK_h), sendMessage $ Go L)
-    , ((capsMask,               xK_j), sendMessage $ Go D)
-    , ((capsMask,               xK_k), sendMessage $ Go U)
-    , ((capsMask,               xK_l), sendMessage $ Go R)
+    -- ALT + HJKL moves between windows.
+    , ((altMask, xK_h), sendMessage $ Go L)
+    , ((altMask, xK_j), sendMessage $ Go D)
+    , ((altMask, xK_k), sendMessage $ Go U)
+    , ((altMask, xK_l), sendMessage $ Go R)
+    -- Right alt + HJKL swaps windows.
+    , ((rAltMask, xK_h), sendMessage $ Swap L)
+    , ((rAltMask, xK_j), sendMessage $ Swap D)
+    , ((rAltMask, xK_k), sendMessage $ Swap U)
+    , ((rAltMask, xK_l), sendMessage $ Swap R)
 
-    , ((capsMask .|. altMask, xK_h), sendMessage $ Swap L)
-    , ((capsMask .|. altMask, xK_j), sendMessage $ Swap D)
-    , ((capsMask .|. altMask, xK_k), sendMessage $ Swap U)
-    , ((capsMask .|. altMask, xK_l), sendMessage $ Swap R)
-
-    -- Shrink/expand master area.
-    , ((             altMask, xK_h), sendMessage Shrink)
-    , ((             altMask, xK_l), sendMessage Expand)
+    -- Shrink/expand master area (C-ontract, E-xpand)
+    , ((rAltMask, xK_c), sendMessage Shrink)
+    , ((rAltMask, xK_e), sendMessage Expand)
 
     -- Increment/Decrement the number of windows in the master area
-    , ((capsMask, xK_comma),  sendMessage (IncMasterN (-1)))
-    , ((capsMask, xK_period), sendMessage (IncMasterN 1))
+    , ((altMask, xK_comma),  sendMessage (IncMasterN (-1)))
+    , ((altMask, xK_period), sendMessage (IncMasterN 1))
 
     -- Push 'S-ink' window back into tiling
-    , ((capsMask,               xK_s), withFocused $ windows . W.sink)
+    , ((rAltMask, xK_s), withFocused $ windows . W.sink)
 
     -- Volume
     , ((0, xF86XK_AudioMute),        spawn "amixer -D pulse set Master toggle")
@@ -134,31 +133,43 @@ myKeys conf@(XConfig {XMonad.modMask = capsMask}) = M.fromList $
     , ((0, xF86XK_MonBrightnessUp),   spawn "xbacklight -inc 10")
 
     -- Quit xmonad (logout)
-    , ((altMask .|. shiftMask, xK_e     ), io (exitWith ExitSuccess))
+    , ((altMask .|. shiftMask, xK_e), io (exitWith ExitSuccess))
 
     -- Rebuild/ restart xmonad
-    , ((altMask .|. shiftMask, xK_r     ), spawn "xmonad --recompile; xmonad --restart")
+    , ((altMask .|. shiftMask, xK_r), spawn "xmonad --recompile; xmonad --restart")
     ]
 
     ++
 
     -- mod-[1..9], Switch to workspace N
     -- mod-shift-[1..9], Move client to workspace N
-    [((m .|. capsMask, k), windows $ f i)
+    [((m, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
-        , (f, m) <- [(W.greedyView, 0), (W.shift, altMask)]]
+        , (f, m) <- [ (W.greedyView, altMask)
+                    , (W.shift,      rAltMask)
+                    -- TODO Figure out how to compose actions like this.
+                    --, (W.shift . W.greedyView, rAltMask  .|. altMask)
+                    ]]
 
-     ++
-
-     -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
-     -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
-    [((m .|. capsMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
-        | (key, sc) <- zip [xK_a, xK_o] [0..]
-        , (f, m) <- [(W.view, 0), (W.shift, altMask)]]
+    -- ++
+    -- -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
+    -- -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
+    --[((m .|. capsMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
+    --    | (key, sc) <- zip [xK_a, xK_o] [0..]
+    --    , (f, m) <- [(W.view, 0), (W.shift, altMask)]]
 
 myStartupHook = do
   --spawnOnce "/usr/bin/stalonetray"
   spawnOnce "nm-applet"
+
+  -- Disable second screen if there's 2
+  screencount <- LIS.countScreens
+  if (screencount > 1)
+    then spawn "xrandr --output eDP-1-1 --off"
+    else return ()
+
+  spawn "feh --bg-fill ~/.xmonad/LizardBG.png"
+
   -- spawnOnce "volumeicon"
   -- spawnOnce "dropbox"
   -- spawnOnce "compton -cb"
@@ -184,14 +195,14 @@ myManageHook = composeAll
 myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- mod-button1, Set the window to floating mode and move by dragging
-    [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
+    [ ((rAltMask, button1), (\w -> focus w >> mouseMoveWindow w
                                        >> windows W.shiftMaster))
 
     -- mod-button2, Raise the window to the top of the stack
-    , ((modm, button2), (\w -> focus w >> windows W.shiftMaster))
+    , ((rAltMask, button2), (\w -> focus w >> windows W.shiftMaster))
 
     -- mod-button3, Set the window to floating mode and resize by dragging
-    , ((modm, button3), (\w -> focus w >> mouseResizeWindow w
+    , ((rAltMask, button3), (\w -> focus w >> mouseResizeWindow w
                                        >> windows W.shiftMaster))
     ]
 
