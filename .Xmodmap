@@ -1,4 +1,6 @@
-keycode 66 = Hyper_L
-clear lock
-remove mod4 = Hyper_L
-add mod3 = Hyper_L
+remove mod1 = Alt_L
+remove mod4 = Super_L
+keycode 133 = Alt_L
+keycode 64 = Super_L
+add mod1 = Alt_L
+add mod4 = Super_L
