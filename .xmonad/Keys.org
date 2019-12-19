@@ -7,7 +7,6 @@ Right shift only on keys which I'd never normally right shift..?
 * Xmonad itself
 Recompile/ reload:                   (ALT + R)
 Quit (logout)                        (ALT + SHIFT + E)
-
 Toggle top bar                       (ALT + T)
 
 * Programs
@@ -32,7 +31,7 @@ Bring window to workspace ix         (ALT + R-ALT + 123456)???
 * Window
 ** Navigation
 Move Up, Left, Right, Down         (ALT + HJKL)
-Jump to window in row by index?    (ALT + ',.py)
+Jump to window in row by index?    (ALT + ',.py) (TODO)
 
 ** Layout
 Rotate through layouts.            (R-ALT + N)
@@ -47,5 +46,5 @@ Pull out of tiling                 (R-ALT + mouse(?)) (Or next key over?)
 Push back into tiling              (R-ALT + S)
 
 * Fn keys
-Volume stuff FN-xyz w/e
+Volume stuff FN-xyz w/e (TODO)
 brightness

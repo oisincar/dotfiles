@@ -24,6 +24,7 @@
 
 !.xmonad/
 .xmonad/*
+!.xmonad/*/
 !.xmonad/*.org
 !.xmonad/*.hs
 !.xmonad/*.png

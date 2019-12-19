@@ -23,6 +23,12 @@ import XMonad.Util.SpawnOnce
 import XMonad.Layout.WindowNavigation
 import qualified XMonad.Layout.IndependentScreens as LIS
 
+-- 3 Column layout for large windows.
+import XMonad.Layout.ThreeColumns
+
+--import XMonadLayouts.FocusWindow
+--import XMonadLayouts.FocusWindow (MiddleColumn(..))
+
 -- Has isFullscreen, for games/ other fullscreen stuff.
 --import Xmonad.Hooks.EwmhDesktops
 
@@ -44,7 +50,6 @@ myPP = xmobarPP { ppCurrent = xmobarColor "#bf616a" ""
 -- Key binding to toggle the gap for the 'top' bar.
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_t)
 
--- myTerminal = "urxvt"
 myTerminal = "urxvt"
 
 -- Main configuration, override the defaults to your liking.
@@ -208,7 +213,11 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 
 -- myLayoutHook = avoidStruts (Grid ||| tiled ||| noBorders (fullscreenFull Full) ||| Mirror tiled)
 --myLayoutHook = avoidStruts (tiled ||| simpleTabbed)
-myLayoutHook = windowNavigation (tiledWindowLayout ||| fullWindowLayout)
+
+myLayoutHook =
+  windowNavigation (tripleColumnLayout ||| tiledWindowLayout ||| fullWindowLayout)
+
+tripleColumnLayout = ThreeColMid 1 (3/100) (1/2)
 
 -- Fullscreen
 fullWindowLayout = noBorders (fullscreenFull Full)
