@@ -115,7 +115,7 @@ directory to make multiple eshell windows easier."
   (add-to-list 'org-src-lang-modes '("inline-js" . javascript)) ;; js2 if you're fancy
 
   (setq indent-tabs-mode nil)
-  (setq org-src-preserve-indentation nil) ;; TODO: Check if this is messing up indentation during edit.
+  (setq org-src-preserve-indentation t)
 ;; (defvar org-babel-default-header-args:inline-js
 ;;   '((:results . "html")
 ;;     (:exports . "results")))
