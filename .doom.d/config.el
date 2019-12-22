@@ -38,7 +38,7 @@
 
 (after! org
   ; Set scale for latex fragments to be displayed in org mode.
-  ;; (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.5))
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.5))
   ; Thicc images
   ;; (setq org-image-actual-width 1000)
   ; Show images on startup
@@ -145,9 +145,9 @@ directory to make multiple eshell windows easier."
 ;;                             (visual-line-mode)
 ;;                             (org-indent-mode)))
 
-(add-hook '+write-mode-hook
-          (auto-fill-mode) ;; Disable auto insertion of newlines
-          )
+;(add-hook '+write-mode-hook
+;          (auto-fill-mode) ;; Disable auto insertion of newlines
+;          )
 
 ;; Refrence/citation stuff.
 (setq bibtex-completion-bibliography '( "~/Devcrap/bibliography/reference/Bibliography.bib" ) ;the major bibtex file

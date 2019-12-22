@@ -143,14 +143,14 @@
         ;  :desc "Spelling error"              :nv "s"   #'evil-next-flyspell-error
         ;  :desc "Spelling correction"         :n  "S"   #'flyspell-correct-word-generic)
 
-        ;(:desc "search" :prefix "/"
-        ;  :desc "Project"                     :nv "p"   #'+ivy/project-search
-        ;  :desc "Directory"                   :nv "d"   (λ! (+ivy/project-search t))
-        ;  :desc "Buffer"                      :nv "b"   #'swiper
-        ;  ;TODO: Use imenu more
-        ;  :desc "Symbols"                     :nv "i"   #'imenu
-        ;  :desc "Symbols across buffers"      :nv "I"   #'imenu-anywhere
-        ;  :desc "Online providers"            :nv "o"   #'+lookup/online-select)
+        (:desc "search" :prefix "/"
+          :desc "Project"                     :nv "p"   #'+ivy/project-search
+          :desc "Directory"                   :nv "d"   (λ! (+ivy/project-search t))
+          :desc "Buffer"                      :nv "b"   #'swiper
+          ;TODO: Use imenu more
+          :desc "Symbols"                     :nv "i"   #'imenu
+          :desc "Symbols across buffers"      :nv "I"   #'imenu-anywhere
+          :desc "Online providers"            :nv "o"   #'+lookup/online-select)
 
         ;(:desc "workspace" :prefix "TAB"
         ;  :desc "Display tab bar"             :n  "TAB" #'+workspace/display
@@ -671,11 +671,12 @@
         :n "q"         #'neotree-hide
         :n "R"         #'neotree-refresh)
 
-      (:after org
+      (:after evil-org
         :map evil-org-mode-map
         :n "M-TAB" #'org-global-cycle
         :localleader
         :n "l" #'org-toggle-latex-fragment
+        :n "RET" #'org-toggle-latex-fragment
         :n "r" #'my-execute-babel
         ;; )
         :n "t" #'org-todo
