@@ -82,7 +82,7 @@
        ;;password-store    ; password manager for nerds
        pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
-       ;reference         ; wrapper for org-ref and others, from gh.com/fuxialexander/ (TODO: Fix errors)
+       reference         ; wrapper for org-ref and others, from gh.com/fuxialexander/ (TODO: Fix errors)
        rgb               ; creating color strings
        ;;terraform         ; infrastructure as code
        tmux              ; an API for interacting with tmux
