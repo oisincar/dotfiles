@@ -168,12 +168,12 @@ myStartupHook = do
   spawnOnce "nm-applet"
 
   -- Disable second screen if there's 2
-  screencount <- LIS.countScreens
-  if (screencount > 1)
-    then spawn "xrandr --output eDP-1-1 --off"
-    else return ()
+  --screencount <- LIS.countScreens
+  --if (screencount > 1)
+  --  then spawn "xrandr --output eDP-1-1 --off"
+  --  else return ()
 
-  spawn "feh --bg-fill ~/.xmonad/LizardBG.png"
+  --spawn "feh --bg-fill ~/.xmonad/LizardBG.png"
 
   -- spawnOnce "volumeicon"
   -- spawnOnce "dropbox"
@@ -215,7 +215,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 --myLayoutHook = avoidStruts (tiled ||| simpleTabbed)
 
 myLayoutHook =
-  windowNavigation (tripleColumnLayout ||| tiledWindowLayout ||| fullWindowLayout)
+  windowNavigation (tiledWindowLayout ||| tripleColumnLayout ||| fullWindowLayout)
 
 tripleColumnLayout = ThreeColMid 1 (3/100) (1/2)
 
