@@ -150,11 +150,11 @@ directory to make multiple eshell windows easier."
 ;          )
 
 ;; Refrence/citation stuff.
-(setq bibtex-completion-bibliography '( "~/Devcrap/bibliography/reference/Bibliography.bib" ) ;the major bibtex file
+(setq bibtex-completion-bibliography '( "~/Devcrap/bibliography/reference/BibDissert.bib" ) ;the major bibtex file
       bibtex-completion-library-path "~/Devcrap/bibliography/reference/pdf/" ;the directory to store pdfs
       bibtex-completion-notes-path "~/Devcrap/bibliography/ref.org" ;the note file for reference notes
       ;; org-directory "~/Dropbox/org"
-      org-ref-default-bibliography '( "~/Devcrap/bibliography/reference/Bibliography.bib" )
+      org-ref-default-bibliography '( "~/Devcrap/bibliography/reference/BibDissert.bib" )
       org-ref-bibliography-notes "~/Devcrap/bibliography/ref.org"
       org-ref-pdf-directory "~/Devcrap/bibliography/reference/pdf/"
       )
@@ -165,6 +165,16 @@ directory to make multiple eshell windows easier."
 (setq org-latex-caption-above nil)    ; Caption below everything, including tables.
 (setq org-export-with-smart-quotes t) ; Nice looking quotes
 
+;; Add acm template to latex
+(after! ox-latex
+  (add-to-list 'org-latex-classes
+               '("acmart"
+                 "\\documentclass{acmart}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
+
+; Trying the blind interface!
 ;; (setq
 ;; '(emacspeak-character-echo nil)
 ;; '(emacspeak-line-echo t)
