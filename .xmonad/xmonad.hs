@@ -19,6 +19,9 @@ import XMonad.Layout.Tabbed
 import XMonad.Layout.Fullscreen
 import XMonad.Util.SpawnOnce
 
+-- Screen brightness
+import qualified XMonad.Util.Brightness as Brightness
+
 -- hjkl navigation
 import XMonad.Layout.WindowNavigation
 import qualified XMonad.Layout.IndependentScreens as LIS
@@ -134,8 +137,8 @@ myKeys conf@(XConfig {XMonad.modMask = altMask}) = M.fromList $
     , ((0, xF86XK_AudioRaiseVolume), spawn "amixer -D pulse set Master unmute 5%+")
 
     -- Screen brightness
-    , ((0, xF86XK_MonBrightnessDown), spawn "xbacklight -dec 10") -- BROKEN ubuntu 16.04. TODO: Find fix.
-    , ((0, xF86XK_MonBrightnessUp),   spawn "xbacklight -inc 10")
+    , ((0, xF86XK_MonBrightnessDown), spawn "lux -s 5%")
+    , ((0, xF86XK_MonBrightnessUp),   spawn "lux -a 5%")
 
     -- Quit xmonad (logout)
     , ((altMask .|. shiftMask, xK_e), io (exitWith ExitSuccess))
