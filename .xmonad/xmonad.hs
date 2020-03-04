@@ -70,10 +70,6 @@ myConfig = def { modMask = mod4Mask
                , startupHook = myStartupHook
                }
 
-
---   icons:       Chrome    terminal   code     folders   twitter   spotify   games
---myWorkspaces = ["\xf268", "\xf120", "\xf121", "\xf07b", "\xf099", "\xf1bc", "\xf11b"]
-
 --   icons:                     Chrome   terminal  code    folders   reddit   video       twitter  youtube  reddit
 myWorkspaces = map wrapSpaces ["\xf269","\xf120","\xf121","\xf07c","\xf281","\xf04e"] --,"\xf099","\xf16a","\xf281"]
     where wrapSpaces s = "" ++ s ++ ""
@@ -104,7 +100,7 @@ myKeys conf@(XConfig {XMonad.modMask = altMask}) = M.fromList $
     , ((rAltMask, xK_n), sendMessage NextLayout)
 
     --  Reset the layouts on the current workspace to default
-    , ((altMask .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
+    , ((altMask .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)
 
     -- Resize viewed windows to the correct size
     , ((rAltMask, xK_r), refresh)
@@ -149,22 +145,25 @@ myKeys conf@(XConfig {XMonad.modMask = altMask}) = M.fromList $
 
     ++
 
-    -- mod-[1..9], Switch to workspace N
-    -- mod-shift-[1..9], Move client to workspace N
+    -- alt-[1..9], Switch to workspace N
+    -- rAlt-[1..9], Move client to workspace N
+    -- alt-rAlt-[1..9], do both^; move client and to workspace.
     [((m, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
         , (f, m) <- [ (W.greedyView, altMask)
-                    , (W.shift,      rAltMask)
-                    -- TODO Figure out how to compose actions like this.
-                    --, (W.shift . W.greedyView, rAltMask  .|. altMask)
+                    , (W.shift, rAltMask)
+                    , (\a -> (W.greedyView a) . (W.shift a), rAltMask  .|. altMask)
                     ]]
 
-    -- ++
-    -- -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
-    -- -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
-    --[((m .|. capsMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
-    --    | (key, sc) <- zip [xK_a, xK_o] [0..]
-    --    , (f, m) <- [(W.view, 0), (W.shift, altMask)]]
+    ++
+    -- let Keys = {a,o,..??} in...
+    -- alt-Keys, Switch to physical/Xinerama screens 1, 2, or 3
+    -- rAlt-Keys, Move client to screen 1, 2, or 3
+    -- TODO: alt-rAlt-Keys, both^.
+    -- NOTE: First two keybinds switched, since one external monitor is the 'primary' one in my head
+    [((m, key), screenWorkspace sc >>= flip whenJust (windows . f))
+        | (key, sc) <- zip [xK_o, xK_a, xK_e, xK_u] [0..]
+        , (f, m) <- [(W.view, altMask), (W.shift, rAltMask)]]
 
 myStartupHook = do
   --spawnOnce "/usr/bin/stalonetray"
