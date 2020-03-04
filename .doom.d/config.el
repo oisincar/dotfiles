@@ -2,11 +2,16 @@
 
 (load! "bindings")
 
+(x-display-pixel-width)
+
+;; Pick font size based on multimonitor/ laptop only/ external big monitor.
 (when window-system
-  (if (> (x-display-pixel-width) 3200) ; width of laptop screen
-      (setq doom-font (font-spec :family "Source Code Pro" :size 18)) ; or 21
+  (if (> (list-length (display-monitor-attributes-list)) 1) ; Multi monitor setup...
+      (setq doom-font (font-spec :family "Source Code Pro" :size 18))
+    (if (> (x-display-pixel-width) 3200) ; width of laptop screen
+        (setq doom-font (font-spec :family "Source Code Pro" :size 18)) ; or 21
       (setq doom-font (font-spec :family "Source Code Pro" :size 26))
-    ))
+      )))
 
 (setq-default doom-big-font (font-spec :family "Source Code Pro" :size 34)
 
@@ -95,7 +100,7 @@ directory to make multiple eshell windows easier."
 ;; emacs/eshell
 (after! eshell
   (set-eshell-alias!
-   "f"   "find-file $1"
+   "f"   "find-file $1" ;; TODO: Use, this is pretty neat!
    "l"   "ls -lh"
    "d"   "dired $1"
    "gl"  "(call-interactively 'magit-log-current)"
