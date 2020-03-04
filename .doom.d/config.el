@@ -190,3 +190,15 @@ directory to make multiple eshell windows easier."
 ;; (dtk-toggle-allcaps-beep t)
 
 ;; (require 'emacspeak-ivy)
+
+;; Make surround only add spaces on closing brackets.
+(after! evil-surround
+  (evil-add-to-alist
+    'evil-surround-pairs-alist
+    ; ?\( '("(" . ")")
+    ?\( '("(" . ")")
+    ?\[ '("[" . "]")
+    ?\{ '("{" . "}")
+    ?\) '("( " . " )")
+    ?\] '("[ " . " ]")
+    ?\} '("{ " . " }")))
