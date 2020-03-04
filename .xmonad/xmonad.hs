@@ -163,7 +163,11 @@ myKeys conf@(XConfig {XMonad.modMask = altMask}) = M.fromList $
     -- NOTE: First two keybinds switched, since one external monitor is the 'primary' one in my head
     [((m, key), screenWorkspace sc >>= flip whenJust (windows . f))
         | (key, sc) <- zip [xK_o, xK_a, xK_e, xK_u] [0..]
-        , (f, m) <- [(W.view, altMask), (W.shift, rAltMask)]]
+        , (f, m) <- [ (W.view, altMask)
+                    , (W.shift, rAltMask)
+                    , (\a -> (W.view a) . (W.shift a)  , altMask .|. rAltMask)
+                    ]
+        ]
 
 myStartupHook = do
   --spawnOnce "/usr/bin/stalonetray"
