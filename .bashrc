@@ -32,3 +32,6 @@ alias god='~/Devcrap/WizLiz/godot/bin/godot.x11.opt.tools.64.mono'
 # Cuda/ tensorflow shtuff.
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"
 export CUDA_HOME=/usr/local/cuda
+
+# Bump up key repeat speed by a good bit (xset r rate #delay #rate).
+xset r rate 200 40
