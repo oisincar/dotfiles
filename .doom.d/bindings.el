@@ -93,8 +93,8 @@
       :n "'"         #'evil-goto-mark
 
       ;; Make backspace comment out stuff.
-      :n "DEL"       #'evil-commentary-line
-      :v "DEL"       #'evil-commentary
+      :n "DEL"       #'evilnc-comment-or-uncomment-lines
+      :v "DEL"       #'evilnc-comment-or-uncomment-lines
 
       "C-x p"        #'+popup/other
 
@@ -441,6 +441,10 @@
           :i "C-k" nil
           :i "C-l" nil
           :i "C-h" nil
+
+          ;; Move linewise over wrapped lines!
+          :n "j" #'evil-next-visual-line
+          :n "k" #'evil-previous-visual-line
 
           ;; Allow line up/down in insert mode too.
           ;:i "C-e" evil-scroll-line-down

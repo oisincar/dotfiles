@@ -56,6 +56,11 @@
 ;; (after! tramp
 ;;   (setq tramp-default-method "ssh"))
 
+(defun my-write-mode ()
+  (interactive)
+  (visual-line-mode)
+  (auto-fill-mode))
+
 ; TODO: Move to some other (functions?) file
 (defun my-org-screenshot ()
   "Take a screenshot into a time stamped unique-named file in the
@@ -111,9 +116,12 @@ directory to make multiple eshell windows easier."
 ;; Set search engine to use grep by default, since it's on all servers.
 ;; (setq +ivy-project-search-engines '(grep rg ag pt))
 
-;; Don't show unity's stupid .meta files.
+;; Don't show unity's stupid .meta files, or cargo lock files.
+;; TEMP: Can't figure out how to ignore both... Just ignore cargo durr.
 (after! counsel
-  (setq counsel-find-file-ignore-regexp "\\.meta\\'"))
+  (setq counsel-find-file-ignore-regexp  "\\.lock\\'")) ;"\\.meta\\'"
+;; Don't show stupid ./ and ../ options.
+(setq ivy-extra-directories ())
 
 ;; Add inline-js as an org language - which exports javascript directly into the file.
 (after! org
@@ -155,11 +163,13 @@ directory to make multiple eshell windows easier."
 ;          )
 
 ;; Refrence/citation stuff.
-(setq bibtex-completion-bibliography '( "~/Devcrap/bibliography/reference/BibDissert.bib" ) ;the major bibtex file
+;; Bibtex now in dissertation writing folder...
+(setq bibtex-completion-bibliography '( "~/Devcrap/College5th/Dissertation/DISS-Message-Passing-NNs/Writings/Dissertation/refs.bib") ;the major bibtex file
       bibtex-completion-library-path "~/Devcrap/bibliography/reference/pdf/" ;the directory to store pdfs
       bibtex-completion-notes-path "~/Devcrap/bibliography/ref.org" ;the note file for reference notes
       ;; org-directory "~/Dropbox/org"
-      org-ref-default-bibliography '( "~/Devcrap/bibliography/reference/BibDissert.bib" )
+      ;; ~/Devcrap/bibliography/reference/BibDissert.bib
+      org-ref-default-bibliography '( "~/Devcrap/College5th/Dissertation/DISS-Message-Passing-NNs/Writings/Dissertation/refs.bib" )
       org-ref-bibliography-notes "~/Devcrap/bibliography/ref.org"
       org-ref-pdf-directory "~/Devcrap/bibliography/reference/pdf/"
       )
@@ -179,17 +189,25 @@ directory to make multiple eshell windows easier."
                  ("\\subsection{%s}" . "\\subsection*{%s}")
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
 
-; Trying the blind interface!
+;; Trying the blind interface!
 ;; (setq
-;; '(emacspeak-character-echo nil)
-;; '(emacspeak-line-echo t)
-;; '(emacspeak-word-echo nil)
-;; '(espeak-default-speech-rate 250)
-;; '(line-number-mode nil))
+;;  '(emacspeak-character-echo nil)
+;;  '(emacspeak-line-echo t)
+;;  '(emacspeak-word-echo nil)
+;;  '(espeak-default-speech-rate 250)
+;;  '(line-number-mode nil))
 ;; (dtk-toggle-split-caps t)
 ;; (dtk-toggle-allcaps-beep t)
 
 ;; (require 'emacspeak-ivy)
+
+
+;; NOTE: When installing, in order to use nikola with code export...
+;; must mx/package-install htmlize. EVEN THOUGH it's required, has to be
+;; accessable outside doom.
+
+;; Rust config...
+(setq rustic-lsp-server 'rust-analyzer)
 
 ;; Make surround only add spaces on closing brackets.
 (after! evil-surround
