@@ -98,6 +98,8 @@ myKeys conf@(XConfig {XMonad.modMask = altMask}) = M.fromList $
 
      -- Rotate through the available layout algorithms
     , ((rAltMask, xK_n), sendMessage NextLayout)
+    -- TODO: Use this (3/4ths down, dzen2?) to send a popup upon layout change/ other changes.
+    -- https://wiki.haskell.org/Xmonad/Frequently_asked_questions#I_don.27t_use_a_statusbar.2C_but_I.27d_like_to_have_layout_displayed_for_some_time_when_it_changes
 
     --  Reset the layouts on the current workspace to default
     , ((altMask .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)
@@ -162,7 +164,7 @@ myKeys conf@(XConfig {XMonad.modMask = altMask}) = M.fromList $
     -- TODO: alt-rAlt-Keys, both^.
     -- NOTE: First two keybinds switched, since one external monitor is the 'primary' one in my head
     [((m, key), screenWorkspace sc >>= flip whenJust (windows . f))
-        | (key, sc) <- zip [xK_o, xK_a, xK_e, xK_u] [0..]
+        | (key, sc) <- zip [xK_o, xK_a] [0..]
         , (f, m) <- [ (W.view, altMask)
                     , (W.shift, rAltMask)
                     , (\a -> (W.view a) . (W.shift a)  , altMask .|. rAltMask)
