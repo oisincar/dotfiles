@@ -4,9 +4,18 @@
 
 (x-display-pixel-width)
 
+
+
+; Notes! Extra stuff...
+; Had to install something nikola needed, TODO: Look up what that was heh (htmlize?). Just via m-x package-install.
+
+; For c-sharp server, needed to modify run script to use global mono installation.
+; in .emacs.d/.local/etc/lsp/omnisharp-roslyn/vX.XX.X/run, change bin_dir variable to /usr/bin.
+
+
 ;; Pick font size based on multimonitor/ laptop only/ external big monitor.
 (when window-system
-  (if (> (list-length (display-monitor-attributes-list)) 1) ; Multi monitor setup...
+  (if (> (length (display-monitor-attributes-list)) 1) ; Multi monitor setup...
       (setq doom-font (font-spec :family "Source Code Pro" :size 18))
     (if (> (x-display-pixel-width) 3200) ; width of laptop screen
         (setq doom-font (font-spec :family "Source Code Pro" :size 18)) ; or 21
@@ -116,10 +125,9 @@ directory to make multiple eshell windows easier."
 ;; Set search engine to use grep by default, since it's on all servers.
 ;; (setq +ivy-project-search-engines '(grep rg ag pt))
 
-;; Don't show unity's stupid .meta files, or cargo lock files.
-;; TEMP: Can't figure out how to ignore both... Just ignore cargo durr.
+;; Don't show unity's stupid .meta files, or cargo lock files (possibly broken :x)
 (after! counsel
-  (setq counsel-find-file-ignore-regexp  "\\.lock\\'")) ;"\\.meta\\'"
+  (setq counsel-find-file-ignore-regexp  "\\.\\(lock\\'\\|meta\\)")) ;"\\.meta\\'"
 ;; Don't show stupid ./ and ../ options.
 (setq ivy-extra-directories ())
 
