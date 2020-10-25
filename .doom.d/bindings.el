@@ -107,105 +107,6 @@
         ;:desc "eshell"                        :nv "'"  #'+eshell/open-popup
         :desc "eshell"                        :nv "'"  #'eshell-here
 
-        ;;; Most commonly used
-        ;:desc "Find file in project"          :n  "SPC" #'projectile-find-file
-        ;:desc "Switch workspace buffer"       :n  ","   #'persp-switch-to-buffer
-        ;:desc "Switch buffer"                 :n  "<"   #'switch-to-buffer
-        ;:desc "Browse files"                  :n  "."   #'find-file
-        ;:desc "Toggle last popup"             :n  "~"   #'+popup/toggle
-        ;:desc "Eval expression"               :n  "`"   #'eval-expression
-        ;:desc "Blink cursor line"             :n  "DEL" #'+nav-flash/blink-cursor
-        ;:desc "Jump to bookmark"              :n  "RET" #'bookmark-jump
-
-        ;;; C-u is used by evil
-        ;:desc "Universal argument"            :n  "u"   #'universal-argument
-        ;:desc "window"                        :n  "w"   evil-window-map
-
-        ;(:desc "previous..." :prefix "["
-        ;  :desc "Text size"                   :nv "["   #'text-scale-decrease
-        ;  :desc "Buffer"                      :nv "b"   #'previous-buffer
-        ;  :desc "Diff Hunk"                   :nv "d"   #'git-gutter:previous-hunk
-        ;  :desc "Todo"                        :nv "t"   #'hl-todo-previous
-        ;  :desc "Error"                       :nv "e"   #'previous-error
-        ;  :desc "Workspace"                   :nv "w"   #'+workspace/switch-left
-        ;  :desc "Smart jump"                  :nv "h"   #'smart-backward
-        ;  :desc "Spelling error"              :nv "s"   #'evil-prev-flyspell-error
-        ;  :desc "Spelling correction"         :n  "S"   #'flyspell-correct-previous-word-generic)
-
-        ;(:desc "next..." :prefix "]"
-        ;  :desc "Text size"                   :nv "]"   #'text-scale-increase
-        ;  :desc "Buffer"                      :nv "b"   #'next-buffer
-        ;  :desc "Diff Hunk"                   :nv "d"   #'git-gutter:next-hunk
-        ;  :desc "Todo"                        :nv "t"   #'hl-todo-next
-        ;  :desc "Error"                       :nv "e"   #'next-error
-        ;  :desc "Workspace"                   :nv "w"   #'+workspace/switch-right
-        ;  :desc "Smart jump"                  :nv "l"   #'smart-forward
-        ;  :desc "Spelling error"              :nv "s"   #'evil-next-flyspell-error
-        ;  :desc "Spelling correction"         :n  "S"   #'flyspell-correct-word-generic)
-
-        (:desc "search" :prefix "/"
-          :desc "Project"                     :nv "p"   #'+ivy/project-search
-          :desc "Directory"                   :nv "d"   (λ! (+ivy/project-search t))
-          :desc "Buffer"                      :nv "b"   #'swiper
-          ;TODO: Use imenu more
-          :desc "Symbols"                     :nv "i"   #'imenu
-          :desc "Symbols across buffers"      :nv "I"   #'imenu-anywhere
-          :desc "Online providers"            :nv "o"   #'+lookup/online-select)
-
-        ;(:desc "workspace" :prefix "TAB"
-        ;  :desc "Display tab bar"             :n  "TAB" #'+workspace/display
-        ;  :desc "New workspace"               :n  "n"   #'+workspace/new
-        ;  :desc "Load workspace from file"    :n  "l"   #'+workspace/load
-        ;  :desc "Load last session"           :n  "L"   (λ! (+workspace/load-session))
-        ;  :desc "Save workspace to file"      :n  "s"   #'+workspace/save
-        ;  :desc "Autosave current session"    :n  "S"   #'+workspace/save-session
-        ;  :desc "Switch workspace"            :n  "."   #'+workspace/switch-to
-        ;  :desc "Kill all buffers"            :n  "x"   #'doom/kill-all-buffers
-        ;  :desc "Delete session"              :n  "X"   #'+workspace/kill-session
-        ;  :desc "Delete this workspace"       :n  "d"   #'+workspace/delete
-        ;  :desc "Load session"                :n  "L"   #'+workspace/load-session
-        ;  :desc "Rename workspace"            :n  "r"   #'+workspace/rename
-        ;  :desc "Next workspace"              :n  "]"   #'+workspace/switch-right
-        ;  :desc "Previous workspace"          :n  "["   #'+workspace/switch-left
-        ;  :desc "Switch to last workspace"    :n  "0"   #'+workspace/switch-to-last)
-
-        ;(:desc "buffer" :prefix "b"
-        ;  :desc "New empty buffer"            :n  "N"   #'evil-buffer-new
-        ;  :desc "Switch workspace buffer"     :n  "b"   #'persp-switch-to-buffer
-        ;  :desc "Switch buffer"               :n  "B"   #'switch-to-buffer
-        ;  :desc "Kill buffer"                 :n  "k"   #'kill-this-buffer
-        ;  :desc "Kill other buffers"          :n  "o"   #'doom/kill-other-buffers
-        ;  :desc "Save buffer"                 :n  "s"   #'save-buffer
-        ;  :desc "Pop scratch buffer"          :n  "x"   #'doom/open-scratch-buffer
-        ;  :desc "Bury buffer"                 :n  "z"   #'bury-buffer
-        ;  :desc "Next buffer"                 :n  "n"   #'next-buffer
-        ;  :desc "Previous buffer"             :n  "p"   #'previous-buffer
-        ;  :desc "Sudo edit this file"         :n  "S"   #'doom/sudo-this-file)
-
-        ;(:desc "code" :prefix "c"
-        ;  :desc "List errors"                 :n  "x"   #'flycheck-list-errors
-        ;  :desc "Evaluate buffer/region"      :n  "e"   #'+eval/buffer
-        ;                                      :v  "e"   #'+eval/region
-        ;  :desc "Evaluate & replace region"   :nv "E"   #'+eval:replace-region
-        ;  :desc "Build tasks"                 :nv "b"   #'+eval/build
-        ;  :desc "Jump to definition"          :n  "d"   #'+lookup/definition
-        ;  :desc "Jump to references"          :n  "D"   #'+lookup/references
-        ;  :desc "Open REPL"                   :n  "r"   #'+eval/open-repl
-        ;                                      :v  "r"   #'+eval:repl)
-        ;(:desc "file" :prefix "f"
-        ;  :desc "Sudo find file"              :n  ">"   #'doom/sudo-find-file
-        ;  :desc "Find file from here"         :n  "?"   #'counsel-file-jump
-        ;  :desc "Find other file"             :n  "a"   #'projectile-find-other-file
-        ;  :desc "Open project editorconfig"   :n  "c"   #'editorconfig-find-current-editorconfig
-        ;  :desc "Find directory"              :n  "d"   #'dired
-        ;  :desc "Find file in emacs.d"        :n  "e"   #'+default/find-in-emacsd
-        ;  :desc "Browse emacs.d"              :n  "E"   #'+default/browse-emacsd
-        ;  :desc "Recent files"                :n  "r"   #'recentf-open-files
-        ;  :desc "Recent project files"        :n  "R"   #'projectile-recentf
-        ;  :desc "Yank filename"               :n  "y"   #'+default/yank-buffer-filename
-        ;  :desc "Find file in private config" :n  "p"   #'+default/find-in-config
-        ;  :desc "Browse private config"       :n  "P"   #'+default/browse-config)
-
         (:desc "git" :prefix "g"
         ;  :desc "Magit blame"                 :n  "b"   #'magit-blame
         ;  :desc "Magit commit"                :n  "c"   #'magit-commit
@@ -221,8 +122,8 @@
         ;  :desc "Magit pull popup"            :n  "P"   #'magit-pull-popup
         ;  :desc "Git revert hunk"             :n  "r"   #'git-gutter:revert-hunk
         ;  :desc "Git revert file"             :n  "R"   #'vc-revert
-          :desc "Git stage hunk"              :n  "h"   #'git-gutter:stage-hunk
-          :desc "Git stage file"              :n  "F"   #'magit-stage-file
+        ;  :desc "Git stage hunk"              :n  "h"   #'git-gutter:stage-hunk
+        ;  :desc "Git stage file"              :n  "F"   #'magit-stage-file
         ;  :desc "Git time machine"            :n  "t"   #'git-timemachine-toggle
         ;  :desc "Git unstage file"            :n  "U"   #'magit-unstage-file
         ;  :desc "Next hunk"                   :nv "]"   #'git-gutter:next-hunk
@@ -345,17 +246,17 @@
       :n  "ZX" #'bury-buffer
       :n  "]b" #'next-buffer
       :n  "[b" #'previous-buffer
-      :n  "]w" #'+workspace/switch-right
-      :n  "[w" #'+workspace/switch-left
-      :m  "gt" #'+workspace/switch-right
-      :m  "gT" #'+workspace/switch-left
+      ;; :n  "]w" #'+workspace/switch-right
+      ;; :n  "[w" #'+workspace/switch-left
+      ;; :m  "gt" #'+workspace/switch-right
+      ;; :m  "gT" #'+workspace/switch-left
       :m  "gd" #'+lookup/definition
       :m  "gD" #'+lookup/references
       :n  "gp" #'+evil/reselect-paste
       :n  "gr" #'+eval:region
       :n  "gR" #'+eval/buffer
       :v  "gR" #'+eval:replace-region
-      :m  "gs" #'+default/easymotion  ; lazy-load `evil-easymotion'
+      ;; :m  "gs" #'+default/easymotion  ; lazy-load `evil-easymotion'
       :v  "@"  #'+evil:apply-macro
       :n  "g@" #'+evil:apply-macro
       ;; repeat in visual mode (FIXME buggy)
@@ -366,7 +267,6 @@
 
       :nv "C-a"   #'evil-numbers/inc-at-pt
       :nv "C-S-a" #'evil-numbers/dec-at-pt
-
 
       ;; --- Plugin bindings ------------------------------
       ;; auto-yasnippet
@@ -598,31 +498,31 @@
         :n "S"   #'gist-unstar
         :n "y"   #'gist-print-current-url)
 
-      ;; helm
-      (:after helm
-        (:map helm-map
-          "ESC"        nil
-          "C-S-n"      #'helm-next-source
-          "C-S-p"      #'helm-previous-source
-          "C-u"        #'helm-delete-minibuffer-contents
-          "C-w"        #'backward-kill-word
-          "C-r"        #'evil-paste-from-register ; Evil registers in helm! Glorious!
-          "C-b"        #'backward-word
-          [left]       #'backward-char
-          [right]      #'forward-char
-          [escape]     #'helm-keyboard-quit
-          [tab]        #'helm-execute-persistent-action)
-
-        (:after helm-files
-          (:map helm-generic-files-map
-            :e "ESC"     #'helm-keyboard-quit)
-          (:map helm-find-files-map
-            "C-w" #'helm-find-files-up-one-level
-            "TAB" #'helm-execute-persistent-action))
-
-        (:after helm-ag
-          (:map helm-ag-map
-            "<backtab>"  #'helm-ag-edit)))
+;      ;; helm
+;      (:after helm
+;        (:map helm-map
+;          "ESC"        nil
+;          "C-S-n"      #'helm-next-source
+;          "C-S-p"      #'helm-previous-source
+;          "C-u"        #'helm-delete-minibuffer-contents
+;          "C-w"        #'backward-kill-word
+;          "C-r"        #'evil-paste-from-register ; Evil registers in helm! Glorious!
+;          "C-b"        #'backward-word
+;          [left]       #'backward-char
+;          [right]      #'forward-char
+;          [escape]     #'helm-keyboard-quit
+;          [tab]        #'helm-execute-persistent-action)
+;
+;        (:after helm-files
+;          (:map helm-generic-files-map
+;            :e "ESC"     #'helm-keyboard-quit)
+;          (:map helm-find-files-map
+;            "C-w" #'helm-find-files-up-one-level
+;            "TAB" #'helm-execute-persistent-action))
+;
+;        (:after helm-ag
+;          (:map helm-ag-map
+;            "<backtab>"  #'helm-ag-edit)))
 
       ;; hl-todo
       :m  "]t" #'hl-todo-next
@@ -635,7 +535,7 @@
         "C-SPC"  #'ivy-call-and-recenter
         ;"M-z"    #'undo
         ;"M-v"    #'yank
-        "C-v"    #'yank
+        "C-y"    #'yank
         "C-r"    #'evil-paste-from-register
         "C-k"    #'ivy-previous-line
         "C-j"    #'ivy-next-line
