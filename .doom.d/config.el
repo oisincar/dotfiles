@@ -2,10 +2,6 @@
 
 (load! "bindings")
 
-(x-display-pixel-width)
-
-
-
 ; Notes! Extra stuff...
 ; Had to install something nikola needed, TODO: Look up what that was heh (htmlize?). Just via m-x package-install.
 
@@ -14,13 +10,14 @@
 
 
 ;; Pick font size based on multimonitor/ laptop only/ external big monitor.
-(when window-system
-  (if (> (length (display-monitor-attributes-list)) 1) ; Multi monitor setup...
-      (setq doom-font (font-spec :family "Source Code Pro" :size 18))
-    (if (> (x-display-pixel-width) 3200) ; width of laptop screen
-        (setq doom-font (font-spec :family "Source Code Pro" :size 18)) ; or 21
-      (setq doom-font (font-spec :family "Source Code Pro" :size 26))
-      )))
+(when (display-graphic-p) ;; If running in a graphical display.
+  (when window-system
+    (if (> (length (display-monitor-attributes-list)) 1) ; Multi monitor setup...
+        (setq doom-font (font-spec :family "Source Code Pro" :size 18))
+      (if (> (x-display-pixel-width) 3200) ; width of laptop screen
+          (setq doom-font (font-spec :family "Source Code Pro" :size 18)) ; or 21
+        (setq doom-font (font-spec :family "Source Code Pro" :size 26))
+        ))))
 
 (setq-default doom-big-font (font-spec :family "Source Code Pro" :size 34)
 
