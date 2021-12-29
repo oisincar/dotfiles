@@ -169,19 +169,42 @@ directory to make multiple eshell windows easier."
 
 ;; Refrence/citation stuff.
 ;; Bibtex now in dissertation writing folder...
-(setq bibtex-completion-bibliography '( "~/Devcrap/College5th/Dissertation/DISS-Message-Passing-NNs/Writings/Dissertation/refs.bib") ;the major bibtex file
-      bibtex-completion-library-path "~/Devcrap/bibliography/reference/pdf/" ;the directory to store pdfs
+
+;; (setq bibtex-completion-bibliography '( "~/Devcrap/College5th/Dissertation/DISS-Message-Passing-NNs/Writings/Dissertation/refs.bib") ;the major bibtex file
+;;       bibtex-completion-library-path "~/Devcrap/bibliography/reference/pdf/" ;the directory to store pdfs
+;;       bibtex-completion-notes-path "~/Devcrap/bibliography/ref.org" ;the note file for reference notes
+;;       ;; org-directory "~/Dropbox/org"
+;;       ;; ~/Devcrap/bibliography/reference/BibDissert.bib
+;;       org-ref-default-bibliography '( "~/Devcrap/College5th/Dissertation/DISS-Message-Passing-NNs/Writings/Dissertation/refs.bib" )
+;;       org-ref-bibliography-notes "~/Devcrap/bibliography/ref.org"
+;;       org-ref-pdf-directory "~/Devcrap/bibliography/reference/pdf/"
+;;       )
+
+
+(map!
+ (:after org-ref
+   :map evil-org-mode-map
+   (:localleader
+     :n "Cc" #'org-ref-helm-insert-cite-link
+     :n "Ce" #'helm-bibtex
+     :n "CE" #'helm-bibtex-with-notes
+     )))
+
+; Todo: works, right??
+(setq bibtex-completion-bibliography '( "~/dev/text-similarity-factcheck/Paper/ref.bib") ;the major bibtex file
+      bibtex-completion-library-path "~/dev/text-similarity-factcheck/Paper/refs_pdf" ;the directory to store pdfs
       bibtex-completion-notes-path "~/Devcrap/bibliography/ref.org" ;the note file for reference notes
-      ;; org-directory "~/Dropbox/org"
-      ;; ~/Devcrap/bibliography/reference/BibDissert.bib
-      org-ref-default-bibliography '( "~/Devcrap/College5th/Dissertation/DISS-Message-Passing-NNs/Writings/Dissertation/refs.bib" )
+      org-ref-default-bibliography '( "~/dev/text-similarity-factcheck/Paper/ref.bib" )
+      org-ref-pdf-directory "~/dev/text-similarity-factcheck/Paper/refs_pdf"
       org-ref-bibliography-notes "~/Devcrap/bibliography/ref.org"
-      org-ref-pdf-directory "~/Devcrap/bibliography/reference/pdf/"
       )
+
+
 ;; Latex export with stuff better.
 ;; (setq org-latex-pdf-process (list
    ;; "latexmk -pdflatex='lualatex -shell-escape -interaction nonstopmode' -pdf -f  %f"))
-(setq org-latex-pdf-process (list "latexmk -pdf %f"))
+;; (setq org-latex-pdf-process (list "latexmk -pdf %f"))
+(setq org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
 (setq org-latex-caption-above nil)    ; Caption below everything, including tables.
 (setq org-export-with-smart-quotes t) ; Nice looking quotes
 
@@ -225,3 +248,6 @@ directory to make multiple eshell windows easier."
     ?\) '("( " . " )")
     ?\] '("[ " . " ]")
     ?\} '("{ " . " }")))
+
+;; Hide (annoying!) code actions popups sideline
+(setq lsp-ui-sideline-show-code-actions nil)
