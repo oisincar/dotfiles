@@ -290,6 +290,8 @@
         (:map company-active-map
           ;; Don't interfere with `evil-delete-backward-word' in insert mode
           "C-w"     nil
+          "RET"     nil
+          [return]  nil
           "C-o"     #'company-search-kill-others
           "C-h"     #'company-show-doc-buffer
           "C-l"     #'company-complete-selection
