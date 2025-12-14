@@ -1,0 +1,70 @@
+set surround
+set commentary
+
+let mapleader = " "
+
+set scrolloff=5
+
+" Use system clipboard
+set clipboard+=unnamed
+
+" ----- Misc & Generic binds -----
+inoremap qj <esc>
+nnoremap ; :
+
+" ----- Searching -----
+set incsearch
+set hlsearch
+" Esc removes previously highlighted search results
+nnoremap <silent> <esc> :noh<cr>
+set smartcase
+
+" ----- Vim Settings -----
+" STUPID BELL
+set visualbell
+set noerrorbells
+
+" Don't use Ex mode, use Q for formatting.
+" map Q gq
+
+"" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
+map \r <Action>(ReformatCode)
+map <leader>d <Action>(Debug)
+map \b <Action>(ToggleLineBreakpoint)
+
+" ----- Files & Search -----
+nmap <leader><leader> <Action>(GotoFile)
+nmap <leader>/ <Action>(FindInPath)
+" Need binding to navigate between files from current dir :c.
+" nmap <leader>. <Action>()
+nmap <leader>fr <Action>(RecentChangedFiles)
+
+
+" ----- Splits & Panes -----
+" Use | or _ to open a vertical split or horizontal split.
+nmap <Bar> <Action>(MoveTabRight)
+nmap _ <Action>(MoveTabDown)
+
+" Move around splits with <Ctrl-hjkl>.
+nnoremap <C-j> <C-W><C-J>
+"nnoremap <C-k> <C-W><C-K>
+nnoremap <C-l> <C-W><C-L>
+nnoremap <C-h> <C-W><C-H>
+
+" Or leader-w-hjkl
+nnoremap <leader>wj <C-W><C-J>
+nnoremap <leader>wk <C-W><C-K>
+nnoremap <leader>wl <C-W><C-L>
+nnoremap <leader>wh <C-W><C-H>
+" Move windows with leader-w-HJKL
+nnoremap <leader>wJ <C-W>J
+nnoremap <leader>wK <C-W>K
+nnoremap <leader>wL <C-W>L
+nnoremap <leader>wH <C-W>H
+
+nmap <leader>bn <Action>(NextTab)
+nmap <leader>bp <Action>(PreviousTab)
+" nnoremap 
+
+" Delete key for comment/uncomment
+map <Del> :action CommentByLineComment<CR>

@@ -18,6 +18,7 @@
 # The real business here.. Vim & Emacs.
 !.vimrc
 !.doom.d/
+!.ideavimrc
 
 # Bar and window manager config.
 !.xmobar/
