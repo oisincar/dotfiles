@@ -24,13 +24,8 @@ set smartcase
 set visualbell
 set noerrorbells
 
-" Don't use Ex mode, use Q for formatting.
-" map Q gq
-
-"" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
-map \r <Action>(ReformatCode)
-map <leader>d <Action>(Debug)
-map \b <Action>(ToggleLineBreakpoint)
+" Case insensitive search (except when capital in the search)
+set smartcase
 
 " ----- Files & Search -----
 nmap <leader><leader> <Action>(GotoFile)
@@ -56,15 +51,54 @@ nnoremap <leader>wj <C-W><C-J>
 nnoremap <leader>wk <C-W><C-K>
 nnoremap <leader>wl <C-W><C-L>
 nnoremap <leader>wh <C-W><C-H>
-" Move windows with leader-w-HJKL
-nnoremap <leader>wJ <C-W>J
-nnoremap <leader>wK <C-W>K
-nnoremap <leader>wL <C-W>L
-nnoremap <leader>wH <C-W>H
+" " Move windows with leader-w-HJKL
+" nnoremap <leader>wJ <C-W>J
+" nnoremap <leader>wK <C-W>K
+" nnoremap <leader>wL <C-W>L
+" nnoremap <leader>wH <C-W>H
 
+" Go to tab...
 nmap <leader>bn <Action>(NextTab)
 nmap <leader>bp <Action>(PreviousTab)
-" nnoremap 
+nmap <C-1> <Action>(GoToTab1)
+nmap <C-2> <Action>(GoToTab2)
+nmap <C-3> <Action>(GoToTab3)
+nmap <C-4> <Action>(GoToTab4)
+nmap <C-5> <Action>(GoToTab5)
+nmap <C-6> <Action>(GoToTab6)
+nmap <C-7> <Action>(GoToTab7)
+nmap <C-8> <Action>(GoToTab8)
+nmap <C-9> <Action>(GoToTab9)
 
+"nnoremap <leader>z :action ToggleDistractionFreeMode<CR>
+nmap <leader>tz <Action>(ToggleZenMode)
+nmap <leader>tn <Action>(EditorToggleShowLineNumbers)
+
+" Move current tab between splits.
+nmap <leader>wt <Action>(MoveEditorToOppositeTabGroup)
+
+" ----- Refactoring -----
 " Delete key for comment/uncomment
-map <Del> :action CommentByLineComment<CR>
+nmap <BS> <Action>(CommentByLineComment)
+vmap <BS> <Action>(CommentByLineComment)
+
+" Rename variable
+nmap <leader>r <Action>(RenameElement)
+
+" ----- DEBUGGING ------
+"Start/stop
+nmap <leader>dd <Action>(Debug)
+nmap <leader>dq <Action>(Stop)
+nmap <leader>dc <Action>(Resume)
+" Run/Step
+nmap <leader>dj <Action>(StepOver)
+nmap <leader>dk <Action>(StepInto)
+nmap <leader>dl <Action>(StepOut)
+nmap <leader>dr <Action>(RunToCursor)
+" Breakpoints
+nmap <leader>db <Action>(ToggleLineBreakpoint)
+nmap <leader>dB <Action>(ViewBreakpoints)
+" Ui/context helpers
+nmap <leader>df <Action>(DebugFocus)
+nmap <leader>de <Action>(EvaluateExpression)
+nmap <leader>dh <Action>(ShowExecutionPoint)
