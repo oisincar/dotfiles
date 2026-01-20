@@ -17,15 +17,14 @@ set incsearch
 set hlsearch
 " Esc removes previously highlighted search results
 nnoremap <silent> <esc> :noh<cr>
-set smartcase
+" Case insensitive search (except when capital in the search)
+set ignorecase smartcase
 
 " ----- Vim Settings -----
 " STUPID BELL
 set visualbell
 set noerrorbells
 
-" Case insensitive search (except when capital in the search)
-set smartcase
 
 " ----- Files & Search -----
 nmap <leader><leader> <Action>(GotoFile)
